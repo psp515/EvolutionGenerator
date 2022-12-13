@@ -1,0 +1,4 @@
+Main Menu
+(Settings(view setting folder to safe csv, sound??),
+Quick Start Simulation -> Simulation,
+Create Custom Simulation -> Simulation)

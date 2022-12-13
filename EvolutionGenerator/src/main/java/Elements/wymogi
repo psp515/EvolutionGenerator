@@ -1,0 +1,36 @@
+Żywność
+- dodaje okresloną energię zwierzeciu
+- po zjedzeniu znika i się pojawia w losowym miejscu
+- 80% ze na preferowanym polu 20% ze na nie preferowanym
+
+Rowniki - wiecej roslin w centrum
+Trupy - rosliny chca wyrastac na trupach
+
+
+Zwierzeta
+- maja energie kt zmniejsza sie codziennie
+- poruszaja sie w 8 kierunkach
+- moga byc na tym samym polu
+- 8 mozliwcyh kierunkow zwierzecia
+- 8 kierunków ruchu
+- n genów z zakresu 0-7 - schemat zachowywania sie danej istoty
+- zwierze je tylok jezeli stanie na polu z jedzeniem
+
+Rozmnarzanie
+- musi byc odpowiednia energia
+- 2 osobniki na tym samym miejscu
+- procent energi rodzica / sumaryczna energia rodzcow = liczba genow od rodzica
+dziala to biorac przeciecia genotypow ale trzeba jeszcze wylosowac ktory rodzic daje ktora czesc
+
+Mutacje  - ?? gdzie on sa i jak dzialaja
+losowo dzilaja
+1 gen w gore lub dol
+
+Poruszanie zwierzat
+
+Normalne -> gen za genem
+Szalenstwo -> 80% 2 geny na raz odpalone w 20% skip genu i wykonanie nastepnego
+
+
+
+PAMIETAJ O FAQ
