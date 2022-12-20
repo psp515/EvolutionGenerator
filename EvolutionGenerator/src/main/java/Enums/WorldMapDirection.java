@@ -1,4 +1,4 @@
-package data;
+package Enums;
 
 import java.util.concurrent.ThreadLocalRandom;
 
