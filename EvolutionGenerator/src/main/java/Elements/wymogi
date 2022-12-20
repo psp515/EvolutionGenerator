@@ -1,36 +1,40 @@
 Żywność
-- dodaje okresloną energię zwierzeciu
-- po zjedzeniu znika i się pojawia w losowym miejscu
-- 80% ze na preferowanym polu 20% ze na nie preferowanym
+- dodaje stałą predefiniowaną energię zwierzeciu
+- po zjedzeniu znika i się pojawia w losowym miejscu (z preferencją dla określonych pól, zależnie od wariacji)
+- może wyrosnąć tam gdzie już stoi zwierze, ale nie ma innej rośliny
+- 80% spawnu ze na preferowanym polu 20% na nie preferowanym
+- preferowane pola zajmują 20% mapy, niepreferowane 80%
+- rośliny przestają się spawnić jak nie ma na nie miejsca na mapie
 
-Rowniki - wiecej roslin w centrum
-Trupy - rosliny chca wyrastac na trupach
+a) "Zalesione równiki" -> pas preferowanych pól poziomo przez środek
+b) "Toksyczne trupy" -> rosliny nie chca wyrastac na trupach
 
 
 Zwierzeta
-- maja energie kt zmniejsza sie codziennie
-- poruszaja sie w 8 kierunkach
-- moga byc na tym samym polu
-- 8 mozliwcyh kierunkow zwierzecia
-- 8 kierunków ruchu
+- maja energie która zmniejsza sie codziennie (po każdym ruchu)
+- poruszaja sie tylko w przód, ale obracają się w jedną z 8 stron za każdym razem
+- może byc 1< na tym samym polu
 - n genów z zakresu 0-7 - schemat zachowywania sie danej istoty
-- zwierze je tylok jezeli stanie na polu z jedzeniem
+- zwierze je tylko jezeli stanie na polu z jedzeniem, dla 1< sposób wyboru poniżej
 
-Rozmnarzanie
-- musi byc odpowiednia energia
-- 2 osobniki na tym samym miejscu
-- procent energi rodzica / sumaryczna energia rodzcow = liczba genow od rodzica
-dziala to biorac przeciecia genotypow ale trzeba jeszcze wylosowac ktory rodzic daje ktora czesc
-
-Mutacje  - ?? gdzie on sa i jak dzialaja
-losowo dzilaja
-1 gen w gore lub dol
+Rozmnażanie
+- oba osobniki muszą mieć pozostałą predefiniowaną energię
+- min. 2 osobniki na tym samym miejscu, dla 2< sposób wybierania poniżej
+- procent (energii rodzica / sumaryczna energia rodzcow) = liczba genow od danego rodzica
+- dziecko bierze przecięcie genotypow po wcześniejszym losowaniu ktory rodzic daje początek a który koniec
+- pod koniec rodzenia nowego zwierzęcia określona liczba genów wybranych losowo zmienia się:
+a) "pełna losowość" -> na całkowicie losowe
+b) "lekka korekta" -> o 1 w górę lub w dół
+- nowe zwierze otrzymuje sumę energii zabranej rodzicom, ma losowy kierunek i startuje poruszanie wg genotypu od losowego genu
 
 Poruszanie zwierzat
+a) "Pełna predystynacja" -> gen za genem
+b) "Nieco szaleństwa" -> 80% 2 geny na raz odpalone w 20% skip genu i wykonanie nastepnego
 
-Normalne -> gen za genem
-Szalenstwo -> 80% 2 geny na raz odpalone w 20% skip genu i wykonanie nastepnego
+Sposób wybierania zwierzęcia przy jedzeniu lub kopulacji wygrywa(ją) osobnik(i):
+1) o największej energii
+2) najstarsze
+3) o największej ilości dzieci
+4) losowo
 
 
-
-PAMIETAJ O FAQ
