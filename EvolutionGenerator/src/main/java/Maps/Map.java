@@ -23,8 +23,8 @@ public class Map implements IMap {
     protected final int height;
     protected Map(MapSettings settings)
     {
-        this.width = width;
-        this.height = height;
+        this.width = settings.width;
+        this.height = settings.height;
 
         this.animalMovement = settings.movementsOptions.getClassRepresentation();
         this.animalMutation = settings.mutationsOptions.getClassRepresentation();
@@ -39,7 +39,7 @@ public class Map implements IMap {
 
     @Override
     public void mutate(IGenes element) {
-        
+
     }
 
     @Override
