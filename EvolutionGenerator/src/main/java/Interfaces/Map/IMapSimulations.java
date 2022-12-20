@@ -1,10 +1,10 @@
-package Simulation;
+package Interfaces.Map;
 
 public interface IMapSimulations
 {
     void simulateDeaths();
-    void moveanimals();
+    void moveAnimals();
     void simulateEating();
     void simulateBorns();
-    void growAnimals();
+    void growFood();
 }

@@ -1,0 +1,1 @@
+Enumy są do wyświetlania w liście do wybierania w ustawieniach.
