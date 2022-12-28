@@ -3,7 +3,7 @@ package ElementsExtensions.Food;
 import Elements.Food;
 import Interfaces.Map.IMap;
 
-public class Equators extends FoodGrowing {
+public class Equators extends FoodGenerator {
 
 
     public Equators(IMap map) {

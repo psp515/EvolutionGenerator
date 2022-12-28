@@ -1,4 +1,9 @@
 package Maps;
 
-public class Hell {
+import Models.MapSettings;
+
+public class Hell extends Map {
+    protected Hell(MapSettings settings) {
+        super(settings);
+    }
 }

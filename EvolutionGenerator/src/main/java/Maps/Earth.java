@@ -1,4 +1,9 @@
 package Maps;
 
-public class Earth {
+import Models.MapSettings;
+
+public class Earth extends Map {
+    protected Earth(MapSettings settings) {
+        super(settings);
+    }
 }

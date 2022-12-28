@@ -11,8 +11,7 @@ public class MapStatistics
 
     DayStatistics dayStatistics;
 
-    int[][]  animalDeathsonField;
+    int[][]  animalDeathsOnField;
 
     int[][]  plantGrowsOnField;
-
 }
