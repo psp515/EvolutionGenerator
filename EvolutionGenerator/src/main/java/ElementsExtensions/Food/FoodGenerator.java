@@ -7,7 +7,7 @@ public abstract class FoodGenerator implements IFoodGenerator {
 
     protected FoodGenerator(IMap map)
     {
-
+        //todo
     }
 
 
