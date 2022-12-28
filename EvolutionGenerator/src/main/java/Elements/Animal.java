@@ -13,7 +13,13 @@ public class Animal extends MapElement implements IParent {
     public final IGenes _genotype;
     private int _energy;
 
-    public Animal(IMap map, IGenes genotype, int startingEnergy, IAnimalMovement movement, Vector2d position) {
+    private int bornDay;
+    private int deathDay;
+    private int foodEaten;
+
+    private boolean MostPopularGeonotype;
+
+    public Animal(IMap map, IGenes genotype, int startingEnergy, IAnimalMovement movement, Vector2d position, int bornDay) {
         super(map, position);
         _genotype = genotype;
         _energy = startingEnergy;
@@ -32,7 +38,7 @@ public class Animal extends MapElement implements IParent {
     }
 
     @Override
-    public IParent copulate(IParent secondParent) {
+    public IParent copulate(IParent secondParent, int day) {
         // tworzennie nowego genu
         // tworzenie nowego animala
         // wszystkie potrzebne typy albo modyfikacje mozna odczytac z map settings.

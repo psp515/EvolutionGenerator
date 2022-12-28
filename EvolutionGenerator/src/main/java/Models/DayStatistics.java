@@ -11,4 +11,7 @@ public class DayStatistics {
 
     public double AverageEnergy;
     public double AverageLiveLength;
+
+    public int dayDeaths;
+    public int dayBorns;
 }

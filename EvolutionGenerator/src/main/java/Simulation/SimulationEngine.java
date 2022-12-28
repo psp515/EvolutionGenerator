@@ -15,6 +15,7 @@ import Models.SimulationSettings;
 public class SimulationEngine implements ISimulationEngine, IMapSimulations {
 
     boolean isRunning;
+    int simulationDay;
 
     IMap map;
     MapStatistics mapStatistics;
@@ -78,12 +79,18 @@ public class SimulationEngine implements ISimulationEngine, IMapSimulations {
         growFood();
 
         //TODO : notify view of updates, IPropertyChanged
-        //TODO : save day stats
+        //TODO : save day stats to csv file
 
         if(!isRunning)
             return;
 
+
+
     }
+
+    public void MarkMostPopularGenotype(){}
+
+    public void DeMarkMostPopularGenotype(){}
 
     @Override
     public void startSimulation() {
