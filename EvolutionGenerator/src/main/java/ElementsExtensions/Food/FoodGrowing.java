@@ -1,9 +1,9 @@
 package ElementsExtensions.Food;
 
-import Interfaces.Map.IFoodGrowing;
+import Interfaces.Map.IFoodGenerator;
 import Interfaces.Map.IMap;
 
-public abstract class FoodGrowing implements IFoodGrowing {
+public abstract class FoodGrowing implements IFoodGenerator {
 
     protected FoodGrowing(IMap map)
     {

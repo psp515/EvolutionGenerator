@@ -4,7 +4,7 @@ import Interfaces.Map.IMap;
 import Interfaces.Map.IMapElement;
 import Tools.Vector2d;
 
-public class MapElement implements IMapElement {
+public abstract class MapElement implements IMapElement {
     protected final IMap _map;
     protected Vector2d position;
 

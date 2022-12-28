@@ -3,7 +3,7 @@ package ElementsExtensions.Genes;
 import Elements.Animal;
 import Interfaces.Animals.IGenes;
 
-public class Genes implements IGenes {
+public abstract class Genes implements IGenes {
     private int[] genes;
     private int activatedGene;
 

@@ -8,7 +8,7 @@ import Models.MapSettings;
 import Models.MapStatistics;
 import Tools.Vector2d;
 
-public class Map implements IMap {
+public abstract class Map implements IMap {
     private MapField[][] fields;
     private MapSettings settings;
 

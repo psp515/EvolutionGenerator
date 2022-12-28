@@ -5,9 +5,8 @@ import Elements.Animal;
 import Elements.Food;
 import Enums.MapType;
 import Interfaces.ISimulationEngine;
-import Interfaces.Map.IFoodGrowing;
+import Interfaces.Map.IFoodGenerator;
 import Interfaces.Map.IMap;
-import Interfaces.Map.IMapElement;
 import Interfaces.Map.IMapSimulations;
 import Models.MapStatistics;
 import Models.SimulationSettings;
@@ -27,7 +26,7 @@ public class SimulationEngine implements ISimulationEngine, IMapSimulations {
     Animal markedAnimal;
     SimulationSettings simulationSettings;
 
-    IFoodGrowing foodGrowing;
+    IFoodGenerator foodGenerator;
 
     public SimulationEngine(SimulationSettings settings, MapType selectedMap){
 
@@ -83,8 +82,6 @@ public class SimulationEngine implements ISimulationEngine, IMapSimulations {
 
         if(!isRunning)
             return;
-
-
 
     }
 

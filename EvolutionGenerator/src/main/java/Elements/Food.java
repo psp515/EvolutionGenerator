@@ -1,6 +1,5 @@
 package Elements;
 
-import Interfaces.Map.IFoodGrowing;
 import Interfaces.Map.IMap;
 import Tools.Vector2d;
 

@@ -1,9 +1,7 @@
 package ElementsExtensions.Food;
 
 import Elements.Food;
-import Interfaces.Map.IFoodGrowing;
 import Interfaces.Map.IMap;
-import Models.MapField;
 
 public class Equators extends FoodGrowing {
 
