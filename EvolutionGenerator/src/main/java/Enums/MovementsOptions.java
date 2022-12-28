@@ -1,21 +1,20 @@
 package Enums;
 
-import ElementsExtensions.Food.DeathBodies;
-import ElementsExtensions.Food.Equators;
+import Elements.Animal;
 import Interfaces.Animals.IAnimalMovement;
-import Interfaces.Others.EnumClassRepresentation;
+import Interfaces.Others.GetClassRepresentation;
 
-public enum MovementsOptions implements EnumClassRepresentation<IAnimalMovement> {
+public enum MovementsOptions implements GetClassRepresentation<IAnimalMovement, Animal> {
     FullFate,
     SlightMadness;
 
     @Override
-    public IAnimalMovement getClassRepresentation() {
+    public IAnimalMovement getClassRepresentation(Animal animal) {
         return switch (this) {
-            case FullFate -> new ElementsExtensions.AnimalMovement.FullFate();
-            case SlightMadness -> new ElementsExtensions.AnimalMovement.SlightMadness();
+            case FullFate -> new ElementsExtensions.AnimalMovement.FullFate(animal);
+            case SlightMadness -> new ElementsExtensions.AnimalMovement.SlightMadness(animal);
         };
     }
 
-    //TODO : to string -> nazwy
+    //TODO : to string -> nazwy dla view
 }

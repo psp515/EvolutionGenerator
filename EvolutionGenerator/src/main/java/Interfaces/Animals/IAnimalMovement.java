@@ -1,8 +1,8 @@
 package Interfaces.Animals;
 
-import Elements.Animal;
 import Tools.Vector2d;
 
+//Wariant poruszania
 public interface IAnimalMovement {
-    Vector2d newPosition(Animal animal);
+    Vector2d nextPosition();
 }

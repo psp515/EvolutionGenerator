@@ -1,45 +1,27 @@
 package Maps;
 
-import Elements.Animal;
-import Elements.MapElement;
-import Enums.FoodGrowingOptions;
-import Enums.MovementsOptions;
-import Enums.MutationsOptions;
-import Interfaces.Animals.IAnimalMovement;
-import Interfaces.Animals.IAnimalMutation;
-import Interfaces.Animals.IGenes;
-import Interfaces.Map.IFoodGrowing;
+import Enums.MapDirection;
 import Interfaces.Map.IMap;
 import Interfaces.Map.IMapElement;
+import Models.MapField;
+import Models.MapSettings;
+import Models.MapStatistics;
 import Tools.Vector2d;
 
 public class Map implements IMap {
+    private MapField[][] fields;
+    private MapSettings settings;
 
-    public final IAnimalMutation animalMutation;
-    public final IFoodGrowing foodGrowing;
-    protected IAnimalMovement animalMovement;
-
-    protected final int width;
-    protected final int height;
     protected Map(MapSettings settings)
     {
-        this.width = settings.width;
-        this.height = settings.height;
-
-        this.animalMovement = settings.movementsOptions.getClassRepresentation();
-        this.animalMutation = settings.mutationsOptions.getClassRepresentation();
-        this.foodGrowing = settings.growingOptions.getClassRepresentation(this);
+        this.settings = settings;
+        this.fields = new MapField[settings.width][settings.height];
     }
 
     @Override
-    public void moveAnimal(Animal element) {
-        // uzywamy tu animalMovement które
-        // osobna implementacja ziemia / piekło gdy wyjdzie za mape
-    }
-
-    @Override
-    public void mutate(IGenes element) {
-
+    public Vector2d moveElement(IMapElement element, MapDirection direction) {
+        //Tutaj nastepuje walidacja 2 wartosci i wzaleznosci od mapy rózne opcje
+        return null;
     }
 
     @Override
@@ -53,27 +35,15 @@ public class Map implements IMap {
     }
 
     @Override
-    public IMapElement[] getElementsAt(Vector2d position) {
-        return new MapElement[0];
+    public MapField getDataAt(Vector2d position) {
+        return null;
     }
 
     @Override
-    public IMapElement[] getElements() {
-        return new MapElement[0];
-    }
+    public MapField[][] getData(){return null;}
 
     @Override
-    public int getEnergyFromFood() {
-        return 0;
-    }
-
-    @Override
-    public int getCopulationCost() {
-        return 0;
-    }
-
-    @Override
-    public int getMinimalCopulationPower() {
-        return 0;
+    public MapSettings getMapSettings() {
+        return null;
     }
 }

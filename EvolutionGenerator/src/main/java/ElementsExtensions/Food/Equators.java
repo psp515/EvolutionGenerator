@@ -1,21 +1,20 @@
 package ElementsExtensions.Food;
 
+import Elements.Food;
 import Interfaces.Map.IFoodGrowing;
 import Interfaces.Map.IMap;
+import Models.MapField;
 
-public class Equators implements IFoodGrowing {
+public class Equators extends FoodGrowing {
 
-    public Equators(IMap map){
 
+    public Equators(IMap map) {
+        super(map);
     }
 
     @Override
-    public void growFood() {
-
+    public Food growFood() {
+        return null;
     }
 
-    @Override
-    public void initializeFood() {
-
-    }
 }

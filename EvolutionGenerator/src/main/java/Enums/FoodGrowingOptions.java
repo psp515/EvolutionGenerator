@@ -4,9 +4,9 @@ import ElementsExtensions.Food.DeathBodies;
 import ElementsExtensions.Food.Equators;
 import Interfaces.Map.IFoodGrowing;
 import Interfaces.Map.IMap;
-import Interfaces.Others.EnumClassRepresentationMap;
+import Interfaces.Others.GetClassRepresentation;
 
-public enum FoodGrowingOptions implements EnumClassRepresentationMap<IFoodGrowing> {
+public enum FoodGrowingOptions implements GetClassRepresentation<IFoodGrowing, IMap> {
     Equators,
     DeathBodies;
 
@@ -18,4 +18,5 @@ public enum FoodGrowingOptions implements EnumClassRepresentationMap<IFoodGrowin
         };
     }
 
+    //TODO : to string -> nazwy dla view
 }

@@ -4,11 +4,11 @@ import Tools.Vector2d;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-public enum WorldMapDirection {
+public enum MapDirection {
     NORTH, NORTHEAST, EAST, SOUTHEAST, SOUTH, SOUTHWEST, WEST, NORTHWEST;
 
-    public static WorldMapDirection getRandom() {
-        return WorldMapDirection.values()[ThreadLocalRandom.current().nextInt(7)];
+    public static MapDirection getRandom() {
+        return MapDirection.values()[ThreadLocalRandom.current().nextInt(7)];
     }
 
     public String toString() {
@@ -24,12 +24,12 @@ public enum WorldMapDirection {
         };
     }
 
-    public WorldMapDirection next() {
-        return WorldMapDirection.values()[(this.ordinal() + 1) % WorldMapDirection.values().length];
+    public MapDirection next() {
+        return MapDirection.values()[(this.ordinal() + 1) % MapDirection.values().length];
     }
 
-    public WorldMapDirection previous() {
-        return WorldMapDirection.values()[(this.ordinal() + WorldMapDirection.values().length - 1) % WorldMapDirection.values().length];
+    public MapDirection previous() {
+        return MapDirection.values()[(this.ordinal() + MapDirection.values().length - 1) % MapDirection.values().length];
     }
 
     public Vector2d toUnitVector() {

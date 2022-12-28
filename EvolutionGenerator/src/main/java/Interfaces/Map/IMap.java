@@ -1,18 +1,17 @@
 package Interfaces.Map;
 
-import Elements.Animal;
-import Interfaces.Animals.IGenes;
+import Enums.MapDirection;
+import Models.MapField;
+import Models.MapSettings;
+import Models.MapStatistics;
 import Tools.Vector2d;
 
 public interface IMap {
 
-    void moveAnimal(Animal element);
-    void mutate(IGenes element);
+    Vector2d moveElement(IMapElement element, MapDirection direction);
     void placeElement(IMapElement element);
     void removeElement(IMapElement element);
-    IMapElement[] getElementsAt(Vector2d position);
-    IMapElement[] getElements();
-    int getEnergyFromFood();
-    int getCopulationCost();
-    int getMinimalCopulationPower();
+    MapField getDataAt(Vector2d position);
+    MapField[][] getData();
+    MapSettings getMapSettings();
 }
