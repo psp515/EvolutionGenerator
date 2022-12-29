@@ -2,6 +2,7 @@ package Interfaces.Map;
 
 import Enums.MapDirection;
 import Interfaces.Animals.IMapMoveElement;
+import Interfaces.Tools.IMapField;
 import Tools.MapField;
 import Models.MapSettings;
 import Tools.Vector2d;
@@ -12,7 +13,7 @@ public interface IMap {
     Pair<MapDirection, Vector2d> moveElement(IMapMoveElement element, Vector2d oldPosition, Vector2d newPosition);
     void placeElement(IMapElement element);
     void removeElement(IMapElement element);
-    MapField getDataAt(Vector2d position);
-    MapField[][] getData();
+    IMapField getMapField(Vector2d position);
+    IMapField[][] getMap();
     MapSettings getMapSettings();
 }

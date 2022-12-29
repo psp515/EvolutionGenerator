@@ -112,7 +112,6 @@ public class Animal extends MapElement implements IMapMoveElement {
 
         Vector2d newPosition = _movement.nextPosition(_genotype.getActiveGene(), position, actDirection);
         Pair<MapDirection, Vector2d> pair = _map.moveElement(this,position, newPosition);
-
         this.position = pair.getValue();
         this.actDirection = pair.getKey();
     }
