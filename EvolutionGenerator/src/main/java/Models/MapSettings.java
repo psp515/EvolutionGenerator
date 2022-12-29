@@ -10,6 +10,7 @@ public class MapSettings {
     public int height;
 
 
+    public int maxEnergy;
     public int moveEnergy;
     public int energyFromFood;
     public int copulationMinimalEnergy;

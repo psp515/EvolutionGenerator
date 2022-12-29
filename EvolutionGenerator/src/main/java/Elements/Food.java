@@ -4,10 +4,18 @@ import Interfaces.Map.IMap;
 import Tools.Vector2d;
 
 public class Food extends MapElement {
-    protected Food(IMap map, Vector2d position)
+
+    public static final int NUMBER_OF_FOOD_IMAGES = 3;
+
+
+    public Food(IMap map, Vector2d position, int growDay)
     {
-        super(map, position);
+        super(map, position, growDay);
+    }
 
-
+    @Override
+    public String toString()
+    {
+        return RESOURCES_STRING + "/food/f" + getRandomNumber(1, NUMBER_OF_FOOD_IMAGES) + ".png";
     }
 }

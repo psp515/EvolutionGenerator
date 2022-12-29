@@ -1,7 +1,7 @@
 package Interfaces.Map;
 
 import Enums.MapDirection;
-import Models.MapField;
+import Tools.MapField;
 import Models.MapSettings;
 import Tools.Vector2d;
 
