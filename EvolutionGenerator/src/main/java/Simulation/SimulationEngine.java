@@ -3,7 +3,7 @@ package Simulation;
 
 import Elements.Animal;
 import Elements.Food;
-import Enums.MapType;
+import Enums.MapOptions;
 import Interfaces.ISimulationEngine;
 import Interfaces.Map.IFoodGenerator;
 import Interfaces.Map.IMap;
@@ -28,7 +28,7 @@ public class SimulationEngine implements ISimulationEngine, IMapSimulations {
 
     IFoodGenerator foodGenerator;
 
-    public SimulationEngine(SimulationSettings settings, MapType selectedMap){
+    public SimulationEngine(SimulationSettings settings, MapOptions selectedMap){
 
         this.simulationSettings = settings;
         this.mapStatistics = new MapStatistics(settings.width, settings.height);

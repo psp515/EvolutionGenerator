@@ -3,7 +3,6 @@ package Interfaces.Map;
 import Enums.MapDirection;
 import Models.MapField;
 import Models.MapSettings;
-import Models.MapStatistics;
 import Tools.Vector2d;
 
 public interface IMap {

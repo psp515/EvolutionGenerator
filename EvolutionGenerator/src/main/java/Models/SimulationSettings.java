@@ -1,9 +1,9 @@
 package Models;
 
-import Enums.FoodGrowingOptions;
-import Enums.MapType;
-import Enums.MovementsOptions;
-import Enums.MutationsOptions;
+import Enums.FoodGrowOptions;
+import Enums.MapOptions;
+import Enums.AnimalMovementOptions;
+import Enums.GenesOptions;
 
 public class SimulationSettings
 {
@@ -42,10 +42,10 @@ public class SimulationSettings
     public int startingAnimals;
 
 
-    public FoodGrowingOptions growingOptions;
-    public MovementsOptions movementsOptions;
-    public MutationsOptions mutationsOptions;
-    public MapType mapType;
+    public FoodGrowOptions growingOptions;
+    public AnimalMovementOptions movementsOptions;
+    public GenesOptions mutationsOptions;
+    public MapOptions mapOption;
 
     // 1-32
     public int gensLength;

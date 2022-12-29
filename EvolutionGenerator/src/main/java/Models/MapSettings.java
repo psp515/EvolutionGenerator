@@ -1,8 +1,8 @@
 package Models;
 
-import Enums.FoodGrowingOptions;
-import Enums.MovementsOptions;
-import Enums.MutationsOptions;
+import Enums.FoodGrowOptions;
+import Enums.AnimalMovementOptions;
+import Enums.GenesOptions;
 
 public class MapSettings {
 
@@ -15,9 +15,9 @@ public class MapSettings {
     public int copulationMinimalEnergy;
     public int copulationCostEnregy;
 
-    public FoodGrowingOptions growingOptions;
-    public MovementsOptions movementsOptions;
-    public MutationsOptions mutationsOptions;
+    public FoodGrowOptions growingOptions;
+    public AnimalMovementOptions movementsOptions;
+    public GenesOptions mutationsOptions;
 
     public int gensLength;
 

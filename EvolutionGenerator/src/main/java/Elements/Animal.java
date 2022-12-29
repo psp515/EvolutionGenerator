@@ -1,6 +1,5 @@
 package Elements;
 
-import Enums.MovementsOptions;
 import Interfaces.Animals.IAnimalMovement;
 import Interfaces.Animals.IGenes;
 import Interfaces.Animals.IParent;
