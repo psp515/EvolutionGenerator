@@ -18,7 +18,7 @@ public enum MapDirection {
         return MapDirection.values()[ThreadLocalRandom.current().nextInt(7)];
     }
 
-    public MapDirection whatever(){return MapDirection.EAST}
+    public MapDirection whatever(){return MapDirection.EAST;}
 
     public MapDirection getOpposed(){
         return switch (this) {
