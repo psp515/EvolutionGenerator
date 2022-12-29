@@ -143,6 +143,13 @@ public class Vector2dTest {
 
     }
 
+    @Test
+    public void copyTest() {
+        assertEquals(new Vector2d(1,1), new Vector2d(1,1).copy());
+        assertEquals(new Vector2d(-2341,1), new Vector2d(-2341,1).copy());
+        assertEquals(new Vector2d(1,234), new Vector2d(1,234).copy());
+    }
+
     //endregion
 
     //region Test Privates

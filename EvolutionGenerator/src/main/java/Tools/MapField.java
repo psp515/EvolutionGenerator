@@ -1,7 +1,6 @@
-package Models;
+package Tools;
 
 import Interfaces.Map.IMapElement;
-import Tools.Vector2d;
 
 public class MapField
 {

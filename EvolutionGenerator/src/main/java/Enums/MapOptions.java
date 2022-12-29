@@ -2,11 +2,12 @@ package Enums;
 
 import Interfaces.Map.IMap;
 import Interfaces.Others.GetClassRepresentation;
+import Interfaces.Others.GetClassRepresentationOneParam;
 import Maps.Earth;
 import Maps.Hell;
 import Models.MapSettings;
 
-public enum MapOptions implements GetClassRepresentation<IMap, MapSettings> {
+public enum MapOptions implements GetClassRepresentationOneParam<IMap, MapSettings> {
     DEFAULT,
     EARTH,
     HELL;

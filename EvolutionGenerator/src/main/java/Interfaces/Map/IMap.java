@@ -1,13 +1,15 @@
 package Interfaces.Map;
 
 import Enums.MapDirection;
-import Models.MapField;
+import Interfaces.Animals.IMapMoveElement;
+import Tools.MapField;
 import Models.MapSettings;
 import Tools.Vector2d;
+import javafx.util.Pair;
 
 public interface IMap {
 
-    Vector2d moveElement(IMapElement element, MapDirection direction);
+    Pair<Vector2d, MapDirection> moveElement(IMapMoveElement element, Vector2d oldPosition, Vector2d newPosition);
     void placeElement(IMapElement element);
     void removeElement(IMapElement element);
     MapField getDataAt(Vector2d position);

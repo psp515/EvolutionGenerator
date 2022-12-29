@@ -10,6 +10,7 @@ public class MapSettings {
     public int height;
 
 
+    public int maxEnergy;
     public int moveEnergy;
     public int energyFromFood;
     public int copulationMinimalEnergy;
@@ -17,7 +18,7 @@ public class MapSettings {
 
     public FoodGrowOptions growingOptions;
     public AnimalMovementOptions movementsOptions;
-    public GenesOptions mutationsOptions;
+    public GenesOptions geneOptions;
 
     public int gensLength;
 

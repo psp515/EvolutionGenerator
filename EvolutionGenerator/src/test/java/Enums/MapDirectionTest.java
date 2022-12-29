@@ -18,6 +18,24 @@ public class MapDirectionTest extends BaseEnumTestClass<MapDirection> {
     }
 
     @Test
+    public void testOpposed()
+    {
+        EnumMap<MapDirection, MapDirection> directionNextAnswers = new EnumMap<MapDirection, MapDirection>(MapDirection.class);
+        directionNextAnswers.put(MapDirection.NORTH, MapDirection.SOUTH);
+        directionNextAnswers.put(MapDirection.NORTHEAST, MapDirection.SOUTHWEST);
+        directionNextAnswers.put(MapDirection.EAST, MapDirection.WEST);
+        directionNextAnswers.put(MapDirection.SOUTHEAST, MapDirection.NORTHWEST);
+        directionNextAnswers.put(MapDirection.SOUTH, MapDirection.NORTH);
+        directionNextAnswers.put(MapDirection.SOUTHWEST, MapDirection.NORTHEAST);
+        directionNextAnswers.put(MapDirection.WEST, MapDirection.EAST);
+        directionNextAnswers.put(MapDirection.NORTHWEST, MapDirection.SOUTHEAST);
+
+        for(MapDirection direction : MapDirection.values())
+            assertEquals(directionNextAnswers.get(direction), direction.getOpposed());
+
+    }
+
+    @Test
     public void toUnitVectorTest()
     {
         EnumMap<MapDirection, Vector2d> directionNextAnswers = new EnumMap<MapDirection, Vector2d>(MapDirection.class);

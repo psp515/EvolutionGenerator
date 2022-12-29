@@ -8,7 +8,7 @@ public interface IGenes {
 
     void mutate();
 
-    IGenes generateGenes(Animal parent1, Animal parent2);
+    int[] generateGenes(Animal parent1, Animal parent2, int genLength);
 
     int getActiveGene();
 }

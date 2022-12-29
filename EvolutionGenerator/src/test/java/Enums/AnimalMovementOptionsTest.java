@@ -22,8 +22,8 @@ public class AnimalMovementOptionsTest extends BaseEnumTestClass<AnimalMovementO
 
     @Override @Test
     public void getClassRepresentationTest() {
-        assertTrue(AnimalMovementOptions.DEFAULT.getClassRepresentation(null) instanceof FullFate);
-        assertTrue(AnimalMovementOptions.FULL_FATE.getClassRepresentation(null) instanceof FullFate);
-        assertTrue(AnimalMovementOptions.SLIGHT_MADNESS.getClassRepresentation(null) instanceof SlightMadness);
+        assertTrue(AnimalMovementOptions.DEFAULT.getClassRepresentation() instanceof FullFate);
+        assertTrue(AnimalMovementOptions.FULL_FATE.getClassRepresentation() instanceof FullFate);
+        assertTrue(AnimalMovementOptions.SLIGHT_MADNESS.getClassRepresentation() instanceof SlightMadness);
     }
 }

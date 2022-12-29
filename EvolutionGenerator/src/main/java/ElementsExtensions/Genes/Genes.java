@@ -23,7 +23,7 @@ public abstract class Genes implements IGenes {
     }
 
     @Override
-    public IGenes generateGenes(Animal parent1, Animal parent2) {
+    public int[] generateGenes(Animal parent1, Animal parent2, int genLength) {
         return null;
     }
 
