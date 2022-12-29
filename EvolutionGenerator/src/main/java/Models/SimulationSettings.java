@@ -67,7 +67,7 @@ public class SimulationSettings
 
         mapSettings.growingOptions = growingOptions;
         mapSettings.movementsOptions = movementsOptions;
-        mapSettings.mutationsOptions = mutationsOptions;
+        mapSettings.geneOptions = mutationsOptions;
 
         mapSettings.gensLength = gensLength;
 

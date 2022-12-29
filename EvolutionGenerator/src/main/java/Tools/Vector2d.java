@@ -41,6 +41,10 @@ public class Vector2d {
         return new Vector2d(-this.x, -this.y);
     }
 
+    public Vector2d copy(){
+        return new Vector2d(this.x, this.y);
+    }
+
     public boolean equals(Object obj) {
       
         if (!(obj instanceof Vector2d))

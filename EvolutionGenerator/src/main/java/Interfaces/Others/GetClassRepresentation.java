@@ -1,7 +1,6 @@
 package Interfaces.Others;
 
-public interface GetClassRepresentation<T,P1> {
-    T getClassRepresentation(P1 p1);
+public interface GetClassRepresentation<T> {
+    T getClassRepresentation();
 }
-
 

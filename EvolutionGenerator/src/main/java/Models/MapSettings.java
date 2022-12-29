@@ -18,7 +18,7 @@ public class MapSettings {
 
     public FoodGrowOptions growingOptions;
     public AnimalMovementOptions movementsOptions;
-    public GenesOptions mutationsOptions;
+    public GenesOptions geneOptions;
 
     public int gensLength;
 

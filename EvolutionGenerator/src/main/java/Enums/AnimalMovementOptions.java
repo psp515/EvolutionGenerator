@@ -6,16 +6,16 @@ import Interfaces.Others.GetClassRepresentation;
 import ElementsExtensions.AnimalMovement.FullFate;
 import ElementsExtensions.AnimalMovement.SlightMadness;
 
-public enum AnimalMovementOptions implements GetClassRepresentation<IAnimalMovement, Animal> {
+public enum AnimalMovementOptions implements GetClassRepresentation<IAnimalMovement> {
     DEFAULT,
     FULL_FATE,
     SLIGHT_MADNESS;
 
     @Override
-    public IAnimalMovement getClassRepresentation(Animal animal) {
+    public IAnimalMovement getClassRepresentation() {
         return switch (this) {
-            case FULL_FATE, DEFAULT -> new FullFate(animal);
-            case SLIGHT_MADNESS -> new SlightMadness(animal);
+            case FULL_FATE, DEFAULT -> new FullFate();
+            case SLIGHT_MADNESS -> new SlightMadness();
         };
     }
 

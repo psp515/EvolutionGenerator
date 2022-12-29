@@ -4,6 +4,7 @@ import Exceptions.InvalidArgumentExcetpion;
 import Interfaces.Animals.IAnimalMovement;
 import Interfaces.Animals.IGenes;
 import Interfaces.Map.IMap;
+import Models.MapSettings;
 import Tools.Vector2d;
 
 public class Animal extends MapElement {
@@ -49,21 +50,30 @@ public class Animal extends MapElement {
 
     public void move(){
 
-        //TODO gdy będą geny
+        //TODO : potrzebne geny
 
 
     }
 
     public Animal copulate(Animal secondParent, int day) {
 
+        MapSettings settings = this._map.getMapSettings();
+        int[] genes = new int[settings.gensLength];
+        int usedEnergy = 0;
 
-
-
+        //TODO : potrzebne geny
+        
         // tworzennie nowego genu
         // tworzenie nowego animala
         // wszystkie potrzebne typy albo modyfikacje mozna odczytac z map settings.
 
-        return null;
+        return new Animal(
+                this._map,
+                this.position.copy(),
+                settings.geneOptions.getClassRepresentation(genes),
+                settings.movementsOptions.getClassRepresentation(),
+                day,
+                usedEnergy);
     }
 
     public void setDeathDay(int day) throws InvalidArgumentExcetpion {

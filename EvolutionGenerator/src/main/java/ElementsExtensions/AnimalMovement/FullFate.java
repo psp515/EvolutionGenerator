@@ -6,12 +6,10 @@ import Interfaces.Animals.IGenes;
 import Tools.Vector2d;
 
 public class FullFate extends AnimalMovement {
-    public FullFate(Animal animal) {
-        super(animal);
-    }
+
 
     @Override
-    public Vector2d nextPosition() {
+    public Vector2d nextPosition(int nextGene, Vector2d actualPosition) {
         return null;
     }
 }
