@@ -1,13 +1,16 @@
 package Elements;
 
+import Enums.MapDirection;
 import Exceptions.InvalidArgumentExcetpion;
 import Interfaces.Animals.IAnimalMovement;
 import Interfaces.Animals.IGenes;
+import Interfaces.Animals.IMapMoveElement;
 import Interfaces.Map.IMap;
+import Interfaces.Map.IMapElement;
 import Models.MapSettings;
 import Tools.Vector2d;
 
-public class Animal extends MapElement {
+public class Animal extends MapElement implements IMapMoveElement {
 
     private final IAnimalMovement _movement;
     public final IGenes _genotype;
@@ -16,6 +19,8 @@ public class Animal extends MapElement {
     private boolean isDead = false;
     private int foodEaten;
     private int childrens;
+
+    private MapDirection actDirection;
 
     public boolean isHighlighted;
 
@@ -48,13 +53,6 @@ public class Animal extends MapElement {
         _map.removeElement(food);
     }
 
-    public void move(){
-
-        //TODO : potrzebne geny
-
-
-    }
-
     public Animal copulate(Animal secondParent, int day) {
 
         MapSettings settings = this._map.getMapSettings();
@@ -62,7 +60,7 @@ public class Animal extends MapElement {
         int usedEnergy = 0;
 
         //TODO : potrzebne geny
-        
+
         // tworzennie nowego genu
         // tworzenie nowego animala
         // wszystkie potrzebne typy albo modyfikacje mozna odczytac z map settings.
@@ -95,6 +93,17 @@ public class Animal extends MapElement {
     public int getChildrensCount(){
         return this.childrens;
     }
+
+    @Override
+    public void move(){
+        //TODO
+
+    }
+    @Override
+    public void useEnergy(int energy){
+        this.energy = Math.max(0, this.energy - energy);
+    }
+    @Override
     public int getEnergy() {
         return energy;
     }

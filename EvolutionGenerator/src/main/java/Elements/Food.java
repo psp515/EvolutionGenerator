@@ -18,4 +18,5 @@ public class Food extends MapElement {
     {
         return RESOURCES_STRING + "/food/f" + getRandomNumber(1, NUMBER_OF_FOOD_IMAGES) + ".png";
     }
+
 }

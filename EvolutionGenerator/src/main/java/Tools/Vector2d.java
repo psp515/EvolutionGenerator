@@ -1,5 +1,7 @@
 package Tools;
 
+import Enums.MapDirection;
+
 import java.util.Objects;
 
 public class Vector2d {
@@ -39,6 +41,12 @@ public class Vector2d {
 
     public Vector2d opposite() {
         return new Vector2d(-this.x, -this.y);
+    }
+
+    public MapDirection getDirection(Vector2d toVector)
+    {
+        //TODO
+        return MapDirection.EAST;
     }
 
     public Vector2d copy(){

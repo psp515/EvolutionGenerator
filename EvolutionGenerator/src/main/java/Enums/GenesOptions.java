@@ -4,8 +4,9 @@ import ElementsExtensions.Genes.NormalGenotype;
 import ElementsExtensions.Genes.DiscouragedGenotype;
 import Interfaces.Animals.IGenes;
 import Interfaces.Others.GetClassRepresentation;
+import Interfaces.Others.GetClassRepresentationOneParam;
 
-public enum GenesOptions implements GetClassRepresentation<IGenes,int[]> {
+public enum GenesOptions implements GetClassRepresentationOneParam<IGenes,int[]> {
     DEFAULT,
     NORMAL_GENOTYPE,
     DISCOURAGED_GENOTYPE;
