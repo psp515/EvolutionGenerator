@@ -1,7 +1,7 @@
 package ElementsExtensions.Genes;
 
-public class SlightChangingGenotype extends Genes {
-    public SlightChangingGenotype(int[] genes) {
+public class DiscouragedGenotype extends Genes {
+    public DiscouragedGenotype(int[] genes) {
         super(genes);
     }
 

@@ -5,7 +5,6 @@ import Interfaces.Map.IMap;
 import Interfaces.Map.IMapElement;
 import Models.MapField;
 import Models.MapSettings;
-import Models.MapStatistics;
 import Tools.Vector2d;
 
 public abstract class Map implements IMap {

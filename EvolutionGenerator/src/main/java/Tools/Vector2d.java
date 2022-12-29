@@ -11,22 +11,21 @@ public class Vector2d {
     }
 
     public String toString() {
-        return "(" + x + ", " + y + ")";
+        return "(" + x + "," + y + ")";
     }
+
 
     public boolean precedes(Vector2d vector2d) {
         return vector2d.x >= this.x && vector2d.y >= this.y;
     }
-
     public boolean follows(Vector2d vector2d) {
         return vector2d.x <= this.x && vector2d.y <= this.y;
     }
-    
-  // to ogarniamy tutaj czy raczej w mapach??
+
+
     public Vector2d upperRight(Vector2d vector2d) {
         return new Vector2d(Math.max(this.x, vector2d.x), Math.max(this.y, vector2d.y));
     }
-  // ten sam komentarz co wyżej
     public Vector2d lowerLeft(Vector2d vector2d) {
         return new Vector2d(Math.min(this.x, vector2d.x), Math.min(this.y, vector2d.y));
     }
@@ -34,8 +33,7 @@ public class Vector2d {
     public Vector2d add(Vector2d vector2d) {
         return new Vector2d(this.x + vector2d.x, this.y + vector2d.y);
     }
-
-    public Vector2d subtract(Vector2d vector2d) {
+    public Vector2d substract(Vector2d vector2d) {
         return new Vector2d(this.x - vector2d.x, this.y - vector2d.y);
     }
 
@@ -55,4 +53,5 @@ public class Vector2d {
     public int hashCode() {
         return Objects.hash(x, y);
     }
+
 }

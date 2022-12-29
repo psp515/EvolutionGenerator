@@ -5,7 +5,14 @@ import Tools.Vector2d;
 import java.util.concurrent.ThreadLocalRandom;
 
 public enum MapDirection {
-    NORTH, NORTHEAST, EAST, SOUTHEAST, SOUTH, SOUTHWEST, WEST, NORTHWEST;
+    NORTH,
+    NORTHEAST,
+    EAST,
+    SOUTHEAST,
+    SOUTH,
+    SOUTHWEST,
+    WEST,
+    NORTHWEST;
 
     public static MapDirection getRandom() {
         return MapDirection.values()[ThreadLocalRandom.current().nextInt(7)];
@@ -14,22 +21,14 @@ public enum MapDirection {
     public String toString() {
         return switch (this) {
             case NORTH -> "N";
-            case NORTHWEST -> "NW";
-            case WEST -> "W";
-            case SOUTHWEST -> "SW";
-            case SOUTH -> "S";
-            case SOUTHEAST -> "SE";
-            case EAST -> "E";
             case NORTHEAST -> "NE";
+            case EAST -> "E";
+            case SOUTHEAST -> "SE";
+            case SOUTH -> "S";
+            case SOUTHWEST -> "SW";
+            case WEST -> "W";
+            case NORTHWEST -> "NW";
         };
-    }
-
-    public MapDirection next() {
-        return MapDirection.values()[(this.ordinal() + 1) % MapDirection.values().length];
-    }
-
-    public MapDirection previous() {
-        return MapDirection.values()[(this.ordinal() + MapDirection.values().length - 1) % MapDirection.values().length];
     }
 
     public Vector2d toUnitVector() {
