@@ -20,8 +20,9 @@ public abstract class Map implements IMap {
     }
 
     @Override
-    public Pair<Vector2d, MapDirection> moveElement(IMapMoveElement element, Vector2d oldPosition, Vector2d newPosition) {
+    public Pair<MapDirection, Vector2d> moveElement(IMapMoveElement element, Vector2d oldPosition, Vector2d newPosition) {
 
+        //TU SIE ZMIENIA ENERGIE ELEMENTU.
         return null;
     }
 

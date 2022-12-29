@@ -9,7 +9,7 @@ import javafx.util.Pair;
 
 public interface IMap {
 
-    Pair<Vector2d, MapDirection> moveElement(IMapMoveElement element, Vector2d oldPosition, Vector2d newPosition);
+    Pair<MapDirection, Vector2d> moveElement(IMapMoveElement element, Vector2d oldPosition, Vector2d newPosition);
     void placeElement(IMapElement element);
     void removeElement(IMapElement element);
     MapField getDataAt(Vector2d position);
