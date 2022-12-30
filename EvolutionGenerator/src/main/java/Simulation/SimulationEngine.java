@@ -3,73 +3,208 @@ package Simulation;
 
 import Elements.Animal;
 import Elements.Food;
-import Enums.MapOptions;
-import Interfaces.ISimulationEngine;
 import Interfaces.Map.IFoodGenerator;
 import Interfaces.Map.IMap;
 import Interfaces.Map.IMapSimulations;
 import Models.MapStatistics;
 import Models.SimulationSettings;
+import Tools.SingleFoodField;
+import Tools.Vector2d;
 
-public class SimulationEngine implements ISimulationEngine, IMapSimulations {
+import java.util.ArrayList;
 
-    boolean isRunning;
+import static Tools.Randomizer.getRandomNumber;
+
+public class SimulationEngine implements IMapSimulations, Runnable {
+
     int simulationDay;
 
     IMap map;
     MapStatistics mapStatistics;
 
-    Animal[] animals;
-    Food[] food;
+    ArrayList<Animal> animals;
 
-    MapStatistics stats;
+    ArrayList<Animal> deadAnimals;
+
+    SingleFoodField[][] mapFields;
+
     Animal markedAnimal;
     SimulationSettings simulationSettings;
 
     IFoodGenerator foodGenerator;
 
-    public SimulationEngine(SimulationSettings settings, MapOptions selectedMap){
+    public SimulationEngine(SimulationSettings settings){
+
+        animals = new ArrayList<>();
+        deadAnimals = new ArrayList<>();
 
         this.simulationSettings = settings;
         this.mapStatistics = new MapStatistics(settings.width, settings.height);
-        //Simulation settings to map settings
 
-        GenerateAnimals();
+        mapFields = new SingleFoodField[simulationSettings.width][simulationSettings.height];
+
+        map = simulationSettings.
+                mapOption.
+                getClassRepresentation(simulationSettings
+                        .generateMapSettings(), mapFields);
+
+        foodGenerator = simulationSettings.growingOptions.getClassRepresentation(mapFields, mapStatistics);
+
+        generateStartingAnimals();
         growFood();
+
+        markedAnimal = null;
     }
 
-    private void GenerateAnimals(){}
+    //region Initialization
+    private void generateStartingAnimals() {
+        for(int i = 0; i < simulationSettings.startingAnimals; i++)
+        {
+            Vector2d animalPosition = new Vector2d(map.getStartBound(), map.getEndBound());
+            Animal newAnimal = new Animal(
+                    map,
+                    animalPosition,
+                    simulationSettings.genesOptions
+                            .getClassRepresentation(generateGenotype(simulationSettings.gensLength)),
+                    simulationSettings.movementsOptions.getClassRepresentation(),
+                    simulationDay,
+                    simulationSettings.startingEnregy);
 
+            map.placeElement(newAnimal);
+        }
+    }
+    private int[] generateGenotype(int len){
+        int[] genotype = new int[len];
+
+        for(int i =0;i < len;i++)
+            genotype[i] = getRandomNumber(0, 7);
+
+        return genotype;
+    }
+    //endregion
 
     @Override
     public void moveAnimals() {
-        //dla kazdego elementu z animals wykonujemy move
+        for (Animal animal : animals)
+            animal.move();
     }
     @Override
     public void simulateEating() {
-        // uzywamy mapfields / dla kazdego pola mapy
-        // jezeli ma animale i jedzenie to wybieramy najsilniejszego i zjadmy
-        // jezeli nie to skip
+
+        for(SingleFoodField[] row : mapFields)
+            for(SingleFoodField field : row)
+                if(field.containsFood()){
+
+                    Animal animal = field.getStrongestAnimal();
+
+                    if(animal != null)
+                    {
+                        animal.eat(field.getFood());
+                    }
+                }
     }
 
+
     @Override
-    public void simulateDeaths() {
-        // dla kazdego animala w animals jezeli ma energie < od 0 to usuwamy z mapy
-        // zapisujemy statystyki mapy
+    public void simulateDeaths()
+    {
+        //Nowa lista bo nie da sie iterowac po zmieniajacej kolekcji
+        for(Animal animal : new ArrayList<>(animals))
+            if(animal.getEnergy() <= 0)
+            {
+                animal.setDeathDay(simulationDay);
+
+                map.removeElement(animal);
+                animals.remove(animal);
+                deadAnimals.add(animal);
+                mapStatistics.dayDeaths += 1;
+                mapStatistics.safeDeadAnimal(animal);
+            }
     }
 
     @Override
     public void simulateBorns() {
-        // dla kazdego fielda jezeli sa 2 zwierzki spelnajace warunki to wywołujemy metode copulate. i efekt wstawiamy do mapy
+
+        for(SingleFoodField[] row : mapFields)
+            for(SingleFoodField field : row)
+            {
+                var fieldAniamls = field.getAnimals();
+
+                if(fieldAniamls.size() < 2)
+                    return;
+
+                fieldAniamls.sort((Animal a1, Animal a2) -> a1.getEnergy() < a2.getEnergy() ? -1 : 1);
+
+                var p1 = fieldAniamls.get(0);
+                var p2 = fieldAniamls.get(1);
+
+                var ch = p1.copulate(p2, simulationDay);
+
+                if(ch != null){
+                    animals.add(ch);
+                    mapStatistics.dayBorns += 1;
+                }
+            }
     }
     @Override
     public void growFood() {
 
-        // wykorzystujemy Ifoodgrowing do wygenerowania miejsca na jedzonko i wstawiamy
+        for(int i = 0; i < simulationSettings.dailyFoodGrow; i++)
+        {
+            Food food = foodGenerator.growFood();
+
+            if(food == null){
+                // nie ma miejsca na mapie na jedzenie
+                break;
+            }
+            else {
+                map.placeElement(food);
+                mapStatistics.safeFoodGrow(food);
+            }
+        }
+    }
+
+    void UpdateStatistics()
+    {
+        mapStatistics.animalsOnMap = animals.size();
+        int totalEnergy = 0;
+        int totalDaysLived = 0;
+
+        for(Animal deadAnimal : deadAnimals)
+            totalDaysLived += deadAnimal.getDeathDay() - deadAnimal.getCreationDay();
+
+        for(SingleFoodField[] row : mapFields)
+            for(SingleFoodField field : row)
+            {
+                if(field.containsFood())
+                    mapStatistics.foodOnMap += 1;
+
+                var fieldAnimals = field.getAnimals();
+
+                if(field.getAnimals().size() == 0)
+                    mapStatistics.placesFreeFromAnimalCount += 1;
+                else
+                {
+                    for(Animal animal : fieldAnimals)
+                    {
+                        totalEnergy += animal.getEnergy();
+                        totalDaysLived += simulationDay - animal.getCreationDay();
+
+                        //TODO : find popular genotype;
+                    }
+                }
+            }
     }
 
     @Override
     public void run() {
+        if(simulationDay == Integer.MAX_VALUE)
+            return;
+
+        simulationDay += 1;
+        mapStatistics.dayBorns = 0;
+        mapStatistics.dayDeaths = 0;
+        mapStatistics.placesFreeFromAnimalCount = 0;
 
         moveAnimals();
         simulateEating();
@@ -77,28 +212,33 @@ public class SimulationEngine implements ISimulationEngine, IMapSimulations {
         simulateBorns();
         growFood();
 
+        UpdateStatistics();
+
         //TODO : notify view of updates, IPropertyChanged
-        //TODO : save day stats to csv file
 
-        if(!isRunning)
-            return;
-
+        if(simulationSettings.saveToCsv)
+        {
+            //TODO save to csv
+        }
     }
 
-    public void MarkMostPopularGenotype(){}
-
-    public void DeMarkMostPopularGenotype(){}
-
-    @Override
-    public void startSimulation() {
-        if(isRunning)
-            return;
-
-        isRunning = true;
+    public void MarkMostPopularGenotype()
+    {
+        for(var animal : animals)
+            if(isMostPopular(animal._genotype.getGenes()))
+                animal.isHighlighted = true;
     }
 
-    @Override
-    public void stopSimulation() {
-        isRunning = false;
+    private boolean isMostPopular(int[] genes)
+    {
+        //TODO
+        return false;
     }
+
+    public void DeMarkMostPopularGenotype()
+    {
+        for(var animal : animals)
+            animal.isHighlighted = false;
+    }
+
 }

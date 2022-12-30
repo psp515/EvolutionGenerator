@@ -23,9 +23,9 @@ public class MapOptionsTest extends BaseEnumTestClass<MapOptions> implements Opt
 
     @Override @Test
     public void getClassRepresentationTest() {
-        assertTrue(MapOptions.DEFAULT.getClassRepresentation(new MapSettings()) instanceof Earth);
-        assertTrue(MapOptions.EARTH.getClassRepresentation(new MapSettings()) instanceof Earth);
-        assertTrue(MapOptions.HELL.getClassRepresentation(new MapSettings()) instanceof Hell);
+        assertTrue(MapOptions.DEFAULT.getClassRepresentation(new MapSettings(), null) instanceof Earth);
+        assertTrue(MapOptions.EARTH.getClassRepresentation(new MapSettings(), null) instanceof Earth);
+        assertTrue(MapOptions.HELL.getClassRepresentation(new MapSettings(), null) instanceof Hell);
     }
 
 }

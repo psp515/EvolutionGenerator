@@ -1,4 +1,4 @@
-package Interfaces.Animals;
+package Interfaces.Map;
 
 import Interfaces.Map.IMapElement;
 

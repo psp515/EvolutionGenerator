@@ -1,17 +1,42 @@
 package Models;
 
-import Elements.MapElement;
+import Elements.Animal;
+import Elements.Food;
 import Interfaces.Animals.IGenes;
+import Tools.Vector2d;
 
 public class MapStatistics
 {
-    public MapStatistics(int width, int height){
-
+    public MapStatistics(int width, int height)
+    {
+        animalDeathsOnField = new int[width][height];
+        foodGrowOnField = new int[width][height];
     }
 
-    DayStatistics dayStatistics;
+    public int animalsOnMap;
+    public int foodOnMap;
 
-    int[][]  animalDeathsOnField;
+    public int placesFreeFromAnimalCount;
+    public IGenes mostPoupularGenotype;
+    public double averageEnergy;
+    public double averageLiveLength;
 
-    int[][]  plantGrowsOnField;
+    public int dayDeaths;
+    public int dayBorns;
+
+    public final int[][]  animalDeathsOnField;
+    public final int[][] foodGrowOnField;
+
+    public void safeDeadAnimal(Animal animal)
+    {
+        Vector2d position = animal.getPosition();
+
+        animalDeathsOnField[position.x][position.y] += 1;
+    }
+
+    public void safeFoodGrow(Food food)
+    {
+        Vector2d position = food.getPosition();
+        foodGrowOnField[position.x][position.y] += 1;
+    }
 }

@@ -11,18 +11,15 @@ public abstract class MapElement implements IMapElement {
      */
     public static final String RESOURCES_STRING = "src/main/resources/";
 
-
     protected final IMap _map;
     protected final int _creationDay;
     protected Vector2d position;
-
 
 
     protected MapElement(IMap map, Vector2d position, int creationDay)
     {
         this._map = map;
         this._creationDay = creationDay;
-
         this.position = position;
     }
 

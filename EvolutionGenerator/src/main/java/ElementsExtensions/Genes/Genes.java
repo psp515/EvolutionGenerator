@@ -4,7 +4,6 @@ import Elements.Animal;
 import Interfaces.Animals.IGenes;
 
 import java.util.concurrent.ThreadLocalRandom;
-
 import static java.lang.Math.abs;
 import static java.lang.Math.min;
 
@@ -33,6 +32,15 @@ public abstract class Genes implements IGenes {
         }
         for(int i=part1; i<(part1*side1 + part2*side2); i++){
             childgenes[i] = side1*parent1._genotype.getGenes()[i] + side2*parent2._genotype.getGenes()[i];
+        int side1 = ThreadLocalRandom.current().nextInt(2);
+        this.genLength = parent1._genotype.getGenLength();
+        int[] childgenes = new int[genLength];
+
+        for(int i=0; i<part1; i++) {
+            childgenes[i] = side1*parent1._genotype.getGenes()[i] + (1-side1)*parent2._genotype.getGenes()[i];
+        }
+        for(int i=part1; i<genLength; i++){
+            childgenes[i] = (1-side1)*parent1._genotype.getGenes()[i] + side1*parent2._genotype.getGenes()[i];
         }
 
         this.genes = childgenes;

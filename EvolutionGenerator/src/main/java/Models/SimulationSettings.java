@@ -5,7 +5,7 @@ import Enums.MapOptions;
 import Enums.AnimalMovementOptions;
 import Enums.GenesOptions;
 
-public class SimulationSettings
+public class SimulationSettings implements Cloneable
 {
     // 20 - 200
     public int width;
@@ -44,7 +44,7 @@ public class SimulationSettings
 
     public FoodGrowOptions growingOptions;
     public AnimalMovementOptions movementsOptions;
-    public GenesOptions mutationsOptions;
+    public GenesOptions genesOptions;
     public MapOptions mapOption;
 
     // 1-32
@@ -60,17 +60,26 @@ public class SimulationSettings
         mapSettings.height = height;
 
         mapSettings.maxEnergy = maxEnregy;
-        mapSettings.moveEnergy = moveEnergy;
+        mapSettings.moveCost = moveEnergy;
         mapSettings.energyFromFood = energyFromFood;
         mapSettings.copulationMinimalEnergy = copulationMinimalEnergy;
         mapSettings.copulationCostEnregy = copulationCostEnregy;
 
         mapSettings.growingOptions = growingOptions;
         mapSettings.movementsOptions = movementsOptions;
-        mapSettings.geneOptions = mutationsOptions;
+        mapSettings.geneOptions = genesOptions;
 
         mapSettings.gensLength = gensLength;
 
         return mapSettings;
+    }
+
+    @Override
+    public SimulationSettings clone() {
+        try {
+            return (SimulationSettings) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }
