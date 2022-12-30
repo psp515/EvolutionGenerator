@@ -11,7 +11,7 @@ public class MapSettings {
 
 
     public int maxEnergy;
-    public int moveEnergy;
+    public int moveCost;
     public int energyFromFood;
     public int copulationMinimalEnergy;
     public int copulationCostEnregy;

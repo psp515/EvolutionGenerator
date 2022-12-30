@@ -14,7 +14,7 @@ public class Food extends MapElement {
     }
 
     @Override
-    public String toString()
+    public String getImage()
     {
         return RESOURCES_STRING + "/food/f" + getRandomNumber(1, NUMBER_OF_FOOD_IMAGES) + ".png";
     }

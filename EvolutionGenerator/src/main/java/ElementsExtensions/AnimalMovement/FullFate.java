@@ -1,15 +1,13 @@
 package ElementsExtensions.AnimalMovement;
 
-import Elements.Animal;
-import Interfaces.Animals.IAnimalMovement;
-import Interfaces.Animals.IGenes;
+import Enums.MapDirection;
 import Tools.Vector2d;
 
 public class FullFate extends AnimalMovement {
 
 
     @Override
-    public Vector2d nextPosition(int nextGene, Vector2d actualPosition) {
+    public Vector2d nextPosition(int nextGene, Vector2d actualPosition, MapDirection actDirection) {
         return null;
     }
 }
