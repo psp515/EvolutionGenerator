@@ -7,4 +7,5 @@ public interface IGenes {
     void mutate();
 
     int getActiveGene();
+    int getGenLength();
 }
