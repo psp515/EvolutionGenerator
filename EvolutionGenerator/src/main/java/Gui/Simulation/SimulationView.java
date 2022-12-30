@@ -19,7 +19,7 @@ public class SimulationView extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-
+        primaryStage.show();
     }
 
     public void startSimulation()
