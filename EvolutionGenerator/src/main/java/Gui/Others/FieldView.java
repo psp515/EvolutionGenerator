@@ -1,4 +1,4 @@
-package Gui;
+package Gui.Others;
 
 import Interfaces.Map.IMapElement;
 import javafx.geometry.Pos;
@@ -11,17 +11,22 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 //TODO narazie wstawione zeby pamiętać
-public class VieldView {
+public class FieldView {
     private Image image;
     private final ImageView view;
     private final Label label;
 
     public VBox container;
 
-    public VieldView(IMapElement element, int elementsCount, boolean hasGrass) throws FileNotFoundException {
+    public FieldView(IMapElement strongestAnimal, int animalsCount, boolean hasFood) throws FileNotFoundException {
 
-        String url = element == null? "" : element.getImage();
-        this.label = new Label(element == null? "" : element.toString());
+        // wyglad pola
+        // na śrtodku zwierze lub brak
+        // w prawym górnym rogu liczba zwierząt
+        // w lewym dolnym rogu ikona jest / nie ma pożywienia.
+
+        String url = strongestAnimal == null? "" : strongestAnimal.getImage();
+        this.label = new Label(strongestAnimal == null? "" : strongestAnimal.toString());
 
         this.image = !url.equals("") ? new Image( new FileInputStream(url)) : null;
         this.view = new ImageView(this.image);

@@ -1,7 +1,6 @@
 package Elements;
 
 import Enums.MapDirection;
-import Exceptions.InvalidArgumentExcetpion;
 import Interfaces.Animals.IAnimalMovement;
 import Interfaces.Animals.IGenes;
 import Interfaces.Animals.IMapMoveElement;
@@ -84,13 +83,13 @@ public class Animal extends MapElement implements IMapMoveElement {
 
         return youngling;
     }
-    public void setDeathDay(int day) throws InvalidArgumentExcetpion {
+    public void setDeathDay(int day) throws IllegalArgumentException {
 
         if (isDead)
             return;
 
         if(day < this._creationDay)
-            throw new InvalidArgumentExcetpion();
+            throw new IllegalArgumentException("Death day must be bigger than creation day.");
 
         isDead = true;
         deathDay = day;

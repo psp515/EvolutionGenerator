@@ -1,18 +1,21 @@
 package Tools;
 
+import Elements.Animal;
 import Elements.Food;
-import Gui.VieldView;
+import Gui.Others.FieldView;
 import Interfaces.Map.IMapElement;
 import Interfaces.Tools.IFoodField;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class SingleFoodField extends MapField implements IFoodField {
     private IMapElement food;
 
+    private ArrayList<Animal> elements;
+
     public SingleFoodField() {
-        // elements for animals only
         elements = new ArrayList<>();
     }
 
@@ -26,7 +29,7 @@ public class SingleFoodField extends MapField implements IFoodField {
             return true;
         }
 
-        elements.add(element);
+        elements.add((Animal) element);
         return true;
     }
 
@@ -40,20 +43,25 @@ public class SingleFoodField extends MapField implements IFoodField {
             return true;
         }
 
-        elements.remove(element);
+        elements.remove((Animal)  element);
         return true;
     }
 
     public IMapElement[] getElements(){
-        //returns only animals
-        return elements.toArray(IMapElement[]::new);
+
+        var copy = new ArrayList<IMapElement>(elements);
+
+        if(food != null)
+         copy.add(food);
+
+        return copy.toArray(IMapElement[]::new);
     }
 
     @Override
-    public VieldView getView() throws FileNotFoundException {
-        //TODO strongest animal or food or null.
+    public FieldView getView() throws FileNotFoundException {
+       Animal strongest = elements.stream().max(Comparator.comparing(Animal::getEnergy)).orElse(null);
 
-        return new VieldView(null,0,false);
+        return new FieldView(strongest,elements.size(),food != null);
     }
 
     @Override

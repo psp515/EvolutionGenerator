@@ -60,7 +60,7 @@ public class SimulationSettings
         mapSettings.height = height;
 
         mapSettings.maxEnergy = maxEnregy;
-        mapSettings.moveEnergy = moveEnergy;
+        mapSettings.moveCost = moveEnergy;
         mapSettings.energyFromFood = energyFromFood;
         mapSettings.copulationMinimalEnergy = copulationMinimalEnergy;
         mapSettings.copulationCostEnregy = copulationCostEnregy;

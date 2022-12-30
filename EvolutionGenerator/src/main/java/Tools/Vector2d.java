@@ -7,6 +7,17 @@ import java.util.Objects;
 public class Vector2d {
     public final int x, y;
 
+
+    /**
+     * Creates random vector in rectangle.
+     * @param startBound Top left corner.
+     * @param endBound Bottom right corner.
+     */
+    public Vector2d(Vector2d startBound, Vector2d endBound){
+        this.x = getRandomNumber(startBound.x, endBound.x);
+        this.y = getRandomNumber(startBound.y,endBound.y);
+    }
+
     public Vector2d(int x, int y) {
         this.x = x;
         this.y = y;
@@ -16,14 +27,12 @@ public class Vector2d {
         return "(" + x + "," + y + ")";
     }
 
-
     public boolean precedes(Vector2d vector2d) {
         return vector2d.x >= this.x && vector2d.y >= this.y;
     }
     public boolean follows(Vector2d vector2d) {
         return vector2d.x <= this.x && vector2d.y <= this.y;
     }
-
 
     public Vector2d upperRight(Vector2d vector2d) {
         return new Vector2d(Math.max(this.x, vector2d.x), Math.max(this.y, vector2d.y));
@@ -43,10 +52,17 @@ public class Vector2d {
         return new Vector2d(-this.x, -this.y);
     }
 
-    public MapDirection getDirection(Vector2d toVector)
+    /**
+     * Two positions must be next to each other!
+     */
+    public MapDirection getDirectionBetweenPositions(Vector2d toVector)
     {
-        //TODO
-        return MapDirection.EAST;
+        return toVector.substract(this).toMapDirection();
+    }
+
+    public boolean isInRectangle(Vector2d first, Vector2d last)
+    {
+        return this.follows(first) && this.precedes(last);
     }
 
     public Vector2d copy(){
@@ -66,4 +82,31 @@ public class Vector2d {
         return Objects.hash(x, y);
     }
 
+    public MapDirection toMapDirection() {
+
+        if( this.equals(new Vector2d(0, 1)))
+            return MapDirection.NORTH;
+        if( this.equals(new Vector2d(1, 1)))
+            return MapDirection.NORTHEAST;
+        if( this.equals(new Vector2d(1, 0)))
+            return MapDirection.EAST;
+        if( this.equals(new Vector2d(1, -1)))
+            return MapDirection.SOUTHEAST;
+        if( this.equals(new Vector2d(0, -1)))
+            return MapDirection.SOUTH;
+        if( this.equals(new Vector2d(-1, -1)))
+            return MapDirection.SOUTHWEST;
+        if( this.equals(new Vector2d(-1, 0)))
+            return MapDirection.WEST;
+        if( this.equals(new Vector2d(-1, 1)))
+            return MapDirection.NORTHWEST;
+
+
+        throw new IllegalArgumentException("You can use toMapDairetion only when Vector is Versor.");
+    }
+
+
+    private int getRandomNumber(int min, int max) {
+        return (int) ((Math.random() * (max - min)) + min);
+    }
 }

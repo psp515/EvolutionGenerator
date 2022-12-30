@@ -1,6 +1,6 @@
 package Tools;
 
-import Gui.VieldView;
+import Gui.Others.FieldView;
 import Interfaces.Map.IMapElement;
 import Interfaces.Tools.IMapField;
 
@@ -33,12 +33,12 @@ public abstract class MapField implements IMapField
     }
 
     @Override
-    public VieldView getView() throws FileNotFoundException {
-        VieldView view;
+    public FieldView getView() throws FileNotFoundException {
+        FieldView view;
 
         if (elements.isEmpty())
-            return new VieldView(null,0,false);
+            return new FieldView(null,0,false);
 
-        return new VieldView(elements.get(0),0,false);
+        return new FieldView(elements.get(0),0,false);
     }
 }
