@@ -16,6 +16,7 @@ public class SingleFoodField extends MapField implements IFoodField {
     private ArrayList<Animal> elements;
 
     public SingleFoodField() {
+        // tylko zwierzeta przechowywane
         elements = new ArrayList<>();
     }
 
@@ -52,7 +53,7 @@ public class SingleFoodField extends MapField implements IFoodField {
         var copy = new ArrayList<IMapElement>(elements);
 
         if(food != null)
-         copy.add(food);
+            copy.add(food);
 
         return copy.toArray(IMapElement[]::new);
     }
@@ -64,6 +65,10 @@ public class SingleFoodField extends MapField implements IFoodField {
     @Override
     public FieldView getView() throws FileNotFoundException {
         return new FieldView(getStrongestAnimal(),elements.size(),food != null);
+    }
+
+    public ArrayList<Animal> getAnimals(){
+        return new ArrayList<Animal>(elements);
     }
 
     @Override
