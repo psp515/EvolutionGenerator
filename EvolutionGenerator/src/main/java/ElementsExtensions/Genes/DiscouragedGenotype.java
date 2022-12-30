@@ -1,7 +1,5 @@
 package ElementsExtensions.Genes;
-
 import Elements.Animal;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.concurrent.ThreadLocalRandom;
@@ -10,6 +8,7 @@ public class DiscouragedGenotype extends Genes {
     public DiscouragedGenotype(int[] genes) {
         super(genes);
     }
+
 
     public DiscouragedGenotype(Animal p1, Animal p2, int len) {
         super(p1,p2,len);
