@@ -1,17 +1,30 @@
 package Models;
 
-import Elements.MapElement;
 import Interfaces.Animals.IGenes;
 
 public class MapStatistics
 {
-    public MapStatistics(int width, int height){
-
+    public MapStatistics(int width, int height)
+    {
+        animalDeathsOnField = new int[width][height];
+        plantGrowsOnField = new int[width][height];
     }
 
-    DayStatistics dayStatistics;
+    public int animalsOnMap;
+    public int foodOnMap;
 
-    int[][]  animalDeathsOnField;
+    public int FreePlacesCount;
 
-    int[][]  plantGrowsOnField;
+    public IGenes MostPoupularGenotype;
+
+    public double AverageEnergy;
+
+    public double AverageLiveLength;
+
+    public int dayDeaths;
+
+    public int dayBorns;
+
+    public int[][]  animalDeathsOnField;
+    public int[][]  plantGrowsOnField;
 }

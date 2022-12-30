@@ -44,7 +44,7 @@ public class SimulationSettings
 
     public FoodGrowOptions growingOptions;
     public AnimalMovementOptions movementsOptions;
-    public GenesOptions mutationsOptions;
+    public GenesOptions genesOptions;
     public MapOptions mapOption;
 
     // 1-32
@@ -67,7 +67,7 @@ public class SimulationSettings
 
         mapSettings.growingOptions = growingOptions;
         mapSettings.movementsOptions = movementsOptions;
-        mapSettings.geneOptions = mutationsOptions;
+        mapSettings.geneOptions = genesOptions;
 
         mapSettings.gensLength = gensLength;
 

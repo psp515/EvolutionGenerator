@@ -3,15 +3,18 @@ package Simulation;
 
 import Elements.Animal;
 import Elements.Food;
-import Enums.MapOptions;
 import Interfaces.ISimulationEngine;
 import Interfaces.Map.IFoodGenerator;
 import Interfaces.Map.IMap;
 import Interfaces.Map.IMapSimulations;
 import Models.MapStatistics;
 import Models.SimulationSettings;
+import Tools.SingleFoodField;
+import Tools.Vector2d;
 
-public class SimulationEngine implements ISimulationEngine, IMapSimulations {
+import static Tools.Randomizer.getRandomNumber;
+
+public class SimulationEngine implements ISimulationEngine, IMapSimulations, Runnable {
 
     boolean isRunning;
     int simulationDay;
@@ -22,40 +25,90 @@ public class SimulationEngine implements ISimulationEngine, IMapSimulations {
     Animal[] animals;
     Food[] food;
 
-    MapStatistics stats;
+    SingleFoodField[][] mapFields;
+
     Animal markedAnimal;
     SimulationSettings simulationSettings;
 
     IFoodGenerator foodGenerator;
 
-    public SimulationEngine(SimulationSettings settings, MapOptions selectedMap){
+    public SimulationEngine(SimulationSettings settings){
 
         this.simulationSettings = settings;
         this.mapStatistics = new MapStatistics(settings.width, settings.height);
-        //Simulation settings to map settings
 
-        GenerateAnimals();
+        mapFields = new SingleFoodField[simulationSettings.width][simulationSettings.height];
+
+        map = simulationSettings.
+                mapOption.
+                getClassRepresentation(simulationSettings
+                        .generateMapSettings(), mapFields);
+
+        foodGenerator = simulationSettings.growingOptions.getClassRepresentation(mapFields, mapStatistics);
+
+        generateStartingAnimals();
         growFood();
+
+        markedAnimal = null;
     }
 
-    private void GenerateAnimals(){}
+    //region Initialization
+    private void generateStartingAnimals() {
+        for(int i = 0; i < simulationSettings.startingAnimals; i++)
+        {
+            Vector2d animalPosition = new Vector2d(map.getStartBound(), map.getEndBound());
+            Animal newAnimal = new Animal(
+                    map,
+                    animalPosition,
+                    simulationSettings.genesOptions
+                            .getClassRepresentation(generateGenotype(simulationSettings.gensLength)),
+                    simulationSettings.movementsOptions.getClassRepresentation(),
+                    simulationDay,
+                    simulationSettings.startingEnregy);
 
+            map.placeElement(newAnimal);
+
+            mapStatistics.animalsOnMap += 1;
+        }
+    }
+    private int[] generateGenotype(int len){
+        int[] genotype = new int[len];
+
+        for(int i =0;i < len;i++)
+            genotype[i] = getRandomNumber(0, 7);
+
+        return genotype;
+    }
+    //endregion
 
     @Override
     public void moveAnimals() {
-        //dla kazdego elementu z animals wykonujemy move
+        for (Animal animal : animals)
+            animal.move();
     }
     @Override
     public void simulateEating() {
-        // uzywamy mapfields / dla kazdego pola mapy
-        // jezeli ma animale i jedzenie to wybieramy najsilniejszego i zjadmy
-        // jezeli nie to skip
+
+        for(SingleFoodField[] row : mapFields)
+            for(SingleFoodField field : row)
+                if(field.containsFood()){
+
+                    Animal animal = field.getStrongestAnimal();
+
+                    if(animal != null)
+                    {
+                        animal.eat(field.getFood());
+                        mapStatistics.foodOnMap -= 1;
+                    }
+                }
     }
 
     @Override
-    public void simulateDeaths() {
-        // dla kazdego animala w animals jezeli ma energie < od 0 to usuwamy z mapy
-        // zapisujemy statystyki mapy
+    public void simulateDeaths()
+    {
+        for(Animal animal: animals)
+            if(animal.getEnergy() <= 0)
+                map.removeElement(animal);
     }
 
     @Override
@@ -65,30 +118,62 @@ public class SimulationEngine implements ISimulationEngine, IMapSimulations {
     @Override
     public void growFood() {
 
-        // wykorzystujemy Ifoodgrowing do wygenerowania miejsca na jedzonko i wstawiamy
+        for(int i = 0; i < simulationSettings.dailyFoodGrow; i++)
+        {
+            Food food = foodGenerator.growFood();
+
+            if(food == null){
+                // nie ma miejsca na mapie
+                break;
+            }
+            else {
+                map.placeElement(food);
+                mapStatistics.foodOnMap += 1;
+            }
+        }
     }
 
     @Override
     public void run() {
 
         moveAnimals();
+
         simulateEating();
+
         simulateDeaths();
+
         simulateBorns();
+
         growFood();
 
+
         //TODO : notify view of updates, IPropertyChanged
-        //TODO : save day stats to csv file
+
+
+        if(simulationSettings.saveToCsv)
+        {
+
+            //TODO save to csv
+
+        }
+
+        //UpdateStatistics
+
+        mapStatistics.dayBorns = 0;
+        mapStatistics.dayDeaths = 0;
+
 
         if(!isRunning)
             return;
 
+        this.run();
     }
 
     public void MarkMostPopularGenotype(){}
 
     public void DeMarkMostPopularGenotype(){}
 
+    //TO mozliwe ze tu ma nie byc
     @Override
     public void startSimulation() {
         if(isRunning)

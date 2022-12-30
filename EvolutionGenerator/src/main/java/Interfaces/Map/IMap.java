@@ -3,7 +3,6 @@ package Interfaces.Map;
 import Enums.MapDirection;
 import Interfaces.Animals.IMapMoveElement;
 import Interfaces.Tools.IMapField;
-import Tools.MapField;
 import Models.MapSettings;
 import Tools.Vector2d;
 import javafx.util.Pair;
@@ -14,6 +13,8 @@ public interface IMap {
     void placeElement(IMapElement element);
     void removeElement(IMapElement element);
     IMapField getMapField(Vector2d position);
-    IMapField[][] getMap();
+    IMapField[][] getMapFields();
     MapSettings getMapSettings();
+    Vector2d getStartBound();
+    Vector2d getEndBound();
 }

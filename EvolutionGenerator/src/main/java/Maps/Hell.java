@@ -14,15 +14,15 @@ public class Hell extends Map {
     @Override
     public Pair<MapDirection, Vector2d> moveElement(IMapMoveElement element, Vector2d oldPosition, Vector2d newPosition) {
 
-        if(newPosition.isInRectangle(startBound,endBound))
+        if(newPosition.isInRectangle(_startBound, _endBound))
         {
-            element.useEnergy(settings.moveCost);
+            element.useEnergy(_settings.moveCost);
             return new Pair<>(oldPosition.getDirectionBetweenPositions(newPosition), newPosition);
         }
         else
         {
-            element.useEnergy(settings.copulationCostEnregy);
-            return new Pair<>(oldPosition.getDirectionBetweenPositions(newPosition), new Vector2d(startBound,endBound));
+            element.useEnergy(_settings.copulationCostEnregy);
+            return new Pair<>(oldPosition.getDirectionBetweenPositions(newPosition), new Vector2d(_startBound, _endBound));
         }
 
     }

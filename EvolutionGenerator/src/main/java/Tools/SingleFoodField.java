@@ -57,11 +57,13 @@ public class SingleFoodField extends MapField implements IFoodField {
         return copy.toArray(IMapElement[]::new);
     }
 
+    public Animal getStrongestAnimal(){
+        return  elements.stream().max(Comparator.comparing(Animal::getEnergy)).orElse(null);
+    }
+
     @Override
     public FieldView getView() throws FileNotFoundException {
-       Animal strongest = elements.stream().max(Comparator.comparing(Animal::getEnergy)).orElse(null);
-
-        return new FieldView(strongest,elements.size(),food != null);
+        return new FieldView(getStrongestAnimal(),elements.size(),food != null);
     }
 
     @Override

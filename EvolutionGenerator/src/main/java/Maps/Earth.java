@@ -15,7 +15,7 @@ public class Earth extends Map {
     @Override
     public Pair<MapDirection, Vector2d> moveElement(IMapMoveElement element, Vector2d oldPosition, Vector2d newPosition) {
 
-        element.useEnergy(settings.moveCost);
+        element.useEnergy(_settings.moveCost);
 
         if(newPosition.y < 0)
         {
@@ -24,13 +24,13 @@ public class Earth extends Map {
 
             return new Pair<>(direction, oldPosition);
         }
-        else if(newPosition.y >= settings.height)
+        else if(newPosition.y >= _settings.height)
         {
             // too much South
             var direction = oldPosition.getDirectionBetweenPositions(newPosition).getOpposed();
             return new Pair<>(direction, oldPosition);
         }
-        else if(newPosition.x >= settings.width)
+        else if(newPosition.x >= _settings.width)
         {
             // too much east
             var updatedNewPosition = new Vector2d(0, newPosition.y);
@@ -39,7 +39,7 @@ public class Earth extends Map {
         else if(newPosition.x < 0)
         {
             // too much west
-            var updatedNewPosition = new Vector2d(settings.width-1, newPosition.y);
+            var updatedNewPosition = new Vector2d(_settings.width-1, newPosition.y);
             return new Pair<>(oldPosition.getDirectionBetweenPositions(newPosition), updatedNewPosition);
         }
         else
