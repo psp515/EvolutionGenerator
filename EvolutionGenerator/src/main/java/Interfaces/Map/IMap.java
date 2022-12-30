@@ -1,7 +1,6 @@
 package Interfaces.Map;
 
 import Enums.MapDirection;
-import Interfaces.Animals.IMapMoveElement;
 import Interfaces.Tools.IMapField;
 import Models.MapSettings;
 import Tools.Vector2d;
