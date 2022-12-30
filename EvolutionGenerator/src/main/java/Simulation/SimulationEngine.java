@@ -104,12 +104,12 @@ public class SimulationEngine implements IMapSimulations, Runnable {
                 }
     }
 
+
     @Override
     public void simulateDeaths()
     {
-        ArrayList<Animal> clone = (ArrayList<Animal>) animals.clone();
-
-        for(Animal animal : clone)
+        //Nowa lista bo nie da sie iterowac po zmieniajacej kolekcji
+        for(Animal animal : new ArrayList<>(animals))
             if(animal.getEnergy() <= 0)
             {
                 animal.setDeathDay(simulationDay);

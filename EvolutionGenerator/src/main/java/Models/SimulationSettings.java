@@ -5,7 +5,7 @@ import Enums.MapOptions;
 import Enums.AnimalMovementOptions;
 import Enums.GenesOptions;
 
-public class SimulationSettings
+public class SimulationSettings implements Cloneable
 {
     // 20 - 200
     public int width;
@@ -72,5 +72,14 @@ public class SimulationSettings
         mapSettings.gensLength = gensLength;
 
         return mapSettings;
+    }
+
+    @Override
+    public SimulationSettings clone() {
+        try {
+            return (SimulationSettings) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }
