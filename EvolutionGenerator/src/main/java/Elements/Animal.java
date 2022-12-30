@@ -3,7 +3,7 @@ package Elements;
 import Enums.MapDirection;
 import Interfaces.Animals.IAnimalMovement;
 import Interfaces.Animals.IGenes;
-import Interfaces.Animals.IMapMoveElement;
+import Interfaces.Map.IMapMoveElement;
 import Interfaces.Map.IMap;
 import Models.MapSettings;
 import Tools.Vector2d;
@@ -69,12 +69,12 @@ public class Animal extends MapElement implements IMapMoveElement {
         this.childrenBorn();
         secondParent.childrenBorn();
 
-        int[] genes = _genotype.generateGenes(this, secondParent, settings.gensLength);
+
 
         Animal youngling = new Animal(
                 this._map,
                 this.position.copy(),
-                settings.geneOptions.getClassRepresentation(genes),
+                settings.geneOptions.getClassRepresentation(this, secondParent, settings.gensLength),
                 settings.movementsOptions.getClassRepresentation(),
                 day,
                 settings.copulationCostEnregy * 2);
@@ -109,8 +109,9 @@ public class Animal extends MapElement implements IMapMoveElement {
     @Override
     public void move(){
 
-        Vector2d newPosition = _movement.nextPosition(_genotype.getActiveGene(), position, actDirection);
+        Vector2d newPosition = _movement.nextPosition(_genotype, position, actDirection);
         Pair<MapDirection, Vector2d> pair = _map.moveElement(this,position, newPosition);
+
         this.position = pair.getValue();
         this.actDirection = pair.getKey();
     }

@@ -1,9 +1,9 @@
 package Enums;
 
+import Elements.Animal;
 import ElementsExtensions.Genes.NormalGenotype;
 import ElementsExtensions.Genes.DiscouragedGenotype;
 import Interfaces.Animals.IGenes;
-import Interfaces.Others.GetClassRepresentation;
 import Interfaces.Others.GetClassRepresentationOneParam;
 
 public enum GenesOptions implements GetClassRepresentationOneParam<IGenes,int[]> {
@@ -26,6 +26,14 @@ public enum GenesOptions implements GetClassRepresentationOneParam<IGenes,int[]>
         return switch (this) {
             case DEFAULT, NORMAL_GENOTYPE -> new NormalGenotype(genes);
             case DISCOURAGED_GENOTYPE -> new DiscouragedGenotype(genes);
+        };
+    }
+
+
+    public IGenes getClassRepresentation(Animal p1, Animal p2, int len){
+        return switch (this) {
+            case DEFAULT, NORMAL_GENOTYPE -> new NormalGenotype(p1, p2, len);
+            case DISCOURAGED_GENOTYPE -> new DiscouragedGenotype(p1, p2, len);
         };
     }
 

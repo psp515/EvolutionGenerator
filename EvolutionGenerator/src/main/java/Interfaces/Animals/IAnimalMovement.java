@@ -4,5 +4,5 @@ import Enums.MapDirection;
 import Tools.Vector2d;
 
 public interface IAnimalMovement {
-    Vector2d nextPosition(int nextGene, Vector2d actualPosition, MapDirection actDirection);
+    Vector2d nextPosition(IGenes genotype, Vector2d actualPosition, MapDirection actDirection);
 }
