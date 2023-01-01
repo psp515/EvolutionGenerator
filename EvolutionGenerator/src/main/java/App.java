@@ -4,10 +4,14 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.util.Objects;
+
+import static java.lang.System.out;
 
 public class App extends Application
 {
@@ -17,11 +21,24 @@ public class App extends Application
     public void start(Stage primaryStage) throws Exception {
         //Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("App.fxml")));
 
-       // Scene s = new Scene();
-
-        //primaryStage.setScene(new VBox());
+        Button startButton = new Button("Start");
+        HBox formBox = new HBox();
+        formBox.getChildren().add(startButton);
+        VBox vBox = new VBox();
+        vBox.getChildren().add(formBox);
+        primaryStage.setScene(new Scene(vBox));
 
         primaryStage.show();
+
+        startButton.setOnAction( (e) -> {try{
+                StartSimulationClicked();
+            }
+        catch (Exception z)
+        {
+            out.println(z);
+        }});
+
+
 
     }
 
@@ -29,11 +46,8 @@ public class App extends Application
     {
 
         //TODO validate Settings
-
-        SimulationSettings copy = settings.clone();
-
-        Application.launch(SimulationView.class, "");
-
+        // settings.clone()
+        new SimulationView(null);
 
     }
 }

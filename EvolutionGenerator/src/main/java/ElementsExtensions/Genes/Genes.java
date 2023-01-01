@@ -23,10 +23,13 @@ public abstract class Genes implements IGenes {
         this.genLength = parent1._genotype.getGenLength();
         int[] childgenes = new int[genLength];
 
-        for(int i=0; i<part1; i++) {
+        for(int i=0; i<part1; i++)
+        {
             childgenes[i] = side1*parent1._genotype.getGenes()[i] + (1-side1)*parent2._genotype.getGenes()[i];
         }
-        for(int i=part1; i<genLength; i++){
+
+        for(int i=part1; i<genLength; i++)
+        {
             childgenes[i] = (1-side1)*parent1._genotype.getGenes()[i] + side1*parent2._genotype.getGenes()[i];
         }
 
