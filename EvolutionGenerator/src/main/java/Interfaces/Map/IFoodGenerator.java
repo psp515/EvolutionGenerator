@@ -6,5 +6,5 @@ import Tools.Vector2d;
 
 // wariant wyrastania
 public interface IFoodGenerator {
-    Food growFood(Vector2d startpoint, Vector2d endpoint, IMap map, int day);
+    Food growFood(IMap map, int day);
 }

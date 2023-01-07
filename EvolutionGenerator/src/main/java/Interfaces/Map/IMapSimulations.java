@@ -10,5 +10,5 @@ public interface IMapSimulations
     void simulateBorns();
     //void growFood();
 
-    void growFood(Vector2d startpoint, Vector2d endpoint);
+    void growFood();
 }

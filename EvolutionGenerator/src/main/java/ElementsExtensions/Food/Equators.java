@@ -20,11 +20,11 @@ public class Equators extends FoodGenerator {
     }
 
     @Override
-    public Food growFood(Vector2d startpoint, Vector2d endpoint, IMap map, int day) {
+    public Food growFood(IMap map, int day) {
 
-        int width = endpoint.x - startpoint.x;
-        int height = endpoint.y - startpoint.y;
-        int equatorheight = width/5;
+        Vector2d startpoint = map.getStartBound();
+        Vector2d endpoint = map.getEndBound();
+        int equatorheight = (endpoint.y - startpoint.y)/5;
         int equatorStartY = startpoint.y + equatorheight;
 
         // tablice z uporządkowanymi indeksami Xowymi i Yowymi zależnie od stref:

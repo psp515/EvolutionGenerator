@@ -51,7 +51,7 @@ public class SimulationEngine implements IMapSimulations, Runnable {
         foodGenerator = simulationSettings.growingOptions.getClassRepresentation(mapFields, mapStatistics);
 
         generateStartingAnimals();
-        growFood(map.getStartBound(),map.getEndBound());
+        growFood();
 
         markedAnimal = null;
     }
@@ -147,11 +147,11 @@ public class SimulationEngine implements IMapSimulations, Runnable {
             }
     }
     @Override
-    public void growFood(Vector2d startpoint, Vector2d endpoint) {
+    public void growFood() {
 
         for(int i = 0; i < simulationSettings.dailyFoodGrow; i++)
         {
-            Food food = foodGenerator.growFood(startpoint, endpoint, map, this.simulationDay);
+            Food food = foodGenerator.growFood(map, this.simulationDay);
 
             if(food == null){
                 // nie ma miejsca na mapie na jedzenie
@@ -210,7 +210,7 @@ public class SimulationEngine implements IMapSimulations, Runnable {
         simulateEating();
         simulateDeaths();
         simulateBorns();
-        growFood(map.getStartBound(), map.getEndBound());
+        growFood();
 
         UpdateStatistics();
 
