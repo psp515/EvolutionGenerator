@@ -3,21 +3,26 @@ package Simulation;
 
 import Elements.Animal;
 import Elements.Food;
+import Interfaces.IPropertyChanged;
 import Interfaces.Map.IFoodGenerator;
 import Interfaces.Map.IMap;
 import Interfaces.Map.IMapSimulations;
 import Models.MapStatistics;
+import Models.SimulationRun;
 import Models.SimulationSettings;
 import Tools.SingleFoodField;
 import Tools.Vector2d;
+import com.sun.source.tree.WhileLoopTree;
+import javafx.concurrent.Task;
 
 import java.util.ArrayList;
 
 import static Tools.Randomizer.getRandomNumber;
+import static java.lang.System.out;
 
 public class SimulationEngine implements IMapSimulations, Runnable {
 
-    int simulationDay;
+    public int simulationDay;
 
     IMap map;
     MapStatistics mapStatistics;
@@ -32,13 +37,19 @@ public class SimulationEngine implements IMapSimulations, Runnable {
     SimulationSettings simulationSettings;
 
     IFoodGenerator foodGenerator;
+    SimulationRun isRunning;
 
-    public SimulationEngine(SimulationSettings settings){
+    IPropertyChanged observer;
+
+    public SimulationEngine(SimulationSettings settings, SimulationRun isRunning, IPropertyChanged observer){
+
+        this.observer = observer;
+        this.isRunning = isRunning;
 
         animals = new ArrayList<>();
         deadAnimals = new ArrayList<>();
 
-        this.simulationSettings = settings;
+        /*this.simulationSettings = settings;
         this.mapStatistics = new MapStatistics(settings.width, settings.height);
 
         mapFields = new SingleFoodField[simulationSettings.width][simulationSettings.height];
@@ -53,7 +64,7 @@ public class SimulationEngine implements IMapSimulations, Runnable {
         generateStartingAnimals();
         growFood();
 
-        markedAnimal = null;
+        markedAnimal = null;*/
     }
 
     //region Initialization
@@ -198,27 +209,59 @@ public class SimulationEngine implements IMapSimulations, Runnable {
 
     @Override
     public void run() {
-        if(simulationDay == Integer.MAX_VALUE)
-            return;
 
-        simulationDay += 1;
-        mapStatistics.dayBorns = 0;
-        mapStatistics.dayDeaths = 0;
-        mapStatistics.placesFreeFromAnimalCount = 0;
+        Task task = new Task<Void>() {
+            @Override
+            public Void call() {
 
-        moveAnimals();
-        simulateEating();
-        simulateDeaths();
-        simulateBorns();
-        growFood();
+                while(isRunning.isRunning)
+                {
+                    simulationDay += 1;
+                    observer.propertyChanged();
+                    try{
+                        Thread.sleep(1000);
+                    }catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
 
-        UpdateStatistics();
+                return null;
+            }
+        };
 
-        //TODO : notify view of updates, IPropertyChanged
+        new Thread(task).start();
 
-        if(simulationSettings.saveToCsv)
+
+            if(simulationDay == Integer.MAX_VALUE)
+                return;
+
+            //simulationDay += 1;
+            //mapStatistics.dayBorns = 0;
+            //mapStatistics.dayDeaths = 0;
+            //mapStatistics.placesFreeFromAnimalCount = 0;
+
+            //moveAnimals();
+            // simulateEating();
+            //simulateDeaths();
+            //simulateBorns();
+            //growFood();
+
+            //UpdateStatistics();
+
+            //TODO : notify view of updates, IPropertyChanged
+
+        /*if(simulationSettings.saveToCsv)
         {
             //TODO save to csv
+        }*/
+
+            observer.propertyChanged();
+
+
+
+        if(isRunning.isRunning)
+        {
+
         }
     }
 

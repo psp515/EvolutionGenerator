@@ -19,7 +19,7 @@ public class App extends Application
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        //Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("App.fxml")));
+
 
         Button startButton = new Button("Start");
         HBox formBox = new HBox();
@@ -37,9 +37,6 @@ public class App extends Application
         {
             out.println(z);
         }});
-
-
-
     }
 
     public void StartSimulationClicked()
@@ -48,6 +45,8 @@ public class App extends Application
         //TODO validate Settings
         // settings.clone()
         new SimulationView(null);
+        //var thread = new Thread(new SimulationView(null));
+        //thread.run();
 
     }
 }
