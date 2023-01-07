@@ -31,6 +31,19 @@ public enum MapDirection {
         };
     }
 
+    public MapDirection getNext(){
+        return switch (this) {
+            case NORTH -> NORTHEAST;
+            case NORTHEAST -> EAST;
+            case EAST -> SOUTHEAST;
+            case SOUTHEAST -> SOUTH;
+            case SOUTH -> SOUTHWEST;
+            case SOUTHWEST -> WEST;
+            case WEST -> NORTHWEST;
+            case NORTHWEST -> NORTH;
+        };
+    }
+
     public String toString() {
         return switch (this) {
             case NORTH -> "N";

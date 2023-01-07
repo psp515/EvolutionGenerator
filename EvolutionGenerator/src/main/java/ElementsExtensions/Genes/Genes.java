@@ -43,6 +43,16 @@ public abstract class Genes implements IGenes {
     @Override
     public int getActiveGene() { return this.activatedGene; }
     public int getGenLength(){ return this.genLength; }
+    public int activateNextGene(){
+        this.activatedGene = genes[(this.activatedGene + 1) % this.genLength];
+        return activatedGene;
+    }
+    public int skipToRandomGene(){
+        int skipCount = ThreadLocalRandom.current().nextInt(this.genLength);
+        for(int i=0;i<skipCount; i++)
+            this.activateNextGene();
+        return this.activatedGene;
+    }
     @Override
     abstract public void mutate();
 }
