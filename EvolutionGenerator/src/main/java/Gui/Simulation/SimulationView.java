@@ -221,18 +221,19 @@ public class SimulationView implements IPropertyChanged {
 
         try
         {
-            Thread.sleep(1000);
+            Thread.sleep(100);
         } catch (InterruptedException e) {}
         status.isRunning = true;
-        //var thread = new Thread(simulationEngine);
-        //thread.start();
         out.println("start");
-        simulationEngine.run();
+        var thread = new Thread(simulationEngine);
+        thread.run();
+        //simulationEngine.run();
     }
     public void stopSimulation() {
 
         out.println("stop");
         status.isRunning = false;
+        refreshMap();
     }
     private void selectAnimalToWatch() {
         //TODO
