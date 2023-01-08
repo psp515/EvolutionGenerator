@@ -15,6 +15,8 @@ import Tools.Vector2d;
 import javafx.concurrent.Task;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 
 import static Tools.Randomizer.getRandomNumber;
 import static java.lang.System.out;
@@ -60,7 +62,7 @@ public class SimulationEngine implements IMapSimulations, Runnable {
 
     public void setMarkedAnimal(Animal animal)
     {
-        //TODO : check if in aniamls
+        //TODO : check if in animals
         this.markedAnimal = animal;
     }
 
@@ -133,7 +135,7 @@ public class SimulationEngine implements IMapSimulations, Runnable {
 
         Animal newAnimal = new Animal(
                 map,
-                new Vector2d(0,0),
+                new Vector2d(1,0),
                 _simulationSettings.genesOptions
                         .getClassRepresentation(new int[]{0, 0, 0, 0}),
                 _simulationSettings.movementsOptions.getClassRepresentation(),
@@ -142,6 +144,19 @@ public class SimulationEngine implements IMapSimulations, Runnable {
 
         animals.add(newAnimal);
         map.placeElement(newAnimal);
+
+
+        Animal newAnimal2 = new Animal(
+                map,
+                new Vector2d(1,0),
+                _simulationSettings.genesOptions
+                        .getClassRepresentation(new int[]{0, 0, 0, 0}),
+                _simulationSettings.movementsOptions.getClassRepresentation(),
+                simulationDay,
+                _simulationSettings.startingEnregy);
+
+        animals.add(newAnimal2);
+        map.placeElement(newAnimal2);
 
         markedAnimal = newAnimal;
     }
@@ -196,18 +211,27 @@ public class SimulationEngine implements IMapSimulations, Runnable {
     @Override
     public void simulateBorns() {
 
-        for(SingleFoodField[] row : mapFields)
-            for(SingleFoodField field : row)
+        for(int i = 0; i < map.getMapSettings().width; i++) {
+            for(int j = 0; j < map.getMapSettings().width; j++)
             {
-                var fieldAniamls = field.getAnimals();
+                var field = mapFields[i][j];
+                var elements = field.getElements();
 
-                if(fieldAniamls.size() < 2)
+                if(elements.length != 0)
+                    out.println(elements.length);
+
+                if(elements.length < 2)
                     return;
 
-                fieldAniamls.sort((Animal a1, Animal a2) -> a1.getEnergy() < a2.getEnergy() ? -1 : 1);
+                Animal[] fieldAniamls = new Animal[elements.length];
 
-                var p1 = fieldAniamls.get(0);
-                var p2 = fieldAniamls.get(1);
+                for(int k=0;k < elements.length;k++)
+                    fieldAniamls[k] = (Animal) elements[k];
+
+                Arrays.sort(fieldAniamls, Comparator.comparing(Animal::getEnergy));
+
+                var p1 = (Animal) fieldAniamls[0];
+                var p2 = (Animal) fieldAniamls[1];
 
                 var ch = p1.copulate(p2, simulationDay);
 
@@ -216,6 +240,7 @@ public class SimulationEngine implements IMapSimulations, Runnable {
                     mapStatistics.dayBorns += 1;
                 }
             }
+        }
     }
     @Override
     public void growFood() {
@@ -320,26 +345,18 @@ public class SimulationEngine implements IMapSimulations, Runnable {
         };
 
         new Thread(task).run();*/
-        out.println("startDay");
         simulationDay += 1;
         mapStatistics.dayBorns = 0;
         mapStatistics.dayDeaths = 0;
         mapStatistics.placesFreeFromAnimalCount = 0;
 
         moveAnimals();
-        out.println("1");
         simulateEating();
-        out.println("2");
         simulateDeaths();
-        out.println("3");
         simulateBorns();
-        out.println("4");
         growFood();
-        out.println("5");
 
         updateStatistics();
-
-        out.println("data");
 
         observer.propertyChanged();
 

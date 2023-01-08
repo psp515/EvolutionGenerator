@@ -1,5 +1,6 @@
 package Elements;
 
+import ElementsExtensions.Genes.Genes;
 import Enums.MapDirection;
 import Interfaces.Animals.IAnimalMovement;
 import Interfaces.Animals.IGenes;
@@ -8,6 +9,10 @@ import Interfaces.Map.IMap;
 import Models.MapSettings;
 import Tools.Vector2d;
 import javafx.util.Pair;
+
+import java.util.Arrays;
+
+import static java.lang.System.out;
 
 public class Animal extends MapElement implements IMapMoveElement {
 
@@ -29,6 +34,7 @@ public class Animal extends MapElement implements IMapMoveElement {
         actDirection = MapDirection.WEST;
 
         _genotype = genotype;
+        out.println(Arrays.toString(genotype.getGenes()));
         _movement = movement;
 
         energy = startingEnergy;
@@ -46,7 +52,7 @@ public class Animal extends MapElement implements IMapMoveElement {
         int foodEnergy = this._map.getMapSettings().energyFromFood;
         int maxEnergy = this._map.getMapSettings().maxEnergy;
 
-        if( energy + maxEnergy > maxEnergy)
+        if( energy + foodEnergy > maxEnergy)
             energy = maxEnergy;
         else
             energy += foodEnergy;
@@ -59,8 +65,7 @@ public class Animal extends MapElement implements IMapMoveElement {
     public Animal copulate(Animal secondParent, int day) {
         MapSettings settings = this._map.getMapSettings();
 
-        if (this.energy < settings.copulationMinimalEnergy ||
-                secondParent.getEnergy() < settings.copulationMinimalEnergy)
+        if (this.energy < settings.copulationMinimalEnergy || secondParent.getEnergy() < settings.copulationMinimalEnergy)
             return null;
 
         this.useEnergy(settings.copulationCostEnregy);
@@ -69,12 +74,14 @@ public class Animal extends MapElement implements IMapMoveElement {
         this.childrenBorn();
         secondParent.childrenBorn();
 
+        IGenes genes = settings.geneOptions.getClassRepresentation(this, secondParent, settings.gensLength);
 
+        out.println(Arrays.toString(genes.getGenes()));
 
         Animal youngling = new Animal(
                 this._map,
                 this.position.copy(),
-                settings.geneOptions.getClassRepresentation(this, secondParent, settings.gensLength),
+                genes,
                 settings.movementsOptions.getClassRepresentation(),
                 day,
                 settings.copulationCostEnregy * 2);
@@ -109,6 +116,8 @@ public class Animal extends MapElement implements IMapMoveElement {
     @Override
     public void move(){
 
+        out.println(_creationDay);
+        out.println(Arrays.toString(_genotype.getGenes()));
         Vector2d newPosition = _movement.nextPosition(_genotype, position, actDirection);
         Pair<MapDirection, Vector2d> pair = _map.moveElement(this,position, newPosition);
 

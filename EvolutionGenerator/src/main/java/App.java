@@ -95,7 +95,7 @@ public class App extends Application
         ss.energyFromFood = 50;
         ss.copulationMinimalEnergy = 80;
         ss.copulationCostEnregy = 50;
-        ss.startingEnregy = 100;
+        ss.startingEnregy = 300;
         ss.maxEnregy = 300;
         ss.startingFood = 30;
         ss.dailyFoodGrow = 30;
@@ -104,7 +104,7 @@ public class App extends Application
         ss.genesOptions = GenesOptions.DEFAULT;
         ss.mapOption = MapOptions.DEFAULT;
         ss.growingOptions = FoodGrowOptions.DEFAULT;
-        ss.gensLength = 16;
+        ss.gensLength = 4;
         ss.saveToCsv = false;
 
         var sw = new SettingsWrapper();
@@ -116,9 +116,9 @@ public class App extends Application
         ss2.height = 20;
         ss2.moveCost = 1;
         ss2.energyFromFood = 50;
-        ss2.copulationMinimalEnergy = 80;
+        ss2.copulationMinimalEnergy = 50;
         ss2.copulationCostEnregy = 50;
-        ss2.startingEnregy = 100;
+        ss2.startingEnregy = 300;
         ss2.maxEnregy = 300;
         ss2.startingFood = 30;
         ss2.dailyFoodGrow = 1;
@@ -127,7 +127,7 @@ public class App extends Application
         ss2.genesOptions = GenesOptions.DEFAULT;
         ss2.mapOption = MapOptions.DEFAULT;
         ss2.growingOptions = FoodGrowOptions.RANDOMER;
-        ss2.gensLength = 8;
+        ss2.gensLength = 4;
         ss2.saveToCsv = false;
 
         var sw2 = new SettingsWrapper();
@@ -426,6 +426,10 @@ public class App extends Application
                 showError("Please select saving.");
                 return;
             }
+
+            out.println(x.width);
+
+            out.println(x.height);
 
             StartCustomSimulation(x);
         });

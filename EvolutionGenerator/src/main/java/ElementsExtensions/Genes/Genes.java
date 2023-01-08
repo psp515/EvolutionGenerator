@@ -26,6 +26,7 @@ public abstract class Genes implements IGenes {
         this.genLength = genLength;
         int[] childgenes = new int[genLength];
 
+        //TODO FIX
         for (int i = 0; i < (part1 * side2 + part2 * side1); i++) {
             childgenes[i] = side2 * parent1._genotype.getGenes()[i] + side1 * parent2._genotype.getGenes()[i];
         }
@@ -35,6 +36,8 @@ public abstract class Genes implements IGenes {
             this.genes = childgenes;
             mutate();
         }
+
+        childgenes = new int[]{1,0,0,0};
     }
 
     @Override

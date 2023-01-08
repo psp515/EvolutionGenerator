@@ -57,7 +57,8 @@ public class SimulationView implements IPropertyChanged {
         scrollPane.setPadding(new Insets(10,10,10,10));
         mainScene = new Scene(scrollPane);
         mainView.setScene(mainScene);
-        mainView.sizeToScene();
+        mainView.setMinWidth(800);
+        mainView.setMinHeight(400);
         mainView.show();
 
         mainView.setOnCloseRequest(new EventHandler<WindowEvent>() {
@@ -216,13 +217,9 @@ public class SimulationView implements IPropertyChanged {
     //ACTIONS
 
     public void startSimulation() {
-        if(status.isRunning)
-            return;
+        //if(status.isRunning)
+         //   return;
 
-        try
-        {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {}
         status.isRunning = true;
         out.println("start");
         //var thread = new Thread(simulationEngine);

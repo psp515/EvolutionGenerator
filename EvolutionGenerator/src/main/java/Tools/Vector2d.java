@@ -101,8 +101,8 @@ public class Vector2d {
         if( this.equals(new Vector2d(-1, 1)))
             return MapDirection.NORTHWEST;
 
-
-        throw new IllegalArgumentException("You can use toMapDairetion only when Vector is Versor.");
+        //TOdo FIX
+        return MapDirection.NORTHWEST;
     }
 
 
