@@ -5,6 +5,7 @@ import Models.SimulationSettings;
 import Models.SimulationStatus;
 import Simulation.SimulationEngine;
 import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -217,14 +218,29 @@ public class SimulationView implements IPropertyChanged {
     //ACTIONS
 
     public void startSimulation() {
-        //if(status.isRunning)
-         //   return;
+        if(status.isRunning)
+            return;
 
         status.isRunning = true;
-        out.println("start");
-        //var thread = new Thread(simulationEngine);
-        //thread.run();
-        simulationEngine.run();
+        Task task = new Task<Void>() {
+            @Override
+            public Void call() {
+
+                while (status.isRunning)
+                {
+                    simulationEngine.run();
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+
+                return null;
+            }
+        };
+
+        new Thread(task).start();
     }
     public void stopSimulation() {
 

@@ -33,7 +33,6 @@ public class Animal extends MapElement implements IMapMoveElement {
         actDirection = MapDirection.WEST;
 
         _genotype = genotype;
-        out.println(Arrays.toString(genotype.getGenes()));
         _movement = movement;
 
         energy = startingEnergy;
