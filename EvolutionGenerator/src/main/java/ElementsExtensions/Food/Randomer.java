@@ -2,6 +2,7 @@ package ElementsExtensions.Food;
 
 import Elements.Food;
 import Interfaces.Map.IMap;
+import Models.MapStatistics;
 import Tools.SingleFoodField;
 import Tools.Vector2d;
 

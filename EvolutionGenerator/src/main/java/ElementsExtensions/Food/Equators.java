@@ -16,8 +16,8 @@ public class Equators extends FoodGenerator {
 
 
 
-    public Equators(SingleFoodField[][] mapField, MapStatistics statistics) {
-        super(mapField, statistics);
+    public Equators(SingleFoodField[][] mapField) {
+        super(mapField);
     }
 
     @Override

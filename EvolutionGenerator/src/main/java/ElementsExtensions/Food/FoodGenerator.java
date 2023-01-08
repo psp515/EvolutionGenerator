@@ -11,9 +11,8 @@ public abstract class FoodGenerator implements IFoodGenerator {
 
     public int[][] deathlist;
 
-    protected FoodGenerator(SingleFoodField[][] mapField, MapStatistics statistics) {
+    protected FoodGenerator(SingleFoodField[][] mapField) {
         this.field = mapField;
-        this.deathlist = statistics.animalDeathsOnField;
 
     }
 

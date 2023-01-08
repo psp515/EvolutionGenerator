@@ -18,7 +18,7 @@ public class DeathBodies extends FoodGenerator {
     public int[][] deathlist;
 
     public DeathBodies(SingleFoodField[][] mapField, MapStatistics statistics) {
-        super(mapField, statistics);
+        super(mapField);
         this.deathlist = statistics.animalDeathsOnField;
     }
 
