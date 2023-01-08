@@ -14,7 +14,7 @@ public class SimulationSettings implements Cloneable
     public int height;
 
     // 1-10
-    public int moveEnergy;
+    public int moveCost;
 
     // 1 - 100
     public int energyFromFood;
@@ -60,7 +60,7 @@ public class SimulationSettings implements Cloneable
         mapSettings.height = height;
 
         mapSettings.maxEnergy = maxEnregy;
-        mapSettings.moveCost = moveEnergy;
+        mapSettings.moveCost = moveCost;
         mapSettings.energyFromFood = energyFromFood;
         mapSettings.copulationMinimalEnergy = copulationMinimalEnergy;
         mapSettings.copulationCostEnregy = copulationCostEnregy;

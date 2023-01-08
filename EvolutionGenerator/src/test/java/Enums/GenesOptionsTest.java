@@ -22,8 +22,8 @@ public class GenesOptionsTest extends BaseEnumTestClass<GenesOptions> implements
 
     @Override @Test
     public void getClassRepresentationTest() {
-        assertTrue(GenesOptions.DEFAULT.getClassRepresentation(null) instanceof NormalGenotype);
-        assertTrue(GenesOptions.NORMAL_GENOTYPE.getClassRepresentation(null) instanceof NormalGenotype);
-        assertTrue(GenesOptions.DISCOURAGED_GENOTYPE.getClassRepresentation(null) instanceof DiscouragedGenotype);
+        assertTrue(GenesOptions.DEFAULT.getClassRepresentation(new int[]{1,1,1}) instanceof NormalGenotype);
+        assertTrue(GenesOptions.NORMAL_GENOTYPE.getClassRepresentation(new int[]{1,1,1}) instanceof NormalGenotype);
+        assertTrue(GenesOptions.DISCOURAGED_GENOTYPE.getClassRepresentation(new int[]{1,1,1}) instanceof DiscouragedGenotype);
     }
 }
