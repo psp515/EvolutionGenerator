@@ -64,7 +64,7 @@ public class SingleFoodField extends MapField implements IFoodField {
 
     @Override
     public FieldView getView()  {
-        return new FieldView(getStrongestAnimal(), elements.size(),food != null);
+        return new FieldView(getStrongestAnimal(), elements.size(), food);
     }
 
     public ArrayList<Animal> getAnimals(){

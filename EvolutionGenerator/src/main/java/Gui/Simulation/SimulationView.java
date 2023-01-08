@@ -91,9 +91,6 @@ public class SimulationView implements IPropertyChanged {
 
         var fields = simulationEngine.getMapFields();
 
-        out.println(width);
-        out.println(height);
-
         for(int i =0; i < width;i++)
         {
             for(int j = 0; j < height;j++)
@@ -112,7 +109,7 @@ public class SimulationView implements IPropertyChanged {
 
         var stats = simulationEngine.getMapStatistics();
 
-        for ( int i = 0; i < 6; i++ )
+        for ( int i = 0; i < 7; i++ )
             statistics.getColumnConstraints().add(new ColumnConstraints(  ));
         for ( int i = 0; i < 2; i++ )
             statistics.getRowConstraints().add(new RowConstraints(  ));
@@ -134,6 +131,10 @@ public class SimulationView implements IPropertyChanged {
 
         statistics.add(new Label("Avg. Live Span"),5,0);
         statistics.add(new Label(String.valueOf(stats.averageLiveLength)),5,1);
+
+
+        statistics.add(new Label("Simulation Day"),6,0);
+        statistics.add(new Label(String.valueOf(simulationEngine.getSimulationDay())),6,1);
 
 
         statistics.setGridLinesVisible(true);
@@ -223,10 +224,14 @@ public class SimulationView implements IPropertyChanged {
             Thread.sleep(1000);
         } catch (InterruptedException e) {}
         status.isRunning = true;
-        var thread = new Thread(simulationEngine);
-        thread.start();
+        //var thread = new Thread(simulationEngine);
+        //thread.start();
+        out.println("start");
+        simulationEngine.run();
     }
     public void stopSimulation() {
+
+        out.println("stop");
         status.isRunning = false;
     }
     private void selectAnimalToWatch() {
@@ -237,10 +242,8 @@ public class SimulationView implements IPropertyChanged {
     }
     @Override
     public void propertyChanged() {
-        try{
-            Thread.sleep(100);
-            Platform.runLater(this::refreshMap);
-        } catch (InterruptedException e) {
-        }
+
+        Platform.runLater(this::refreshMap);
+
     }
 }

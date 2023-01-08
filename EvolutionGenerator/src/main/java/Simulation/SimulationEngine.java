@@ -17,6 +17,7 @@ import javafx.concurrent.Task;
 import java.util.ArrayList;
 
 import static Tools.Randomizer.getRandomNumber;
+import static java.lang.System.out;
 
 public class SimulationEngine implements IMapSimulations, Runnable {
 
@@ -189,9 +190,7 @@ public class SimulationEngine implements IMapSimulations, Runnable {
         for(int i = 0; i < _simulationSettings.dailyFoodGrow; i++)
         {
             Food food = foodGenerator.growFood(map, this.simulationDay);
-
             if(food == null){
-                // nie ma miejsca na mapie na jedzenie
                 break;
             }
             else {
@@ -239,21 +238,29 @@ public class SimulationEngine implements IMapSimulations, Runnable {
         Task task = new Task<Void>() {
             @Override
             public Void call() {
-
                 while(isRunning.isRunning)
                 {
+                    out.println("startDay");
                     simulationDay += 1;
                     mapStatistics.dayBorns = 0;
                     mapStatistics.dayDeaths = 0;
                     mapStatistics.placesFreeFromAnimalCount = 0;
 
                     moveAnimals();
+                    out.println("1");
                     simulateEating();
+
+                    out.println("2");
                     simulateDeaths();
+                    out.println("3");
                     simulateBorns();
+                    out.println("4");
                     growFood();
+                    out.println("5");
 
                     updateStatistics();
+
+                    out.println("data");
 
                     observer.propertyChanged();
 
@@ -262,13 +269,15 @@ public class SimulationEngine implements IMapSimulations, Runnable {
                         //TODO save to csv
                     }
 
+                    try{Thread.sleep(100);} catch (InterruptedException e) {}
+                    out.println("endsleep");
                 }
 
                 return null;
             }
         };
 
-        new Thread(task).start();
+        new Thread(task).run();
     }
 
     public void MarkMostPopularGenotype()

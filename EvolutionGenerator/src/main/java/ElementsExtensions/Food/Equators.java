@@ -22,6 +22,8 @@ public class Equators extends FoodGenerator {
     @Override
     public Food growFood(IMap map, int day) {
 
+        //TODO FIX: tutaj gdzies robi się infinite loop
+
         Vector2d startpoint = map.getStartBound();
         Vector2d endpoint = map.getEndBound();
         int equatorheight = (endpoint.y - startpoint.y)/5;

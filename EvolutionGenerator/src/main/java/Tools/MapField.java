@@ -1,5 +1,6 @@
 package Tools;
 
+import Elements.Food;
 import Gui.Others.FieldView;
 import Interfaces.Map.IMapElement;
 import Interfaces.Tools.IMapField;
@@ -37,8 +38,10 @@ public abstract class MapField implements IMapField
         FieldView view;
 
         if (elements.isEmpty())
-            return new FieldView(null,0,false);
+            return new FieldView(null,0,null);
 
-        return new FieldView(elements.get(0),0,false);
+        IMapElement food =  elements.stream().filter(p->{return p instanceof Food;}).findFirst().orElse(null);
+
+        return new FieldView(elements.get(0),0,food);
     }
 }
