@@ -130,7 +130,7 @@ public class Animal extends MapElement implements IMapMoveElement {
         return RESOURCES_STRING + "/animals/" + getAnimalImage();
     }
     private String getAnimalImage() {
-        int number = (int) Math.floor(energy / _map.getMapSettings().maxEnergy);
+        int number = (int) Math.floor(energy*6 / _map.getMapSettings().maxEnergy);
         return "a"+number+".png";
     }
 }

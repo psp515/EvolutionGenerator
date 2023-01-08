@@ -44,7 +44,7 @@ public abstract class Map implements IMap {
                 position.precedes(_endBound)))
             throw new IllegalArgumentException(String.format("GetMapFiled must take as argument valid position in square between %s and %s.", _startBound, _endBound));
 
-        return this._fields[position.x-1][position.y-1];
+        return this._fields[position.x][position.y];
     }
 
     @Override

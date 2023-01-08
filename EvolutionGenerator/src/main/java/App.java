@@ -89,8 +89,8 @@ public class App extends Application
     private void loadPresets() {
         //TODO : json
         var ss = new SimulationSettings();
-        ss.width = 50;
-        ss.height = 50;
+        ss.width = 20;
+        ss.height = 20;
         ss.moveCost = 1;
         ss.energyFromFood = 50;
         ss.copulationMinimalEnergy = 80;
@@ -103,6 +103,7 @@ public class App extends Application
         ss.movementsOptions = AnimalMovementOptions.DEFAULT;
         ss.genesOptions = GenesOptions.DEFAULT;
         ss.mapOption = MapOptions.DEFAULT;
+        ss.growingOptions = FoodGrowOptions.DEFAULT;
         ss.gensLength = 16;
         ss.saveToCsv = false;
 
@@ -111,8 +112,8 @@ public class App extends Application
         sw.settings = ss;
 
         var ss2 = new SimulationSettings();
-        ss2.width = 50;
-        ss2.height = 50;
+        ss2.width = 20;
+        ss2.height = 20;
         ss2.moveCost = 1;
         ss2.energyFromFood = 50;
         ss2.copulationMinimalEnergy = 80;
@@ -125,7 +126,8 @@ public class App extends Application
         ss2.movementsOptions = AnimalMovementOptions.DEFAULT;
         ss2.genesOptions = GenesOptions.DEFAULT;
         ss2.mapOption = MapOptions.DEFAULT;
-        ss2.gensLength = 16;
+        ss2.growingOptions = FoodGrowOptions.DEFAULT;
+        ss2.gensLength = 2;
         ss2.saveToCsv = false;
 
         var sw2 = new SettingsWrapper();
@@ -201,8 +203,6 @@ public class App extends Application
         savingOptionsSelector = new ComboBox();
         savingOptionsSelector.setPromptText("Saving Options");
         savingOptionsSelector.getItems().addAll(savingOptions);
-
-
 
         //Adding To View
 

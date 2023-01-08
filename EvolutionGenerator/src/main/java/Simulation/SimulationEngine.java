@@ -20,7 +20,7 @@ import static Tools.Randomizer.getRandomNumber;
 
 public class SimulationEngine implements IMapSimulations, Runnable {
 
-    public int simulationDay;
+    int simulationDay;
 
     IMap map;
     MapStatistics mapStatistics;
@@ -32,7 +32,7 @@ public class SimulationEngine implements IMapSimulations, Runnable {
     SingleFoodField[][] mapFields;
 
     Animal markedAnimal;
-    SimulationSettings simulationSettings;
+    public final SimulationSettings _simulationSettings;
 
     IFoodGenerator foodGenerator;
     SimulationStatus isRunning;
@@ -46,6 +46,15 @@ public class SimulationEngine implements IMapSimulations, Runnable {
 
     public Animal getMarkledAnimal(){
         return this.markedAnimal;
+    }
+    public int getSimulationDay(){
+        return this.simulationDay;
+    }
+
+    public SingleFoodField[][] getMapFields(){return this.mapFields;}
+
+    public MapStatistics getMapStatistics(){
+        return this.mapStatistics;
     }
 
     public void setMarkedAnimal(Animal animal)
@@ -63,37 +72,41 @@ public class SimulationEngine implements IMapSimulations, Runnable {
         animals = new ArrayList<>();
         deadAnimals = new ArrayList<>();
 
-        /*this.simulationSettings = settings;
+        this._simulationSettings = settings;
         this.mapStatistics = new MapStatistics(settings.width, settings.height);
 
-        mapFields = new SingleFoodField[simulationSettings.width][simulationSettings.height];
+        mapFields = new SingleFoodField[_simulationSettings.width][_simulationSettings.height];
 
-        map = simulationSettings.
-                mapOption.
-                getClassRepresentation(simulationSettings
-                        .generateMapSettings(), mapFields);
+        for(int i = 0; i < _simulationSettings.width;i++)
+            for(int j = 0; j < _simulationSettings.height;j++)
+                mapFields[i][j] = new SingleFoodField();
 
-        foodGenerator = simulationSettings.growingOptions.getClassRepresentation(mapFields, mapStatistics);
+
+        map = _simulationSettings
+                .mapOption
+                .getClassRepresentation(_simulationSettings.generateMapSettings(), mapFields);
+
+        foodGenerator = _simulationSettings.growingOptions.getClassRepresentation(mapFields, mapStatistics);
 
         generateStartingAnimals();
         growFood();
 
-        markedAnimal = null;*/
+        markedAnimal = null;
     }
 
     //region Initialization
     private void generateStartingAnimals() {
-        for(int i = 0; i < simulationSettings.startingAnimals; i++)
+        for(int i = 0; i < _simulationSettings.startingAnimals; i++)
         {
             Vector2d animalPosition = new Vector2d(map.getStartBound(), map.getEndBound());
             Animal newAnimal = new Animal(
                     map,
                     animalPosition,
-                    simulationSettings.genesOptions
-                            .getClassRepresentation(generateGenotype(simulationSettings.gensLength)),
-                    simulationSettings.movementsOptions.getClassRepresentation(),
+                    _simulationSettings.genesOptions
+                            .getClassRepresentation(generateGenotype(_simulationSettings.gensLength)),
+                    _simulationSettings.movementsOptions.getClassRepresentation(),
                     simulationDay,
-                    simulationSettings.startingEnregy);
+                    _simulationSettings.startingEnregy);
 
             map.placeElement(newAnimal);
         }
@@ -128,7 +141,6 @@ public class SimulationEngine implements IMapSimulations, Runnable {
                     }
                 }
     }
-
 
     @Override
     public void simulateDeaths()
@@ -174,7 +186,7 @@ public class SimulationEngine implements IMapSimulations, Runnable {
     @Override
     public void growFood() {
 
-        for(int i = 0; i < simulationSettings.dailyFoodGrow; i++)
+        for(int i = 0; i < _simulationSettings.dailyFoodGrow; i++)
         {
             Food food = foodGenerator.growFood(map, this.simulationDay);
 
@@ -189,8 +201,7 @@ public class SimulationEngine implements IMapSimulations, Runnable {
         }
     }
 
-    void UpdateStatistics()
-    {
+    void updateStatistics() {
         mapStatistics.animalsOnMap = animals.size();
         int totalEnergy = 0;
         int totalDaysLived = 0;
@@ -221,6 +232,7 @@ public class SimulationEngine implements IMapSimulations, Runnable {
             }
     }
 
+
     @Override
     public void run() {
 
@@ -231,7 +243,25 @@ public class SimulationEngine implements IMapSimulations, Runnable {
                 while(isRunning.isRunning)
                 {
                     simulationDay += 1;
+                    mapStatistics.dayBorns = 0;
+                    mapStatistics.dayDeaths = 0;
+                    mapStatistics.placesFreeFromAnimalCount = 0;
+
+                    moveAnimals();
+                    simulateEating();
+                    simulateDeaths();
+                    simulateBorns();
+                    growFood();
+
+                    updateStatistics();
+
                     observer.propertyChanged();
+
+                    if(_simulationSettings.saveToCsv)
+                    {
+                        //TODO save to csv
+                    }
+
                 }
 
                 return null;
@@ -239,39 +269,6 @@ public class SimulationEngine implements IMapSimulations, Runnable {
         };
 
         new Thread(task).start();
-
-
-            if(simulationDay == Integer.MAX_VALUE)
-                return;
-
-            //simulationDay += 1;
-            //mapStatistics.dayBorns = 0;
-            //mapStatistics.dayDeaths = 0;
-            //mapStatistics.placesFreeFromAnimalCount = 0;
-
-            //moveAnimals();
-            // simulateEating();
-            //simulateDeaths();
-            //simulateBorns();
-            //growFood();
-
-            //UpdateStatistics();
-
-            //TODO : notify view of updates, IPropertyChanged
-
-        /*if(simulationSettings.saveToCsv)
-        {
-            //TODO save to csv
-        }*/
-
-            observer.propertyChanged();
-
-
-
-        if(isRunning.isRunning)
-        {
-
-        }
     }
 
     public void MarkMostPopularGenotype()

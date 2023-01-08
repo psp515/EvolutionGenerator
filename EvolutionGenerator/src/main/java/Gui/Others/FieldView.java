@@ -2,6 +2,7 @@ package Gui.Others;
 
 import Interfaces.Map.IMapElement;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -18,7 +19,7 @@ public class FieldView {
 
     public VBox container;
 
-    public FieldView(IMapElement strongestAnimal, int animalsCount, boolean hasFood) throws FileNotFoundException {
+    public FieldView(IMapElement strongestAnimal, int animalsCount, boolean hasFood)  {
 
         // wyglad pola
         // na śrtodku zwierze lub brak
@@ -26,16 +27,20 @@ public class FieldView {
         // w lewym dolnym rogu ikona jest / nie ma pożywienia.
 
         String url = strongestAnimal == null? "" : strongestAnimal.getImage();
-        this.label = new Label(strongestAnimal == null? "" : strongestAnimal.toString());
+        this.label = new Label(strongestAnimal == null? "" : strongestAnimal.getPosition().toString());
 
-        this.image = !url.equals("") ? new Image( new FileInputStream(url)) : null;
+        try {
+            this.image = !url.equals("") ? new Image( new FileInputStream(url)) : null;
+        }
+        catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
         this.view = new ImageView(this.image);
-        this.view.setFitHeight(40);
-        this.view.setFitWidth(40);
+        this.view.setFitHeight(20);
+        this.view.setFitWidth(20);
         this.container = new VBox();
         this.container.getChildren().add(this.view);
         this.container.getChildren().add(this.label);
         this.container.setAlignment(Pos.CENTER);
     }
-
 }

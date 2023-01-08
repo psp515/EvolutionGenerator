@@ -16,7 +16,6 @@ public class SingleFoodField extends MapField implements IFoodField {
     private ArrayList<Animal> elements;
 
     public SingleFoodField() {
-        // tylko zwierzeta przechowywane
         elements = new ArrayList<>();
     }
 
@@ -59,12 +58,13 @@ public class SingleFoodField extends MapField implements IFoodField {
     }
 
     public Animal getStrongestAnimal(){
+        //TODO zmiana sposobu !!!!!!!!!
         return  elements.stream().max(Comparator.comparing(Animal::getEnergy)).orElse(null);
     }
 
     @Override
-    public FieldView getView() throws FileNotFoundException {
-        return new FieldView(getStrongestAnimal(),elements.size(),food != null);
+    public FieldView getView()  {
+        return new FieldView(getStrongestAnimal(), elements.size(),food != null);
     }
 
     public ArrayList<Animal> getAnimals(){
