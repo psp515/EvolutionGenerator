@@ -246,7 +246,12 @@ public class SimulationEngine implements IMapSimulations, Runnable {
 
         for(int i = 0; i < _simulationSettings.dailyFoodGrow; i++)
         {
+<<<<<<< Updated upstream
             Food food = foodGenerator.growFood(map, this.simulationDay);
+=======
+            Food food = foodGenerator.growFood(map, simulationDay);
+
+>>>>>>> Stashed changes
             if(food == null){
                 break;
             }

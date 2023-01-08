@@ -14,8 +14,13 @@ public class Equators extends FoodGenerator {
 
 
 
+<<<<<<< Updated upstream
     public Equators(SingleFoodField[][] mapField) {
         super(mapField);
+=======
+    public Equators(SingleFoodField[][] mapField, MapStatistics statistics) {
+        super(mapField, statistics);
+>>>>>>> Stashed changes
     }
 
     @Override

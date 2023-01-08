@@ -5,6 +5,10 @@ import Interfaces.Map.IMap;
 import Models.MapStatistics;
 import Tools.SingleFoodField;
 import Tools.Vector2d;
+<<<<<<< Updated upstream
+=======
+import com.sun.javafx.scene.shape.ArcHelper;
+>>>>>>> Stashed changes
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,7 +21,11 @@ public class DeathBodies extends FoodGenerator {
     public int[][] deathlist;
 
     public DeathBodies(SingleFoodField[][] mapField, MapStatistics statistics) {
+<<<<<<< Updated upstream
         super(mapField);
+=======
+        super(mapField, statistics);
+>>>>>>> Stashed changes
         this.deathlist = statistics.animalDeathsOnField;
     }
 
