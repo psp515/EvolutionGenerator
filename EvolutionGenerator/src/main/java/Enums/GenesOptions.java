@@ -1,8 +1,8 @@
 package Enums;
 
 import Elements.Animal;
-import ElementsExtensions.Genes.NormalGenotype;
 import ElementsExtensions.Genes.DiscouragedGenotype;
+import ElementsExtensions.Genes.NormalGenotype;
 import Interfaces.Animals.IGenes;
 import Interfaces.Others.GetClassRepresentationOneParam;
 

@@ -1,10 +1,9 @@
 package Enums;
 
-import Elements.Animal;
-import Interfaces.Animals.IAnimalMovement;
-import Interfaces.Others.GetClassRepresentation;
 import ElementsExtensions.AnimalMovement.FullFate;
 import ElementsExtensions.AnimalMovement.SlightMadness;
+import Interfaces.Animals.IAnimalMovement;
+import Interfaces.Others.GetClassRepresentation;
 
 public enum AnimalMovementOptions implements GetClassRepresentation<IAnimalMovement> {
     DEFAULT,

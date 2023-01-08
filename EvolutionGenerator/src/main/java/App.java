@@ -17,10 +17,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Map;
 
 import static java.lang.System.out;
 

@@ -1,8 +1,8 @@
 package ElementsExtensions.Genes;
+
 import Elements.Animal;
+
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.concurrent.ThreadLocalRandom;
 

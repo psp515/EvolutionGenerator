@@ -1,8 +1,8 @@
 package Gui.Simulation;
 
 import Interfaces.IPropertyChanged;
-import Models.SimulationStatus;
 import Models.SimulationSettings;
+import Models.SimulationStatus;
 import Simulation.SimulationEngine;
 import javafx.application.Platform;
 import javafx.event.EventHandler;

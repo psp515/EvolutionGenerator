@@ -1,7 +1,5 @@
 package Interfaces.Map;
 
-import Tools.Vector2d;
-
 public interface IMapSimulations
 {
     void simulateDeaths();

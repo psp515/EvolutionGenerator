@@ -6,7 +6,6 @@ import Gui.Others.FieldView;
 import Interfaces.Map.IMapElement;
 import Interfaces.Tools.IFoodField;
 
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Comparator;
 

@@ -6,7 +6,6 @@ import Interfaces.Map.IMapElement;
 import Tools.SingleFoodField;
 import Tools.Vector2d;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.concurrent.ThreadLocalRandom;

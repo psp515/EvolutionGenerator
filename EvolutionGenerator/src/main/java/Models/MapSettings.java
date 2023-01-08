@@ -1,7 +1,7 @@
 package Models;
 
-import Enums.FoodGrowOptions;
 import Enums.AnimalMovementOptions;
+import Enums.FoodGrowOptions;
 import Enums.GenesOptions;
 
 public class MapSettings {

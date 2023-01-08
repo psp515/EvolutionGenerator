@@ -4,7 +4,6 @@ import ElementsExtensions.Food.DeathBodies;
 import ElementsExtensions.Food.Equators;
 import ElementsExtensions.Food.Randomer;
 import Interfaces.Map.IFoodGenerator;
-import Interfaces.Map.IMap;
 import Interfaces.Others.GetClassRepresentationTwoParam;
 import Models.MapStatistics;
 import Tools.SingleFoodField;

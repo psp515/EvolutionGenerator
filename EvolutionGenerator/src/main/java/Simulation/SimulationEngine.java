@@ -8,11 +8,10 @@ import Interfaces.Map.IFoodGenerator;
 import Interfaces.Map.IMap;
 import Interfaces.Map.IMapSimulations;
 import Models.MapStatistics;
-import Models.SimulationStatus;
 import Models.SimulationSettings;
+import Models.SimulationStatus;
 import Tools.SingleFoodField;
 import Tools.Vector2d;
-import javafx.concurrent.Task;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -217,11 +216,11 @@ public class SimulationEngine implements IMapSimulations, Runnable {
                 var field = mapFields[i][j];
                 var elements = field.getElements();
 
-                if(elements.length != 0)
-                    out.println(elements.length);
-
                 if(elements.length < 2)
                     return;
+
+                out.println("Simulate borns");
+                out.println(elements.length);
 
                 Animal[] fieldAniamls = new Animal[elements.length];
 

@@ -5,8 +5,6 @@ import Interfaces.Map.IMap;
 import Tools.SingleFoodField;
 import Tools.Vector2d;
 
-import static java.lang.System.out;
-
 public class Randomer extends FoodGenerator {
 
     public Randomer(SingleFoodField[][] mapFields) {

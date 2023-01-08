@@ -5,7 +5,6 @@ import Interfaces.Map.IMap;
 import Models.MapStatistics;
 import Tools.SingleFoodField;
 import Tools.Vector2d;
-import com.sun.javafx.scene.shape.ArcHelper;
 
 import java.util.ArrayList;
 import java.util.Collections;

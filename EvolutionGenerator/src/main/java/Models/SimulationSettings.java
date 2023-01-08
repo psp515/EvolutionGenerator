@@ -1,9 +1,9 @@
 package Models;
 
-import Enums.FoodGrowOptions;
-import Enums.MapOptions;
 import Enums.AnimalMovementOptions;
+import Enums.FoodGrowOptions;
 import Enums.GenesOptions;
+import Enums.MapOptions;
 
 public class SimulationSettings implements Cloneable
 {

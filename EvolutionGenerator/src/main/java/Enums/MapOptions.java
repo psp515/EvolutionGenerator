@@ -1,8 +1,6 @@
 package Enums;
 
 import Interfaces.Map.IMap;
-import Interfaces.Others.GetClassRepresentation;
-import Interfaces.Others.GetClassRepresentationOneParam;
 import Interfaces.Others.GetClassRepresentationTwoParam;
 import Interfaces.Tools.IMapField;
 import Maps.Earth;

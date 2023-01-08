@@ -4,8 +4,6 @@ import Elements.Animal;
 import Interfaces.Animals.IGenes;
 
 import java.util.concurrent.ThreadLocalRandom;
-import static java.lang.Math.abs;
-import static java.lang.Math.min;
 
 public abstract class Genes implements IGenes {
     private int[] genes;
@@ -21,23 +19,35 @@ public abstract class Genes implements IGenes {
     public Genes(Animal parent1, Animal parent2, int genLength) {
         int part1 = (genLength * parent1.getEnergy()) / (parent1.getEnergy() + parent2.getEnergy());
         int part2 = genLength - part1;
-        int side1 = ThreadLocalRandom.current().nextInt(2);
-        int side2 = 1 - side1;
         this.genLength = genLength;
-        int[] childgenes = new int[genLength];
 
-        //TODO FIX
-        for (int i = 0; i < (part1 * side2 + part2 * side1); i++) {
-            childgenes[i] = side2 * parent1._genotype.getGenes()[i] + side1 * parent2._genotype.getGenes()[i];
+        if(ThreadLocalRandom.current().nextInt(2) %2 ==0)
+            this.genes = createGenes(genLength, parent1, parent2, part1, part2);
+        else
+            this.genes = createGenes(genLength, parent2, parent1, part2, part1);
+
+        mutate();
+    }
+
+    private int[] createGenes(int len, Animal a, Animal b, int a_len, int b_len)
+    {
+        int[] genes = new int[len];
+
+        int i = 0;
+
+        for(int j = 0; j < a_len;j++)
+        {
+            genes[i] = a._genotype.getGenes()[i];
+            i++;
         }
-        for (int i = part1; i < (part1 * side1 + part2 * side2); i++) {
-            childgenes[i] = side1 * parent1._genotype.getGenes()[i] + side2 * parent2._genotype.getGenes()[i];
 
-            this.genes = childgenes;
-            mutate();
+        for(int j = 0; j < b_len;j++)
+        {
+            genes[i] = b._genotype.getGenes()[i];
+            i++;
         }
 
-        childgenes = new int[]{1,0,0,0};
+        return genes;
     }
 
     @Override

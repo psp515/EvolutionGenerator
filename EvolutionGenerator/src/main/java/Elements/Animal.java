@@ -1,11 +1,10 @@
 package Elements;
 
-import ElementsExtensions.Genes.Genes;
 import Enums.MapDirection;
 import Interfaces.Animals.IAnimalMovement;
 import Interfaces.Animals.IGenes;
-import Interfaces.Map.IMapMoveElement;
 import Interfaces.Map.IMap;
+import Interfaces.Map.IMapMoveElement;
 import Models.MapSettings;
 import Tools.Vector2d;
 import javafx.util.Pair;
@@ -75,8 +74,6 @@ public class Animal extends MapElement implements IMapMoveElement {
         secondParent.childrenBorn();
 
         IGenes genes = settings.geneOptions.getClassRepresentation(this, secondParent, settings.gensLength);
-
-        out.println(Arrays.toString(genes.getGenes()));
 
         Animal youngling = new Animal(
                 this._map,
