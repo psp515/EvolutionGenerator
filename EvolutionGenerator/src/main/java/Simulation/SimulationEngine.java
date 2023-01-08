@@ -176,7 +176,7 @@ public class SimulationEngine implements IMapSimulations, Runnable {
 
         for(int i = 0; i < simulationSettings.dailyFoodGrow; i++)
         {
-            Food food = foodGenerator.growFood();
+            Food food = foodGenerator.growFood(map, this.simulationDay);
 
             if(food == null){
                 // nie ma miejsca na mapie na jedzenie

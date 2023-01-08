@@ -8,4 +8,6 @@ public interface IGenes {
 
     int getActiveGene();
     int getGenLength();
+    int skipToRandomGene();
+    int activateNextGene();
 }
