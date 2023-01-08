@@ -3,6 +3,7 @@ package ElementsExtensions.Food;
 import Elements.Food;
 import Interfaces.Map.IMap;
 import Interfaces.Map.IMapElement;
+import Models.MapStatistics;
 import Tools.SingleFoodField;
 import Tools.Vector2d;
 
@@ -14,13 +15,9 @@ public class Equators extends FoodGenerator {
 
 
 
-<<<<<<< Updated upstream
-    public Equators(SingleFoodField[][] mapField) {
-        super(mapField);
-=======
+
     public Equators(SingleFoodField[][] mapField, MapStatistics statistics) {
         super(mapField, statistics);
->>>>>>> Stashed changes
     }
 
     @Override
