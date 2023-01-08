@@ -8,17 +8,15 @@ import Interfaces.Map.IFoodGenerator;
 import Interfaces.Map.IMap;
 import Interfaces.Map.IMapSimulations;
 import Models.MapStatistics;
-import Models.SimulationRun;
+import Models.SimulationStatus;
 import Models.SimulationSettings;
 import Tools.SingleFoodField;
 import Tools.Vector2d;
-import com.sun.source.tree.WhileLoopTree;
 import javafx.concurrent.Task;
 
 import java.util.ArrayList;
 
 import static Tools.Randomizer.getRandomNumber;
-import static java.lang.System.out;
 
 public class SimulationEngine implements IMapSimulations, Runnable {
 
@@ -37,11 +35,27 @@ public class SimulationEngine implements IMapSimulations, Runnable {
     SimulationSettings simulationSettings;
 
     IFoodGenerator foodGenerator;
-    SimulationRun isRunning;
+    SimulationStatus isRunning;
 
     IPropertyChanged observer;
 
-    public SimulationEngine(SimulationSettings settings, SimulationRun isRunning, IPropertyChanged observer){
+
+    public ArrayList<Animal> getAnimals(){
+        return this.animals;
+    }
+
+    public Animal getMarkledAnimal(){
+        return this.markedAnimal;
+    }
+
+    public void setMarkedAnimal(Animal animal)
+    {
+        //TODO : check if in aniamls
+        this.markedAnimal = animal;
+    }
+
+
+    public SimulationEngine(SimulationSettings settings, SimulationStatus isRunning, IPropertyChanged observer){
 
         this.observer = observer;
         this.isRunning = isRunning;
@@ -218,11 +232,6 @@ public class SimulationEngine implements IMapSimulations, Runnable {
                 {
                     simulationDay += 1;
                     observer.propertyChanged();
-                    try{
-                        Thread.sleep(1000);
-                    }catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
                 }
 
                 return null;

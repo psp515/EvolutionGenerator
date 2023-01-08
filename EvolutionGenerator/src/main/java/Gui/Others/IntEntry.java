@@ -2,14 +2,13 @@ package Gui.Others;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 public class IntEntry extends VBox {
 
     NumberTextField input;
-    int min;
-    int max;
+    public final int min;
+    public final int max;
     public IntEntry(String description, int initialValue, int min, int max){
 
         this.getChildren().add(new Label(description));

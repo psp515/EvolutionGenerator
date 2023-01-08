@@ -1,5 +1,5 @@
 package Models;
 
-public class SimulationRun {
+public class SimulationStatus {
     public boolean isRunning;
 }
