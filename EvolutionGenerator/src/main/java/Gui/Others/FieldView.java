@@ -21,6 +21,8 @@ public class FieldView {
     public FieldView(IMapElement strongestAnimal, int animalsCount, IMapElement food)  {
 
         this.container = new VBox();
+        this.container.setMinHeight(30);
+        this.container.setMinWidth(30);
         this.container.setMaxHeight(30);
         this.container.setMinWidth(30);
 
@@ -34,7 +36,7 @@ public class FieldView {
                     this.view.setFitHeight(20);
                     this.view.setFitWidth(20);
 
-                    this.label = new Label("No Animals");
+                    this.label = new Label("0 A");
                     this.container = new VBox();
                     this.container.getChildren().add(this.view);
                     this.container.getChildren().add(this.label);
@@ -55,7 +57,7 @@ public class FieldView {
                 this.view.setFitHeight(20);
                 this.view.setFitWidth(20);
 
-                this.label = new Label("Number of animals: " + String.valueOf(animalsCount));
+                this.label = new Label(String.valueOf(animalsCount)+"A");
                 this.container.getChildren().add(this.view);
                 this.container.getChildren().add(this.label);
                 this.container.setAlignment(Pos.CENTER);

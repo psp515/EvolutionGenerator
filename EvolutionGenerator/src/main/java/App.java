@@ -147,24 +147,21 @@ public class App extends Application
 
         var title = new Label("Load settings from preset");
         title.setStyle("-fx-font-weight: bold");
-
         Button startButton = new Button("Start Custom Simulation");
+
 
         IntEntry widthEntry = new IntEntry("Map Width", 40,20,200);
         IntEntry heightEntry = new IntEntry("Map Height", 40,20,200);
-
         IntEntry moveCostEntry = new IntEntry("Move Cost", 10,1,10);
         IntEntry energyFromFoodEntry = new IntEntry("Energy From Food", 50,1,100);
         IntEntry copulationMinimalEnergyEntry = new IntEntry("Copulation energy requirements", 80,1,100);
         IntEntry copulationCostEnregyEntry = new IntEntry("Copulation Cost", 39,1,100);
-        IntEntry startingEnregyEntry = new IntEntry("Starting Animals Energy", 100,1,100);
+        IntEntry startingEnregyEntry = new IntEntry("Starting Animal Energy", 100,1,100);
         IntEntry maxEnregyEntry = new IntEntry("Maximal Animal Energy", 500,1,1000);
-
         IntEntry startingFoodEntry = new IntEntry("Starting Food Objects on Map", 1,1,200*200);
         IntEntry dailyFoodGrowEntry = new IntEntry("Daily Food Grow", 1,1,200*200);
-        IntEntry startingAnimalsEntry = new IntEntry("Starting Animal Energy", 1,1,200*200);
-
-        IntEntry genesLengthEntry = new IntEntry("Map Width", 1,1,32);
+        IntEntry startingAnimalsEntry = new IntEntry("Starting Animals Count", 1,1,200*200);
+        IntEntry genesLengthEntry = new IntEntry("Gen Length", 1,1,32);
 
         VBox mo = new VBox();
         mo.setPadding(new Insets(4,10,4,10));
