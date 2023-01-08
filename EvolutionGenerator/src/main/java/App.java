@@ -126,7 +126,7 @@ public class App extends Application
         ss2.movementsOptions = AnimalMovementOptions.DEFAULT;
         ss2.genesOptions = GenesOptions.DEFAULT;
         ss2.mapOption = MapOptions.DEFAULT;
-        ss2.growingOptions = FoodGrowOptions.DEATH_BODIES;
+        ss2.growingOptions = FoodGrowOptions.RANDOMER;
         ss2.gensLength = 2;
         ss2.saveToCsv = false;
 

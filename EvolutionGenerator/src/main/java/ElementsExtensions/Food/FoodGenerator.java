@@ -10,8 +10,8 @@ public abstract class FoodGenerator implements IFoodGenerator {
 
     public SingleFoodField[][] field;
 
-    protected FoodGenerator(SingleFoodField[][] mapField) {
-        this.field = mapField;
+    protected FoodGenerator(SingleFoodField[][] mapFields) {
+        this.field = mapFields;
 
     }
 
