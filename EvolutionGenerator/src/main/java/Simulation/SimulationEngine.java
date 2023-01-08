@@ -12,6 +12,7 @@ import Models.SimulationSettings;
 import Models.SimulationStatus;
 import Tools.SingleFoodField;
 import Tools.Vector2d;
+import javafx.application.Platform;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -68,6 +69,8 @@ public class SimulationEngine implements IMapSimulations, Runnable {
 
     public SimulationEngine(SimulationSettings settings, SimulationStatus isRunning, IPropertyChanged observer){
 
+        markedAnimal = null;
+
         this.observer = observer;
         this.isRunning = isRunning;
 
@@ -92,8 +95,6 @@ public class SimulationEngine implements IMapSimulations, Runnable {
 
         generateStartingAnimals();
         generateStartingFood();
-
-        markedAnimal = null;
     }
 
     //region Initialization
@@ -129,35 +130,6 @@ public class SimulationEngine implements IMapSimulations, Runnable {
             map.placeElement(newAnimal);
             animals.add(newAnimal);
         }
-
-        //TODO ELETE
-
-        Animal newAnimal = new Animal(
-                map,
-                new Vector2d(1,0),
-                _simulationSettings.genesOptions
-                        .getClassRepresentation(new int[]{0, 0, 0, 0}),
-                _simulationSettings.movementsOptions.getClassRepresentation(),
-                simulationDay,
-                _simulationSettings.startingEnregy);
-
-        animals.add(newAnimal);
-        map.placeElement(newAnimal);
-
-
-        Animal newAnimal2 = new Animal(
-                map,
-                new Vector2d(1,0),
-                _simulationSettings.genesOptions
-                        .getClassRepresentation(new int[]{0, 0, 0, 0}),
-                _simulationSettings.movementsOptions.getClassRepresentation(),
-                simulationDay,
-                _simulationSettings.startingEnregy);
-
-        animals.add(newAnimal2);
-        map.placeElement(newAnimal2);
-
-        markedAnimal = newAnimal;
     }
     private int[] generateGenotype(int len){
         int[] genotype = new int[len];
@@ -362,7 +334,7 @@ public class SimulationEngine implements IMapSimulations, Runnable {
 
         updateStatistics();
 
-        observer.propertyChanged();
+        Platform.runLater(() -> observer.propertyChanged());
 
         if(_simulationSettings.saveToCsv)
         {
