@@ -16,7 +16,7 @@ public enum FoodGrowOptions implements GetClassRepresentationTwoParam<IFoodGener
     @Override
     public IFoodGenerator getClassRepresentation(SingleFoodField[][] mapFields, MapStatistics statistics){
         return switch (this) {
-            case DEFAULT, EQUATORS -> new Equators(mapFields);
+            case DEFAULT, EQUATORS -> new Equators(mapFields, statistics);
             case DEATH_BODIES -> new DeathBodies(mapFields, statistics);
         };
     }

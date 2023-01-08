@@ -5,7 +5,9 @@ import Enums.MapDirection;
 import java.util.Objects;
 
 public class Vector2d {
-    public final int x, y;
+    public int x;
+    public int y;
+
 
 
     /**

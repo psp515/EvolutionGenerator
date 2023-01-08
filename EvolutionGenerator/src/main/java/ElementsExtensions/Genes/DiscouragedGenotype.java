@@ -1,8 +1,11 @@
 package ElementsExtensions.Genes;
 import Elements.Animal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.concurrent.ThreadLocalRandom;
+
+import static java.lang.System.out;
 
 public class DiscouragedGenotype extends Genes {
     public DiscouragedGenotype(int[] genes) {
@@ -21,6 +24,8 @@ public class DiscouragedGenotype extends Genes {
             genesToChange.add(i);
         }
         Collections.shuffle(genesToChange);
+        out.println(changedGenesCount);
+        out.println(Arrays.toString(genesToChange.toArray()));
 
         for(int i=0; i<changedGenesCount; i++){
             this.getGenes()[genesToChange.get(i)] += 1-ThreadLocalRandom.current().nextInt(3);

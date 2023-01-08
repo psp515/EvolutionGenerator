@@ -16,7 +16,6 @@ public abstract class Genes implements IGenes {
         this.genes = genes;
         activatedGene = 0;
         genLength = genes.length;
-        mutate();
     }
 
     public Genes(Animal parent1, Animal parent2, int genLength){
@@ -30,6 +29,7 @@ public abstract class Genes implements IGenes {
         for(int i=0; i<(part1*side2 + part2*side1); i++) {
             childgenes[i] = side2*parent1._genotype.getGenes()[i] + side1*parent2._genotype.getGenes()[i];
         }
+<<<<<<< Updated upstream
         for(int i=part1; i<(part1*side1 + part2*side2); i++){
             childgenes[i] = side1*parent1._genotype.getGenes()[i] + side2*parent2._genotype.getGenes()[i];
         int side1 = ThreadLocalRandom.current().nextInt(2);
@@ -45,6 +45,14 @@ public abstract class Genes implements IGenes {
 
         this.genes = childgenes;
         mutate();
+=======
+        for (int i = part1; i < (part1 * side1 + part2 * side2); i++) {
+            childgenes[i] = side1 * parent1._genotype.getGenes()[i] + side2 * parent2._genotype.getGenes()[i];
+        }
+        this.genes = childgenes;
+        mutate();
+
+>>>>>>> Stashed changes
     }
 
     @Override
