@@ -128,6 +128,22 @@ public class SimulationEngine implements IMapSimulations, Runnable {
             map.placeElement(newAnimal);
             animals.add(newAnimal);
         }
+
+        //TODO ELETE
+
+        Animal newAnimal = new Animal(
+                map,
+                new Vector2d(0,0),
+                _simulationSettings.genesOptions
+                        .getClassRepresentation(new int[]{0, 0, 0, 0}),
+                _simulationSettings.movementsOptions.getClassRepresentation(),
+                simulationDay,
+                _simulationSettings.startingEnregy);
+
+        animals.add(newAnimal);
+        map.placeElement(newAnimal);
+
+        markedAnimal = newAnimal;
     }
     private int[] generateGenotype(int len){
         int[] genotype = new int[len];
@@ -221,6 +237,8 @@ public class SimulationEngine implements IMapSimulations, Runnable {
         mapStatistics.animalsOnMap = animals.size();
         int totalEnergy = 0;
         int totalDaysLived = 0;
+        mapStatistics.foodOnMap = 0;
+        mapStatistics.placesFreeFromAnimalCount = 0;
 
         for(Animal deadAnimal : deadAnimals)
             totalDaysLived += deadAnimal.getDeathDay() - deadAnimal.getCreationDay();
@@ -246,6 +264,9 @@ public class SimulationEngine implements IMapSimulations, Runnable {
                     }
                 }
             }
+
+        //TODO FIX
+        mapStatistics.animalsOnMap = animals.size();
     }
 
 

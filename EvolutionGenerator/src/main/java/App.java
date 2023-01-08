@@ -122,12 +122,12 @@ public class App extends Application
         ss2.maxEnregy = 300;
         ss2.startingFood = 30;
         ss2.dailyFoodGrow = 1;
-        ss2.startingAnimals = 10;
+        ss2.startingAnimals = 0;
         ss2.movementsOptions = AnimalMovementOptions.DEFAULT;
         ss2.genesOptions = GenesOptions.DEFAULT;
         ss2.mapOption = MapOptions.DEFAULT;
         ss2.growingOptions = FoodGrowOptions.RANDOMER;
-        ss2.gensLength = 2;
+        ss2.gensLength = 8;
         ss2.saveToCsv = false;
 
         var sw2 = new SettingsWrapper();

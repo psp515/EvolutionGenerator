@@ -57,7 +57,7 @@ public class SimulationView implements IPropertyChanged {
         scrollPane.setPadding(new Insets(10,10,10,10));
         mainScene = new Scene(scrollPane);
         mainView.setScene(mainScene);
-        mainView.setFullScreen(true);
+        mainView.sizeToScene();
         mainView.show();
 
         mainView.setOnCloseRequest(new EventHandler<WindowEvent>() {

@@ -26,7 +26,7 @@ public class Animal extends MapElement implements IMapMoveElement {
     public Animal(IMap map, Vector2d position, IGenes genotype, IAnimalMovement movement, int bornDay, int startingEnergy) {
         super(map, position, bornDay);
 
-        actDirection = MapDirection.getRandom();
+        actDirection = MapDirection.WEST;
 
         _genotype = genotype;
         _movement = movement;
@@ -130,7 +130,7 @@ public class Animal extends MapElement implements IMapMoveElement {
         return RESOURCES_STRING + "/animals/" + getAnimalImage();
     }
     private String getAnimalImage() {
-        int number = (int) Math.floor(energy*6 / _map.getMapSettings().maxEnergy);
+        int number = (int) Math.floor(energy * 6 / _map.getMapSettings().maxEnergy);
         return "a"+number+".png";
     }
 }

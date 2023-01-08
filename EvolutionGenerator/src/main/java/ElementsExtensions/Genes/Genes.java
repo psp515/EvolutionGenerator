@@ -16,7 +16,6 @@ public abstract class Genes implements IGenes {
         this.genes = genes;
         activatedGene = 0;
         genLength = genes.length;
-        mutate();
     }
 
     public Genes(Animal parent1, Animal parent2, int genLength) {
