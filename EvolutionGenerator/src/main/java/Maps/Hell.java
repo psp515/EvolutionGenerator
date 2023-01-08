@@ -17,12 +17,17 @@ public class Hell extends Map {
         if(newPosition.isInRectangle(_startBound, _endBound))
         {
             element.useEnergy(_settings.moveCost);
+            _fields[oldPosition.x][oldPosition.y].removeMapElement(element);
+            _fields[newPosition.x][newPosition.y].addElement(element);
             return new Pair<>(oldPosition.getDirectionBetweenPositions(newPosition), newPosition);
         }
         else
         {
+            newPosition = new Vector2d(_startBound, _endBound);
             element.useEnergy(_settings.copulationCostEnregy);
-            return new Pair<>(oldPosition.getDirectionBetweenPositions(newPosition), new Vector2d(_startBound, _endBound));
+            _fields[oldPosition.x][oldPosition.y].removeMapElement(element);
+            _fields[newPosition.x][newPosition.y].addElement(element);
+            return new Pair<>(oldPosition.getDirectionBetweenPositions(newPosition), newPosition);
         }
 
     }

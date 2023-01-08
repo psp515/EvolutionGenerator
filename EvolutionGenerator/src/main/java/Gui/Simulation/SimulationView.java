@@ -225,9 +225,9 @@ public class SimulationView implements IPropertyChanged {
         } catch (InterruptedException e) {}
         status.isRunning = true;
         out.println("start");
-        var thread = new Thread(simulationEngine);
-        thread.run();
-        //simulationEngine.run();
+        //var thread = new Thread(simulationEngine);
+        //thread.run();
+        simulationEngine.run();
     }
     public void stopSimulation() {
 

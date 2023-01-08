@@ -121,8 +121,8 @@ public class App extends Application
         ss2.startingEnregy = 100;
         ss2.maxEnregy = 300;
         ss2.startingFood = 30;
-        ss2.dailyFoodGrow = 30;
-        ss2.startingAnimals = 30;
+        ss2.dailyFoodGrow = 1;
+        ss2.startingAnimals = 10;
         ss2.movementsOptions = AnimalMovementOptions.DEFAULT;
         ss2.genesOptions = GenesOptions.DEFAULT;
         ss2.mapOption = MapOptions.DEFAULT;

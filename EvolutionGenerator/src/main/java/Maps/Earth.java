@@ -21,30 +21,39 @@ public class Earth extends Map {
         {
             // too much North
             var direction = oldPosition.getDirectionBetweenPositions(newPosition).getOpposed();
-
+            _fields[oldPosition.x][oldPosition.y].removeMapElement(element);
+            _fields[newPosition.x][newPosition.y].addElement(element);
             return new Pair<>(direction, oldPosition);
         }
         else if(newPosition.y >= _settings.height)
         {
             // too much South
             var direction = oldPosition.getDirectionBetweenPositions(newPosition).getOpposed();
+            _fields[oldPosition.x][oldPosition.y].removeMapElement(element);
+            _fields[newPosition.x][newPosition.y].addElement(element);
             return new Pair<>(direction, oldPosition);
         }
         else if(newPosition.x >= _settings.width)
         {
             // too much east
             var updatedNewPosition = new Vector2d(0, newPosition.y);
+            _fields[oldPosition.x][oldPosition.y].removeMapElement(element);
+            _fields[newPosition.x][newPosition.y].addElement(element);
             return new Pair<>(oldPosition.getDirectionBetweenPositions(newPosition), updatedNewPosition);
         }
         else if(newPosition.x < 0)
         {
             // too much west
             var updatedNewPosition = new Vector2d(_settings.width-1, newPosition.y);
+            _fields[oldPosition.x][oldPosition.y].removeMapElement(element);
+            _fields[newPosition.x][newPosition.y].addElement(element);
             return new Pair<>(oldPosition.getDirectionBetweenPositions(newPosition), updatedNewPosition);
         }
         else
         {
             // normal move
+            _fields[oldPosition.x][oldPosition.y].removeMapElement(element);
+            _fields[newPosition.x][newPosition.y].addElement(element);
             return new Pair<>(oldPosition.getDirectionBetweenPositions(newPosition), newPosition);
         }
     }

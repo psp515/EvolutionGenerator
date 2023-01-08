@@ -90,12 +90,28 @@ public class SimulationEngine implements IMapSimulations, Runnable {
         foodGenerator = _simulationSettings.growingOptions.getClassRepresentation(mapFields, mapStatistics);
 
         generateStartingAnimals();
-        growFood();
+        generateStartingFood();
 
         markedAnimal = null;
     }
 
     //region Initialization
+
+    private void generateStartingFood()
+    {
+        for(int i = 0; i < _simulationSettings.startingFood; i++)
+        {
+            Food food = foodGenerator.growFood(map, this.simulationDay);
+            if(food == null){
+                break;
+            }
+            else {
+                map.placeElement(food);
+                mapStatistics.safeFoodGrow(food);
+            }
+        }
+    }
+
     private void generateStartingAnimals() {
         for(int i = 0; i < _simulationSettings.startingAnimals; i++)
         {
@@ -110,6 +126,7 @@ public class SimulationEngine implements IMapSimulations, Runnable {
                     _simulationSettings.startingEnregy);
 
             map.placeElement(newAnimal);
+            animals.add(newAnimal);
         }
     }
     private int[] generateGenotype(int len){
@@ -234,8 +251,8 @@ public class SimulationEngine implements IMapSimulations, Runnable {
 
     @Override
     public void run() {
-
-        Task task = new Task<Void>() {
+        /*
+        Task<Void> task = new Task<>() {
             @Override
             public Void call() {
                 while(isRunning.isRunning)
@@ -269,7 +286,11 @@ public class SimulationEngine implements IMapSimulations, Runnable {
                         //TODO save to csv
                     }
 
-                    try{Thread.sleep(100);} catch (InterruptedException e) {}
+                    try
+                    {
+                        Thread.sleep(1000);
+                    }
+                    catch (InterruptedException e) {}
                     out.println("endsleep");
                 }
 
@@ -277,7 +298,37 @@ public class SimulationEngine implements IMapSimulations, Runnable {
             }
         };
 
-        new Thread(task).run();
+        new Thread(task).run();*/
+        out.println("startDay");
+        simulationDay += 1;
+        mapStatistics.dayBorns = 0;
+        mapStatistics.dayDeaths = 0;
+        mapStatistics.placesFreeFromAnimalCount = 0;
+
+        moveAnimals();
+        out.println("1");
+        simulateEating();
+        out.println("2");
+        simulateDeaths();
+        out.println("3");
+        simulateBorns();
+        out.println("4");
+        growFood();
+        out.println("5");
+
+        updateStatistics();
+
+        out.println("data");
+
+        observer.propertyChanged();
+
+        if(_simulationSettings.saveToCsv)
+        {
+            //TODO save to csv
+        }
+
+
+        out.println("endsleep");
     }
 
     public void MarkMostPopularGenotype()
