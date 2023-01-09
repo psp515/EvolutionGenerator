@@ -8,6 +8,7 @@ import Tools.Vector2d;
 //import com.sun.javafx.scene.shape.ArcHelper;
 
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class DeathBodies extends FoodGenerator {
 
@@ -30,13 +31,26 @@ public class DeathBodies extends FoodGenerator {
         List<Map.Entry<Vector2d, Integer>> list = new ArrayList<>(deathMap.entrySet());
         list.sort(Map.Entry.comparingByValue());
 
-        for(int i = 0; i < list.size(); i++)
+        if(ThreadLocalRandom.current().nextInt(5) == 4)
         {
-            var position = list.get(i).getKey();
-            SingleFoodField possibleField = (SingleFoodField) fields[position.x][position.y];
-            if(!possibleField.containsFood())
-                return new Food(map,position.copy(),day);
+            for(int i = list.size() - 1; i >= 0; i--)
+            {
+                var position = list.get(i).getKey();
+                SingleFoodField possibleField = (SingleFoodField) fields[position.x][position.y];
+                if(!possibleField.containsFood())
+                    return new Food(map,position.copy(),day);
 
+            }
+        }
+        else
+        {
+            for (Map.Entry<Vector2d, Integer> vector2dIntegerEntry : list) {
+                var position = vector2dIntegerEntry.getKey();
+                SingleFoodField possibleField = (SingleFoodField) fields[position.x][position.y];
+                if (!possibleField.containsFood())
+                    return new Food(map, position.copy(), day);
+
+            }
         }
 
 

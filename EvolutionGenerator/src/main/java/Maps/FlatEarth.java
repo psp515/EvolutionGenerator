@@ -1,6 +1,6 @@
 package Maps;
 
 
-//TODO
+//Dodatkowa możliwość
 public class FlatEarth {
 }
