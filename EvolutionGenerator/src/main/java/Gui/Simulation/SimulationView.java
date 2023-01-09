@@ -8,6 +8,7 @@ import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -18,6 +19,12 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 import java.util.Arrays;
+
+import static java.lang.System.out;
+
+// TODO Marking Animals
+// TODO Selecting One Animal - > to mozna zrobić combo boxem i wybór jednego
+// TODO Kopulacja nie działa poprawnie
 
 public class SimulationView implements IPropertyChanged {
 
@@ -75,6 +82,14 @@ public class SimulationView implements IPropertyChanged {
 
     //DRAW
 
+    public Label makeLabel(String text)
+    {
+        var label = new Label(text);
+        label.setPadding(new Insets(4,4,4,4));
+        label.setAlignment(Pos.CENTER);
+        return label;
+    }
+
     public void refreshMap(){
         drawStatistics();
         drawWatchedAnimal();
@@ -105,12 +120,10 @@ public class SimulationView implements IPropertyChanged {
             }
         }
 
+        map.setGridLinesVisible(false);
         map.setGridLinesVisible(true);
     }
-    public void updateMap() {
-        map = new GridPane();
-        drawMap();
-    }
+
     public void drawStatistics() {
 
         statistics.getChildren().clear();
@@ -122,65 +135,29 @@ public class SimulationView implements IPropertyChanged {
         for ( int i = 0; i < 2; i++ )
             statistics.getRowConstraints().add(new RowConstraints(  ));
 
-        statistics.add(new Label("Animals Count"),0,0);
-        statistics.add(new Label(String.valueOf(stats.animalsOnMap)),0,1);
+        statistics.add(makeLabel("Animals Count"),0,0);
+        statistics.add(makeLabel(String.valueOf(stats.animalsOnMap)),0,1);
 
-        statistics.add(new Label("Food Count"),1,0);
-        statistics.add(new Label(String.valueOf(stats.foodOnMap)),1,1);
+        statistics.add(makeLabel("Food Count"),1,0);
+        statistics.add(makeLabel(String.valueOf(stats.foodOnMap)),1,1);
 
-        statistics.add(new Label("Free Count"),2,0);
-        statistics.add(new Label(String.valueOf(stats.placesFreeFromAnimalCount)),2,1);
+        statistics.add(makeLabel("Free Count"),2,0);
+        statistics.add(makeLabel(String.valueOf(stats.placesFreeFromAnimalCount)),2,1);
 
-        statistics.add(new Label("Most Popular Gens"),3,0);
-        statistics.add(new Label("TODO"),3,1);
+        statistics.add(makeLabel("Most Popular Gens"),3,0);
+        statistics.add(makeLabel("TODO"),3,1);
 
-        statistics.add(new Label("Avg. Energy"),4,0);
-        statistics.add(new Label(String.valueOf(stats.averageEnergy)),4,1);
+        statistics.add(makeLabel("Avg. Energy"),4,0);
+        statistics.add(makeLabel(String.valueOf(stats.averageEnergy)),4,1);
 
-        statistics.add(new Label("Avg. Live Span"),5,0);
-        statistics.add(new Label(String.valueOf(stats.averageLiveLength)),5,1);
-
-
-        statistics.add(new Label("Simulation Day"),6,0);
-        statistics.add(new Label(String.valueOf(simulationEngine.getSimulationDay())),6,1);
+        statistics.add(makeLabel("Avg. Live Span"),5,0);
+        statistics.add(makeLabel(String.valueOf(stats.averageLiveLength)),5,1);
 
 
-        statistics.setGridLinesVisible(true);
-    }
+        statistics.add(makeLabel("Simulation Day"),6,0);
+        statistics.add(makeLabel(String.valueOf(simulationEngine.getSimulationDay())),6,1);
 
-    public void updateStatistics() {
-        statistics = new GridPane();
-
-        var stats = simulationEngine.getMapStatistics();
-
-        for ( int i = 0; i < 7; i++ )
-            statistics.getColumnConstraints().add(new ColumnConstraints(  ));
-        for ( int i = 0; i < 2; i++ )
-            statistics.getRowConstraints().add(new RowConstraints(  ));
-
-        statistics.add(new Label("Animals Count"),0,0);
-        statistics.add(new Label(String.valueOf(stats.animalsOnMap)),0,1);
-
-        statistics.add(new Label("Food Count"),1,0);
-        statistics.add(new Label(String.valueOf(stats.foodOnMap)),1,1);
-
-        statistics.add(new Label("Free Count"),2,0);
-        statistics.add(new Label(String.valueOf(stats.placesFreeFromAnimalCount)),2,1);
-
-        statistics.add(new Label("Most Popular Gens"),3,0);
-        statistics.add(new Label("TODO"),3,1);
-
-        statistics.add(new Label("Avg. Energy"),4,0);
-        statistics.add(new Label(String.valueOf(stats.averageEnergy)),4,1);
-
-        statistics.add(new Label("Avg. Live Span"),5,0);
-        statistics.add(new Label(String.valueOf(stats.averageLiveLength)),5,1);
-
-
-        statistics.add(new Label("Simulation Day"),6,0);
-        statistics.add(new Label(String.valueOf(simulationEngine.getSimulationDay())),6,1);
-
-
+        statistics.setGridLinesVisible(false);
         statistics.setGridLinesVisible(true);
     }
 
@@ -201,33 +178,35 @@ public class SimulationView implements IPropertyChanged {
         for ( int i = 0; i < 2; i++ )
             watchedAnimal.getRowConstraints().add(new RowConstraints(  ));
 
-        watchedAnimal.add(new Label("Genes"),0,0);
-        watchedAnimal.add(new Label(Arrays.toString(animal._genotype.getGenes())),0,1);
+        watchedAnimal.add(makeLabel("Genes"),0,0);
+        watchedAnimal.add(makeLabel(Arrays.toString(animal._genotype.getGenes())),0,1);
 
-        watchedAnimal.add(new Label("Active Gene"),1,0);
-        watchedAnimal.add(new Label(String.valueOf(animal._genotype.getActiveGene())),1,1);
 
-        watchedAnimal.add(new Label("Energy"),2,0);
-        watchedAnimal.add(new Label(String.valueOf(animal.getEnergy())),2,1);
+        watchedAnimal.add(makeLabel("Active Gene"),1,0);
+        watchedAnimal.add(makeLabel(String.valueOf(animal._genotype.getActiveGene())),1,1);
 
-        watchedAnimal.add(new Label("Eaten Food"),3,0);
-        watchedAnimal.add(new Label(String.valueOf(animal.getEatenFood())),3,1);
 
-        watchedAnimal.add(new Label("Childrens"),4,0);
-        watchedAnimal.add(new Label(String.valueOf(animal.getChildrensCount())),4,1);
+        watchedAnimal.add(makeLabel("Energy"),2,0);
+        watchedAnimal.add(makeLabel(String.valueOf(animal.getEnergy())),2,1);
+
+
+        watchedAnimal.add(makeLabel("Eaten Food"),3,0);
+        watchedAnimal.add(makeLabel(String.valueOf(animal.getEatenFood())),3,1);
+
+        watchedAnimal.add(makeLabel("Children Count"),4,0);
+        watchedAnimal.add(makeLabel(String.valueOf(animal.getChildrensCount())),4,1);
 
        if(animal.getDeathDay()>=0){
-           watchedAnimal.add(new Label("Died at"),5,0);
-           watchedAnimal.add(new Label(String.valueOf(animal.getDeathDay())),5,1);
+           watchedAnimal.add(makeLabel("Died At"),5,0);
+           watchedAnimal.add(makeLabel(String.valueOf(animal.getDeathDay())),5,1);
        }
        else {
-           watchedAnimal.add(new Label("Lives"),5,0);
-           watchedAnimal.add(new Label(String.valueOf(simulationEngine.getSimulationDay() - animal.getCreationDay())),5,1);
+           watchedAnimal.add(makeLabel("Is Living"),5,0);
+           watchedAnimal.add(makeLabel(String.valueOf(simulationEngine.getSimulationDay() - animal.getCreationDay())),5,1);
        }
-    }
-    public void updateWatchedAnimal() {
-        watchedAnimal = new GridPane();
-        drawWatchedAnimal();
+
+        watchedAnimal.setGridLinesVisible(false);
+        watchedAnimal.setGridLinesVisible(true);
     }
 
     private void drawActions() {
@@ -284,7 +263,7 @@ public class SimulationView implements IPropertyChanged {
                 {
                     simulationEngine.run();
                     try {
-                        Thread.sleep(200);
+                        Thread.sleep(300);
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
@@ -297,8 +276,16 @@ public class SimulationView implements IPropertyChanged {
 
         new Thread(task).start();
     }
-    public void stopSimulation() {
+    public void stopSimulation()  {
+
         status.isRunning = false;
+
+        try {
+            Thread.sleep(300);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
         refreshMap();
     }
 

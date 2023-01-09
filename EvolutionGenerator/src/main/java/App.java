@@ -86,21 +86,21 @@ public class App extends Application
     private void loadPresets() {
         //TODO : json
         var ss = new SimulationSettings();
-        ss.width = 20;
-        ss.height = 20;
+        ss.width = 5;
+        ss.height = 5;
         ss.moveCost = 1;
         ss.energyFromFood = 50;
         ss.copulationMinimalEnergy = 80;
         ss.copulationCostEnregy = 50;
         ss.startingEnregy = 300;
         ss.maxEnregy = 300;
-        ss.startingFood = 30;
-        ss.dailyFoodGrow = 30;
-        ss.startingAnimals = 30;
+        ss.startingFood = 1;
+        ss.dailyFoodGrow = 1;
+        ss.startingAnimals = 2;
         ss.movementsOptions = AnimalMovementOptions.DEFAULT;
         ss.genesOptions = GenesOptions.DEFAULT;
         ss.mapOption = MapOptions.DEFAULT;
-        ss.growingOptions = FoodGrowOptions.DEFAULT;
+        ss.growingOptions = FoodGrowOptions.RANDOMER;
         ss.gensLength = 4;
         ss.saveToCsv = false;
 
@@ -109,8 +109,8 @@ public class App extends Application
         sw.settings = ss;
 
         var ss2 = new SimulationSettings();
-        ss2.width = 20;
-        ss2.height = 20;
+        ss2.width = 30;
+        ss2.height = 30;
         ss2.moveCost = 1;
         ss2.energyFromFood = 50;
         ss2.copulationMinimalEnergy = 50;
@@ -118,8 +118,8 @@ public class App extends Application
         ss2.startingEnregy = 300;
         ss2.maxEnregy = 300;
         ss2.startingFood = 30;
-        ss2.dailyFoodGrow = 10;
-        ss2.startingAnimals = 10;
+        ss2.dailyFoodGrow = 1;
+        ss2.startingAnimals = 30;
         ss2.movementsOptions = AnimalMovementOptions.DEFAULT;
         ss2.genesOptions = GenesOptions.DEFAULT;
         ss2.mapOption = MapOptions.DEFAULT;
