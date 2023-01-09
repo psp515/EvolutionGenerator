@@ -2,17 +2,9 @@ package Models;
 
 import Elements.Animal;
 import Elements.Food;
-import Interfaces.Animals.IGenes;
 import Tools.Vector2d;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class MapStatistics
 {
@@ -37,6 +29,8 @@ public class MapStatistics
 
     public final int[][]  animalDeathsOnField;
     public final int[][] foodGrowOnField;
+    public File csvfile = new File("src/main/resources/csvFile.csv");
+
 
     public void safeDeadAnimal(Animal animal)
     {
