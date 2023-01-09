@@ -16,6 +16,9 @@ import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import netscape.javascript.JSObject;
+// import org.json.*;
+
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,6 +29,7 @@ public class App extends Application
 {
 
     ArrayList<SettingsWrapper> optionalSettings = new ArrayList<>();
+
     ComboBox presetSelector;
     ObservableList<String> optionalSettingsNames = FXCollections.observableArrayList();
 
@@ -84,7 +88,8 @@ public class App extends Application
     }
 
     private void loadPresets() {
-        //TODO : json
+
+        //TODO: JSON
         var ss = new SimulationSettings();
         ss.width = 5;
         ss.height = 5;

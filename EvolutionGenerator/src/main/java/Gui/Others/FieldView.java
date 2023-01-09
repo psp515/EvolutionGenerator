@@ -35,8 +35,8 @@ public class FieldView {
                 {
                     this.image = new Image( new FileInputStream(food.getImage()));
                     this.view = new ImageView(this.image);
-                    this.view.setFitHeight(20);
-                    this.view.setFitWidth(20);
+                    this.view.setFitHeight(25);
+                    this.view.setFitWidth(30);
 
                     this.label = new Label("0 A");
                     this.container = new VBox();
