@@ -2,14 +2,8 @@ package ElementsExtensions.Food;
 
 import Elements.Food;
 import Interfaces.Map.IMap;
-import Interfaces.Map.IMapElement;
-import Models.MapStatistics;
 import Tools.SingleFoodField;
 import Tools.Vector2d;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Equators extends FoodGenerator {
@@ -28,6 +22,18 @@ public class Equators extends FoodGenerator {
         {
             if(ThreadLocalRandom.current().nextInt(2) == 1)
             {
+                int k = 0;
+                while (k < 10){
+
+                    int i = ThreadLocalRandom.current().nextInt(map.getMapSettings().width);
+                    int j = ThreadLocalRandom.current().nextInt(first_bound);
+
+                    SingleFoodField possibleField = (SingleFoodField) fields[i][j];
+                    if(!possibleField.containsFood())
+                        return new Food(map, new Vector2d(i, j),day);
+
+                    k += 1;
+                }
 
                 for(int i = 0; i < map.getMapSettings().width; i++)
                     for(int j = 0; j < first_bound;j++)
@@ -54,6 +60,22 @@ public class Equators extends FoodGenerator {
                     }
             }
             else {
+
+                int k = 0;
+
+                while (k < 10) {
+
+                    int i = ThreadLocalRandom.current().nextInt(map.getMapSettings().width);
+                    int j = ThreadLocalRandom.current().nextInt(second_bound, map.getMapSettings().height);
+
+                    SingleFoodField possibleField = (SingleFoodField) fields[i][j];
+                    if(!possibleField.containsFood())
+                        return new Food(map, new Vector2d(i, j),day);
+
+                    k += 1;
+                }
+
+
                 for(int i = 0; i < map.getMapSettings().width; i++)
                     for(int j = second_bound; j < map.getMapSettings().height; j++)
                     {
@@ -82,6 +104,21 @@ public class Equators extends FoodGenerator {
         }
         else
         {
+            int k = 0;
+
+            while (k < 10) {
+
+                int i = ThreadLocalRandom.current().nextInt(map.getMapSettings().width);
+                int j = ThreadLocalRandom.current().nextInt(first_bound, second_bound);
+
+                SingleFoodField possibleField = (SingleFoodField) fields[i][j];
+                if(!possibleField.containsFood())
+                    return new Food(map, new Vector2d(i, j),day);
+
+                k += 1;
+            }
+
+
             for(int i = 0; i < map.getMapSettings().width; i++)
                 for(int j = first_bound; j < second_bound;j++)
                 {
