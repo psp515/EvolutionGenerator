@@ -51,7 +51,8 @@ public class SimulationEngine implements IMapSimulations, Runnable {
     IPropertyChanged observer;
 
     HashMap<String, Integer> genesCollection = new HashMap<String, Integer>();
-
+    long time;
+    String csvName;
 
 
     public ArrayList<Animal> getAnimals(){
@@ -83,6 +84,9 @@ public class SimulationEngine implements IMapSimulations, Runnable {
     public SimulationEngine(SimulationSettings settings, SimulationStatus isRunning, IPropertyChanged observer){
 
         watchedAnimal = null;
+        this.time = System.currentTimeMillis();
+        this.csvName = "src/main/resources/csvFile" + time + ".csv";
+
 
         this.observer = observer;
         this.status = isRunning;
@@ -317,7 +321,7 @@ public class SimulationEngine implements IMapSimulations, Runnable {
         if(_simulationSettings.saveToCsv) {
 
             //TODO : zmiana nazwy pliku na simulation + milisekundy utworzneia -> nazwa zapisana w konstruktorze.
-            File newfile = new File("src/main/resources/csvFile.csv");
+            File newfile = new File(this.csvName);
 
             writeIntoCSV(mapStatistics, simulationDay, newfile);
 
@@ -357,7 +361,6 @@ public class SimulationEngine implements IMapSimulations, Runnable {
             String[] data1 = { simDay, animalsCount, foodCount, freePlaces, popularGenes, avEnergy, avLivespan };
             out.println(Arrays.toString(data1));
             writer.writeNext(data1);
-            out.println(stats.csvfile.toString());
             out.println("================");
 
 
