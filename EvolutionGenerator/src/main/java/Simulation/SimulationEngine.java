@@ -17,6 +17,8 @@ import javafx.application.Platform;
 import com.opencsv.CSVReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -26,7 +28,6 @@ import java.io.IOException;
 import java.util.*;
 
 import static Tools.Randomizer.getRandomNumber;
-import static java.lang.System.out;
 
 public class SimulationEngine implements IMapSimulations, Runnable {
 
@@ -109,7 +110,6 @@ public class SimulationEngine implements IMapSimulations, Runnable {
 
         updateStatistics();
 
-        //observer.propertyChanged();
     }
 
     //region Initialization
@@ -196,8 +196,6 @@ public class SimulationEngine implements IMapSimulations, Runnable {
                 var field = mapFields[i][j];
                 var elements = field.getElements();
 
-                out.println(elements.length);
-
                 if(elements.length < 2)
                     break;
 
@@ -217,8 +215,6 @@ public class SimulationEngine implements IMapSimulations, Runnable {
                     animals.add(ch);
                     mapStatistics.dayBorns += 1;
                 }
-
-
             }
         }
     }
@@ -242,8 +238,8 @@ public class SimulationEngine implements IMapSimulations, Runnable {
         genesCollection = new HashMap<>();
 
         mapStatistics.animalsOnMap = animals.size();
-        int totalEnergy = 0;
-        int totalDaysLived = 0;
+        double totalEnergy = 0;
+        double totalDaysLived = 0;
         mapStatistics.foodOnMap = 0;
         mapStatistics.placesFreeFromAnimalCount = 0;
 
@@ -288,13 +284,15 @@ public class SimulationEngine implements IMapSimulations, Runnable {
         {
             List<Map.Entry<String, Integer>> list = new ArrayList<>(genesCollection.entrySet());
             list.sort(Map.Entry.comparingByValue());
-
             mapStatistics.mostPoupularGenes = list.get(list.size()-1).getKey();
-
-            mapStatistics.animalsOnMap = animals.size();
-            mapStatistics.averageEnergy = totalEnergy / animals.size();
-            mapStatistics.averageLiveLength = totalDaysLived / (animals.size() + deadAnimals.size());
         }
+        else
+        {
+            mapStatistics.mostPoupularGenes = "None";
+        }
+        mapStatistics.animalsOnMap = animals.size();
+        mapStatistics.averageEnergy = round(totalEnergy / animals.size(), 2);
+        mapStatistics.averageLiveLength = round(totalDaysLived / (animals.size() + deadAnimals.size()),2);
     }
 
     @Override
@@ -316,6 +314,7 @@ public class SimulationEngine implements IMapSimulations, Runnable {
         observer.propertyChanged();
 
         if(_simulationSettings.saveToCsv) {
+            //TODO : zmiana nazwy pliku na simulation + milisekundy utworzneia -> nazwa zapisana w konstruktorze.
             File newfile = new File("../resources/csvFile.csv");
 
             writeIntoCSV(newfile, mapStatistics, simulationDay);
@@ -377,7 +376,11 @@ public class SimulationEngine implements IMapSimulations, Runnable {
             animal.isGenotypeHighlighted = false;
     }
 
-    public boolean isPossible() {
-        return this.animals.size() > 0;
+    private static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        BigDecimal bd = new BigDecimal(Double.toString(value));
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return bd.doubleValue();
     }
 }

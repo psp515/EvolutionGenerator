@@ -92,22 +92,22 @@ public class App extends Application
 
         //TODO: JSON
         var ss = new SimulationSettings();
-        ss.width = 2;
-        ss.height = 2;
-        ss.moveCost = 1;
+        ss.width = 40;
+        ss.height = 40;
+        ss.moveCost = 10;
         ss.energyFromFood = 50;
         ss.copulationMinimalEnergy = 80;
         ss.copulationCostEnregy = 50;
-        ss.startingEnregy = 300;
+        ss.startingEnregy = 50;
         ss.maxEnregy = 300;
-        ss.startingFood = 1;
-        ss.dailyFoodGrow = 1;
-        ss.startingAnimals = 2;
+        ss.startingFood = 100;
+        ss.dailyFoodGrow = 10;
+        ss.startingAnimals = 1000;
         ss.movementsOptions = AnimalMovementOptions.DEFAULT;
         ss.genesOptions = GenesOptions.DEFAULT;
         ss.mapOption = MapOptions.DEFAULT;
-        ss.growingOptions = FoodGrowOptions.RANDOMER;
-        ss.gensLength = 4;
+        ss.growingOptions = FoodGrowOptions.DEATH_BODIES;
+        ss.gensLength = 3;
         ss.saveToCsv = false;
 
         var sw = new SettingsWrapper();

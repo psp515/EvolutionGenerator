@@ -1,18 +1,17 @@
 package ElementsExtensions.Food;
 
 import Interfaces.Map.IFoodGenerator;
-import Models.MapStatistics;
-import Tools.SingleFoodField;
+import Interfaces.Tools.IFoodField;
 
 public abstract class FoodGenerator implements IFoodGenerator {
 
-    public SingleFoodField[][] field;
+    protected IFoodField[][] fields;
 
 
     public int[][] deathlist;
 
-    protected FoodGenerator(SingleFoodField[][] mapField) {
-        this.field = mapField;
+    protected FoodGenerator(IFoodField[][] mapField) {
+        this.fields = mapField;
 
     }
 

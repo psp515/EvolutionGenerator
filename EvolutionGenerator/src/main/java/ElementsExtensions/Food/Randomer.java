@@ -2,7 +2,6 @@ package ElementsExtensions.Food;
 
 import Elements.Food;
 import Interfaces.Map.IMap;
-import Models.MapStatistics;
 import Tools.SingleFoodField;
 import Tools.Vector2d;
 
@@ -16,16 +15,9 @@ public class Randomer extends FoodGenerator {
     public Food growFood(IMap map, int day) {
 
         for(int i = 0; i < map.getMapSettings().width; i++)
-        {
-            for(int j = 0; j < map.getMapSettings().width; j++)
-            {
-                if(!field[i][j].containsFood())
-                {
-                    var food = new Food(map, new Vector2d(i,j), day);
-                    return food;
-                }
-            }
-        }
+            for(int j = 0; j < map.getMapSettings().height; j++)
+                if(!fields[i][j].containsFood())
+                    return new Food(map, new Vector2d(i,j), day);
 
         return null;
     }

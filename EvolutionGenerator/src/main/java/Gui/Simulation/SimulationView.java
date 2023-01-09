@@ -22,7 +22,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 import static java.lang.System.currentTimeMillis;
-import static java.lang.System.out;
 
 // TODO Selecting One Animal - > to mozna zrobić combo boxem i wybór jednego
 // TODO Kopulacja nie działa poprawnie
@@ -223,19 +222,32 @@ public class SimulationView implements IPropertyChanged {
     private void drawActions() {
 
         actions.getChildren().clear();
-
         actions.setSpacing(20);
+
+        Button startButton = new Button("Start Simulation");
+        Button markingButton = new Button("Mark / Unmark Most Popular Genotype (Blue)");
+        Button stopButton = new Button("Stop Simulation");
+
+        Button clearAnimalComboBoxButton = new Button("Clear watched animal");
+
+        actions.getChildren().add(startButton);
+        actions.getChildren().add(stopButton);
+        actions.getChildren().add(markingButton);
+
+        stopButton.setOnAction( (e) -> {
+            stopSimulation();
+        });
+
+        markingButton.setOnAction((e)->{
+            markAnimalsWithGenotype();
+        });
+
+        startButton.setOnAction( (e) -> {
+            startSimulation();
+        });
 
         if(!status.notReadyToStartAction())
         {
-            Button startButton = new Button("Start Simulation");
-            actions.getChildren().add(startButton);
-
-            Button markingButton = new Button("Mark / Unmark Most Popular Genotype (Blue)");
-            actions.getChildren().add(markingButton);
-
-            Button clearAnimalComboBoxButton = new Button("Clear watched animal");
-
             var animals = simulationEngine.getAnimals();
             animalMapper = new HashMap<>();
             animalsOptions = FXCollections.observableArrayList();
@@ -267,23 +279,8 @@ public class SimulationView implements IPropertyChanged {
                 Platform.runLater(this::refreshMap);
             });
 
-            markingButton.setOnAction((e)->{
-                markAnimalsWithGenotype();
-            });
 
-            startButton.setOnAction( (e) -> {
-                startSimulation();
-            });
-        }
-        else
-        {
-            Button stopButton = new Button("Stop Simulation");
 
-            actions.getChildren().add(stopButton);
-
-            stopButton.setOnAction( (e) -> {
-                stopSimulation();
-            });
         }
     }
 
@@ -327,7 +324,6 @@ public class SimulationView implements IPropertyChanged {
         if(animalComboBox.getValue() != null)
         {
             String value = (String) animalComboBox.getValue();
-            out.println(value);
             int key = Integer.parseInt(value.substring(0,4));
             watched = animalMapper.get(key);
             watched.isHighlighted = true;
@@ -358,6 +354,15 @@ public class SimulationView implements IPropertyChanged {
                     }
                     else {
                         status.isRunning = false;
+
+                        Platform.runLater(new Runnable() {
+                            @Override public void run() {
+                                actions.getChildren().clear();
+
+                                mainView.setTitle("Simulation Finished");
+                            }
+                        });
+
                         break;
                     }
                 }
