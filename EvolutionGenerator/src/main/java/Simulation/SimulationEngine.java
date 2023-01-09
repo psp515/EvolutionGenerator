@@ -12,7 +12,6 @@ import Models.SimulationSettings;
 import Models.SimulationStatus;
 import Tools.SingleFoodField;
 import Tools.Vector2d;
-import javafx.application.Platform;
 
 import java.util.*;
 
@@ -46,7 +45,7 @@ public class SimulationEngine implements IMapSimulations, Runnable {
         return this.animals;
     }
 
-    public Animal getMarkledAnimal(){
+    public Animal getWatchedAnimal(){
         return this.watchedAnimal;
     }
     public int getSimulationDay(){
@@ -61,8 +60,10 @@ public class SimulationEngine implements IMapSimulations, Runnable {
 
     public void setWatchedAnimal(Animal animal)
     {
-        //TODO : check if in animals
-        this.watchedAnimal = animal;
+        if( this.animals.contains(animal))
+            this.watchedAnimal = animal;
+        else
+            this.watchedAnimal = null;
     }
 
 
@@ -97,7 +98,7 @@ public class SimulationEngine implements IMapSimulations, Runnable {
 
         updateStatistics();
 
-        observer.propertyChanged();
+        //observer.propertyChanged();
     }
 
     //region Initialization
@@ -268,14 +269,17 @@ public class SimulationEngine implements IMapSimulations, Runnable {
                 }
             }
 
-        List<Map.Entry<String, Integer>> list = new ArrayList<>(genesCollection.entrySet());
-        list.sort(Map.Entry.comparingByValue());
+        if(genesCollection.size() > 0)
+        {
+            List<Map.Entry<String, Integer>> list = new ArrayList<>(genesCollection.entrySet());
+            list.sort(Map.Entry.comparingByValue());
 
-        mapStatistics.mostPoupularGenes = list.get(list.size()-1).getKey();
+            mapStatistics.mostPoupularGenes = list.get(list.size()-1).getKey();
 
-        mapStatistics.animalsOnMap = animals.size();
-        mapStatistics.averageEnergy = totalEnergy / animals.size();
-        mapStatistics.averageLiveLength = totalDaysLived / (animals.size() + deadAnimals.size());
+            mapStatistics.animalsOnMap = animals.size();
+            mapStatistics.averageEnergy = totalEnergy / animals.size();
+            mapStatistics.averageLiveLength = totalDaysLived / (animals.size() + deadAnimals.size());
+        }
     }
 
     @Override
@@ -294,7 +298,7 @@ public class SimulationEngine implements IMapSimulations, Runnable {
 
         updateStatistics();
 
-        Platform.runLater(() -> observer.propertyChanged());
+        observer.propertyChanged();
 
         if(_simulationSettings.saveToCsv)
         {
@@ -311,12 +315,12 @@ public class SimulationEngine implements IMapSimulations, Runnable {
     public void MarkMostPopularGenotype() {
         for(var animal : animals)
             if(isMostPopular(animal._genotype.getGenes()))
-                animal.isHighlighted = true;
+                animal.isGenotypeHighlighted = true;
     }
 
     public void UnMarkMostPopularGenotype() {
         for(var animal : animals)
-            animal.isHighlighted = false;
+            animal.isGenotypeHighlighted = false;
     }
 
     public boolean isPossible() {

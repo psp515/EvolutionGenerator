@@ -160,7 +160,7 @@ public class App extends Application
         IntEntry energyFromFoodEntry = new IntEntry("Energy From Food", 50,1,100);
         IntEntry copulationMinimalEnergyEntry = new IntEntry("Copulation energy requirements", 80,1,100);
         IntEntry copulationCostEnregyEntry = new IntEntry("Copulation Cost", 39,1,100);
-        IntEntry startingEnregyEntry = new IntEntry("Starting Animal Energy", 100,1,100);
+        IntEntry startingEnregyEntry = new IntEntry("Starting Animal Energy", 30,1,100);
         IntEntry maxEnregyEntry = new IntEntry("Maximal Animal Energy", 500,1,1000);
         IntEntry startingFoodEntry = new IntEntry("Starting Food Objects on Map", 1,1,200*200);
         IntEntry dailyFoodGrowEntry = new IntEntry("Daily Food Grow", 1,1,200*200);

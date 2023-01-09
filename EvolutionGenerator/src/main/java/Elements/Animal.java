@@ -7,9 +7,8 @@ import Interfaces.Map.IMap;
 import Interfaces.Map.IMapMoveElement;
 import Models.MapSettings;
 import Tools.Vector2d;
+import javafx.scene.control.ComboBox;
 import javafx.util.Pair;
-
-import java.util.Arrays;
 
 
 public class Animal extends MapElement implements IMapMoveElement, Comparable<Animal> {
@@ -23,6 +22,8 @@ public class Animal extends MapElement implements IMapMoveElement, Comparable<An
     private int children;
 
     private MapDirection actDirection;
+
+    public boolean isGenotypeHighlighted;
 
     public boolean isHighlighted;
 
@@ -39,7 +40,6 @@ public class Animal extends MapElement implements IMapMoveElement, Comparable<An
         foodEaten = 0;
         children = 0;
         isDead = false;
-
     }
 
     public void eat(Food food){
