@@ -8,12 +8,12 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public abstract class Genes implements IGenes {
     private int[] genes;
-    private int activatedGene;
+    private int activeGeneIndex;
     private int genLength;
 
     public Genes(int[] genes){
         this.genes = genes;
-        activatedGene = 0;
+        activeGeneIndex = 0;
         genLength = genes.length;
     }
 
@@ -28,6 +28,8 @@ public abstract class Genes implements IGenes {
             this.genes = createGenes(genLength, parent2, parent1, part2, part1);
 
         mutate();
+
+        //Activate random gen
 
         int i = ThreadLocalRandom.current().nextInt(genLength);
 
@@ -60,17 +62,17 @@ public abstract class Genes implements IGenes {
     @Override
     public int[] getGenes() { return genes; }
     @Override
-    public int getActiveGene() { return this.activatedGene; }
+    public int getActiveGene() { return genes[this.activeGeneIndex]; }
     public int getGenLength(){ return this.genLength; }
     public int activateNextGene(){
-        this.activatedGene = genes[(this.activatedGene + 1) % this.genLength];
-        return activatedGene;
+        this.activeGeneIndex = (this.activeGeneIndex + 1) % this.genLength;
+        return genes[this.activeGeneIndex];
     }
     public int skipToRandomGene(){
         int skipCount = ThreadLocalRandom.current().nextInt(this.genLength);
         for(int i=0;i<skipCount; i++)
             this.activateNextGene();
-        return this.activatedGene;
+        return genes[this.activeGeneIndex];
     }
     @Override
     abstract public void mutate();

@@ -155,8 +155,8 @@ public class App extends Application
         Button startButton = new Button("Start Custom Simulation");
 
 
-        IntEntry widthEntry = new IntEntry("Map Width", 40,20,80);
-        IntEntry heightEntry = new IntEntry("Map Height", 40,20,80);
+        IntEntry widthEntry = new IntEntry("Map Width", 40,5,80);
+        IntEntry heightEntry = new IntEntry("Map Height", 40,5,80);
         IntEntry moveCostEntry = new IntEntry("Move Cost", 10,1,10);
         IntEntry energyFromFoodEntry = new IntEntry("Energy From Food", 50,1,100);
         IntEntry copulationMinimalEnergyEntry = new IntEntry("Copulation energy requirements", 80,1,100);

@@ -319,21 +319,21 @@ public class SimulationView implements IPropertyChanged {
             simulationEngine.UnMarkMostPopularGenotype();
         }
 
+        var watched = simulationEngine.getWatchedAnimal();
+
+        if (watched != null)
+            watched.isHighlighted = false;
+
         if(animalComboBox.getValue() != null)
         {
             String value = (String) animalComboBox.getValue();
             out.println(value);
             int key = Integer.parseInt(value.substring(0,4));
-            Animal watched = animalMapper.get(key);
+            watched = animalMapper.get(key);
             watched.isHighlighted = true;
             simulationEngine.setWatchedAnimal(watched);
         }
         else {
-            var watched = simulationEngine.getWatchedAnimal();
-
-            if (watched != null)
-                watched.isHighlighted = false;
-
             simulationEngine.setWatchedAnimal(null);
         }
 
