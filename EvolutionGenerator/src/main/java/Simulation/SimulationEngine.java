@@ -16,6 +16,11 @@ import com.opencsv.CSVWriter;
 import javafx.application.Platform;
 
 import java.io.IOException;
+import java.io.Reader;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -52,7 +57,7 @@ public class SimulationEngine implements IMapSimulations, Runnable {
         return this.animals;
     }
 
-    public Animal getMarkledAnimal(){
+    public Animal getWatchedAnimal(){
         return this.watchedAnimal;
     }
     public int getSimulationDay(){
@@ -67,8 +72,10 @@ public class SimulationEngine implements IMapSimulations, Runnable {
 
     public void setWatchedAnimal(Animal animal)
     {
-        //TODO : check if in animals
-        this.watchedAnimal = animal;
+        if( this.animals.contains(animal))
+            this.watchedAnimal = animal;
+        else
+            this.watchedAnimal = null;
     }
 
 
@@ -103,7 +110,6 @@ public class SimulationEngine implements IMapSimulations, Runnable {
 
         updateStatistics();
 
-        observer.propertyChanged();
     }
 
     //region Initialization
@@ -183,15 +189,15 @@ public class SimulationEngine implements IMapSimulations, Runnable {
     }
     @Override
     public void simulateBorns() {
-
         for(int i = 0; i < map.getMapSettings().width; i++) {
-            for(int j = 0; j < map.getMapSettings().width; j++)
+            for(int j = 0; j < map.getMapSettings().height; j++)
             {
+
                 var field = mapFields[i][j];
                 var elements = field.getElements();
 
                 if(elements.length < 2)
-                    return;
+                    break;
 
                 Animal[] fieldAniamls = new Animal[elements.length];
 
@@ -232,8 +238,8 @@ public class SimulationEngine implements IMapSimulations, Runnable {
         genesCollection = new HashMap<>();
 
         mapStatistics.animalsOnMap = animals.size();
-        int totalEnergy = 0;
-        int totalDaysLived = 0;
+        double totalEnergy = 0;
+        double totalDaysLived = 0;
         mapStatistics.foodOnMap = 0;
         mapStatistics.placesFreeFromAnimalCount = 0;
 
@@ -274,14 +280,19 @@ public class SimulationEngine implements IMapSimulations, Runnable {
                 }
             }
 
-        List<Map.Entry<String, Integer>> list = new ArrayList<>(genesCollection.entrySet());
-        list.sort(Map.Entry.comparingByValue());
-
-        mapStatistics.mostPoupularGenes = list.get(list.size()-1).getKey();
-
+        if(genesCollection.size() > 0)
+        {
+            List<Map.Entry<String, Integer>> list = new ArrayList<>(genesCollection.entrySet());
+            list.sort(Map.Entry.comparingByValue());
+            mapStatistics.mostPoupularGenes = list.get(list.size()-1).getKey();
+        }
+        else
+        {
+            mapStatistics.mostPoupularGenes = "None";
+        }
         mapStatistics.animalsOnMap = animals.size();
-        mapStatistics.averageEnergy = totalEnergy / animals.size();
-        mapStatistics.averageLiveLength = totalDaysLived / (animals.size() + deadAnimals.size());
+        mapStatistics.averageEnergy = round(totalEnergy / animals.size(), 2);
+        mapStatistics.averageLiveLength = round(totalDaysLived / (animals.size() + deadAnimals.size()),2);
     }
 
     @Override
@@ -300,7 +311,7 @@ public class SimulationEngine implements IMapSimulations, Runnable {
 
         updateStatistics();
 
-        Platform.runLater(() -> observer.propertyChanged());
+        observer.propertyChanged();
 
         if(_simulationSettings.saveToCsv) {
 
@@ -366,15 +377,19 @@ public class SimulationEngine implements IMapSimulations, Runnable {
     public void MarkMostPopularGenotype() {
         for(var animal : animals)
             if(isMostPopular(animal._genotype.getGenes()))
-                animal.isHighlighted = true;
+                animal.isGenotypeHighlighted = true;
     }
 
     public void UnMarkMostPopularGenotype() {
         for(var animal : animals)
-            animal.isHighlighted = false;
+            animal.isGenotypeHighlighted = false;
     }
 
-    public boolean isPossible() {
-        return this.animals.size() > 0;
+    private static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        BigDecimal bd = new BigDecimal(Double.toString(value));
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return bd.doubleValue();
     }
 }

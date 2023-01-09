@@ -12,7 +12,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
-//TODO narazie wstawione zeby pamiętać
 public class FieldView {
     private Image image;
     private ImageView view;
@@ -35,8 +34,8 @@ public class FieldView {
                 {
                     this.image = new Image( new FileInputStream(food.getImage()));
                     this.view = new ImageView(this.image);
-                    this.view.setFitHeight(25);
-                    this.view.setFitWidth(30);
+                    this.view.setFitHeight(20);
+                    this.view.setFitWidth(20);
 
                     this.label = new Label("0 A");
                     this.container = new VBox();
@@ -46,8 +45,6 @@ public class FieldView {
 
                 }
                 catch (FileNotFoundException e) {}
-
-
             }
         }
         else
@@ -59,13 +56,14 @@ public class FieldView {
                 this.view.setFitHeight(20);
                 this.view.setFitWidth(20);
 
-                this.label = new Label(String.valueOf(animalsCount)+"A");
+                this.label = new Label(animalsCount +" A");
                 this.container.getChildren().add(this.view);
                 this.container.getChildren().add(this.label);
                 this.container.setAlignment(Pos.CENTER);
 
-                if(animals.stream().anyMatch(animal -> animal.isHighlighted))
-                {
+                if(animals.stream().anyMatch(animal -> animal.isGenotypeHighlighted))
+                    this.container.setStyle("-fx-background-color: #0077b6;");
+                else if(animals.stream().anyMatch(animal -> animal.isHighlighted)) {
                     this.container.setStyle("-fx-background-color: #90EE90;");
                 }
 

@@ -1,26 +1,28 @@
 package Gui.Simulation;
 
+import Elements.Animal;
 import Interfaces.IPropertyChanged;
 import Models.SimulationSettings;
 import Models.SimulationStatus;
 import Simulation.SimulationEngine;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 import java.util.Arrays;
+import java.util.HashMap;
 
-// TODO Marking Animals
+import static java.lang.System.currentTimeMillis;
+
 // TODO Selecting One Animal - > to mozna zrobić combo boxem i wybór jednego
 // TODO Kopulacja nie działa poprawnie
 
@@ -28,6 +30,7 @@ public class SimulationView implements IPropertyChanged {
 
     public SimulationEngine simulationEngine;
     public volatile SimulationStatus status;
+    long miliseconds;
 
     Stage mainView;
     Scene mainScene;
@@ -35,6 +38,10 @@ public class SimulationView implements IPropertyChanged {
     GridPane statistics;
     HBox actions;
     GridPane watchedAnimal;
+
+    ComboBox animalComboBox;
+    ObservableList<String> animalsOptions;
+    HashMap<Integer, Animal> animalMapper;
 
     boolean genotypesMarked;
 
@@ -71,6 +78,7 @@ public class SimulationView implements IPropertyChanged {
         mainView.setScene(mainScene);
         mainView.setMinWidth(800);
         mainView.setMinHeight(800);
+        mainView.setTitle("Simulation");
         mainView.show();
 
         mainView.setOnCloseRequest(new EventHandler<WindowEvent>() {
@@ -147,7 +155,7 @@ public class SimulationView implements IPropertyChanged {
         statistics.add(makeLabel(String.valueOf(stats.placesFreeFromAnimalCount)),2,1);
 
         statistics.add(makeLabel("Most Popular Gens"),3,0);
-        statistics.add(makeLabel("TODO"),3,1);
+        statistics.add(makeLabel(stats.mostPoupularGenes),3,1);
 
         statistics.add(makeLabel("Avg. Energy"),4,0);
         statistics.add(makeLabel(String.valueOf(stats.averageEnergy)),4,1);
@@ -166,7 +174,7 @@ public class SimulationView implements IPropertyChanged {
     public void drawWatchedAnimal() {
         watchedAnimal.getChildren().clear();
 
-        var animal = simulationEngine.getMarkledAnimal();
+        var animal = simulationEngine.getWatchedAnimal();
         if(animal == null)
             return;
 
@@ -213,34 +221,67 @@ public class SimulationView implements IPropertyChanged {
 
     private void drawActions() {
 
+        actions.getChildren().clear();
+        actions.setSpacing(20);
+
         Button startButton = new Button("Start Simulation");
+        Button markingButton = new Button("Mark / Unmark Most Popular Genotype (Blue)");
         Button stopButton = new Button("Stop Simulation");
-        Button animalButton = new Button("Select Animal");
-        Button markingButton = new Button("Mark / Unmark Most Popular Genotype");
+
+        Button clearAnimalComboBoxButton = new Button("Clear watched animal");
 
         actions.getChildren().add(startButton);
         actions.getChildren().add(stopButton);
-        actions.getChildren().add(animalButton);
         actions.getChildren().add(markingButton);
-
-        actions.setSpacing(20);
-
-        startButton.setOnAction( (e) -> {
-            startSimulation();
-        });
 
         stopButton.setOnAction( (e) -> {
             stopSimulation();
         });
 
-        animalButton.setOnAction((e)->{
-            //TODO
-            watchAnimal();
-        });
-
         markingButton.setOnAction((e)->{
             markAnimalsWithGenotype();
         });
+
+        startButton.setOnAction( (e) -> {
+            startSimulation();
+        });
+
+        if(!status.notReadyToStartAction())
+        {
+            var animals = simulationEngine.getAnimals();
+            animalMapper = new HashMap<>();
+            animalsOptions = FXCollections.observableArrayList();
+
+            for(int i =0;i<animals.size();i++)
+            {
+                var animal = animals.get(i);
+                animalMapper.put(i, animal);
+                animalsOptions.add(String.format("%04d", i) + " " + animal.getPosition() + " " + animal.getEnergy());
+            }
+
+            animalComboBox = new ComboBox();
+            animalComboBox.setPromptText("Select Animal To Watch");
+            animalComboBox.getItems().addAll(animalsOptions);
+
+            actions.getChildren().add(clearAnimalComboBoxButton);
+            actions.getChildren().add(animalComboBox);
+
+            clearAnimalComboBoxButton.setOnAction((e)->{
+
+                animalComboBox.setValue(null);
+
+                var watched = simulationEngine.getWatchedAnimal();
+
+                if (watched != null)
+                    watched.isHighlighted = false;
+
+                simulationEngine.setWatchedAnimal(null);
+                Platform.runLater(this::refreshMap);
+            });
+
+
+
+        }
     }
 
     // endregion
@@ -248,6 +289,19 @@ public class SimulationView implements IPropertyChanged {
     //ACTIONS
 
     public void startSimulation() {
+        var current = currentTimeMillis();
+        //prevents double click
+        if(current - miliseconds < 1000 )
+            return;
+
+        if(simulationEngine.getMapStatistics().animalsOnMap <= 0)
+        {
+            Alert a = new Alert(Alert.AlertType.INFORMATION);
+            a.setContentText("There are no animals on map, simulation is ended.");
+            a.show();
+            return;
+        }
+
         if(status.notReadyToStartAction())
         {
             Alert a = new Alert(Alert.AlertType.INFORMATION);
@@ -261,7 +315,27 @@ public class SimulationView implements IPropertyChanged {
             genotypesMarked = false;
             simulationEngine.UnMarkMostPopularGenotype();
         }
+
+        var watched = simulationEngine.getWatchedAnimal();
+
+        if (watched != null)
+            watched.isHighlighted = false;
+
+        if(animalComboBox.getValue() != null)
+        {
+            String value = (String) animalComboBox.getValue();
+            int key = Integer.parseInt(value.substring(0,4));
+            watched = animalMapper.get(key);
+            watched.isHighlighted = true;
+            simulationEngine.setWatchedAnimal(watched);
+        }
+        else {
+            simulationEngine.setWatchedAnimal(null);
+        }
+
         status.isRunning = true;
+        drawActions();
+
         Task task = new Task<Void>() {
             @Override
             public Void call() {
@@ -273,15 +347,22 @@ public class SimulationView implements IPropertyChanged {
                     {
                         simulationEngine.run();
                         try {
-                            Thread.sleep(200);
+                            Thread.sleep(300);
                         } catch (InterruptedException e) {
                             throw new RuntimeException(e);
                         }
                     }
                     else {
-                        Alert a = new Alert(Alert.AlertType.INFORMATION);
-                        a.setContentText("Simulation has ended all animals died.");
-                        a.show();
+                        status.isRunning = false;
+
+                        Platform.runLater(new Runnable() {
+                            @Override public void run() {
+                                actions.getChildren().clear();
+
+                                mainView.setTitle("Simulation Finished");
+                            }
+                        });
+
                         break;
                     }
                 }
@@ -297,6 +378,8 @@ public class SimulationView implements IPropertyChanged {
 
         status.isRunning = false;
 
+        miliseconds = currentTimeMillis();
+
         try {
             Thread.sleep(300);
         } catch (InterruptedException e) {
@@ -304,18 +387,7 @@ public class SimulationView implements IPropertyChanged {
         }
 
         refreshMap();
-    }
-
-    private void watchAnimal() {
-        if(status.notReadyToStartAction())
-        {
-            Alert a = new Alert(Alert.AlertType.INFORMATION);
-            a.setContentText("There is ongoing simulation or previous simulation didn't finished. Please wait.");
-            a.show();
-            return;
-        }
-
-        //TODO
+        drawActions();
     }
 
     private void markAnimalsWithGenotype()

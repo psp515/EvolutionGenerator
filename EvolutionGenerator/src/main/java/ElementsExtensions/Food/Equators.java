@@ -2,20 +2,11 @@ package ElementsExtensions.Food;
 
 import Elements.Food;
 import Interfaces.Map.IMap;
-import Interfaces.Map.IMapElement;
-import Models.MapStatistics;
 import Tools.SingleFoodField;
 import Tools.Vector2d;
-
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Equators extends FoodGenerator {
-
-
-
-
     public Equators(SingleFoodField[][] mapField) {
         super(mapField);
     }
@@ -23,104 +14,137 @@ public class Equators extends FoodGenerator {
     @Override
     public Food growFood(IMap map, int day) {
 
-        //TODO FIX: tutaj gdzies robi się infinite loop
+        int first_bound = (int) (map.getMapSettings().height * 0.2);
 
-        Vector2d startpoint = map.getStartBound();
-        Vector2d endpoint = map.getEndBound();
-        int equatorheight = (endpoint.y - startpoint.y)/5;
-        int equatorStartY = startpoint.y + equatorheight;
+        int second_bound = (int) (map.getMapSettings().height * 0.8);
 
-        // tablice z uporządkowanymi indeksami Xowymi i Yowymi zależnie od stref:
-        // wszystkie Xowe, wszystkie Yowe, wszystkie nieurodzajne, nad równikiem, równik, pod równikiem
+        if(ThreadLocalRandom.current().nextInt(5) == 4)
+        {
+            if(ThreadLocalRandom.current().nextInt(2) == 1)
+            {
+                int k = 0;
+                while (k < 10){
 
-        ArrayList<Integer> indexesX = new ArrayList<>();
-        for(int i=startpoint.x; i<endpoint.x; i++)
-            indexesX.add(i);
-        Collections.shuffle(indexesX);
+                    int i = ThreadLocalRandom.current().nextInt(map.getMapSettings().width);
+                    int j = ThreadLocalRandom.current().nextInt(first_bound);
 
-        ArrayList<Integer> indexesY = new ArrayList<>();
-        ArrayList<Integer> indexesYdry = new ArrayList<>();
+                    SingleFoodField possibleField = (SingleFoodField) fields[i][j];
+                    if(!possibleField.containsFood())
+                        return new Food(map, new Vector2d(i, j),day);
 
-        ArrayList<Integer> indexesYupper = new ArrayList<>();
-        for(int i=startpoint.y; i<equatorStartY; i++)
-            indexesYupper.add(i);
-        Collections.shuffle(indexesYupper);
+                    k += 1;
+                }
 
-        ArrayList<Integer> indexesYequator = new ArrayList<>();
-        for(int i=equatorStartY; i<equatorStartY+equatorheight; i++)
-            indexesYequator.add(i);
-        Collections.shuffle(indexesYequator);
+                for(int i = 0; i < map.getMapSettings().width; i++)
+                    for(int j = 0; j < first_bound;j++)
+                    {
+                        SingleFoodField possibleField = (SingleFoodField) fields[i][j];
+                        if(!possibleField.containsFood())
+                            return new Food(map,new Vector2d(i, j),day);
+                    }
 
-        ArrayList<Integer> indexesYbottom = new ArrayList<>();
-        for(int i=equatorStartY+equatorheight; i<endpoint.y; i++)
-            indexesYbottom.add(i);
-        Collections.shuffle(indexesYbottom);
+                for(int i = 0; i < map.getMapSettings().width; i++)
+                    for(int j = second_bound; j < map.getMapSettings().height; j++)
+                    {
+                        SingleFoodField possibleField = (SingleFoodField) fields[i][j];
+                        if(!possibleField.containsFood())
+                            return new Food(map, new Vector2d(i, j),day);
+                    }
 
-
-
-        // potasowanie pól tablic wg rodzaju pola  i zlepienie tych tablic po kolei wg wylosowanej kolejności
-        // (w końcu jak w wylosowanej części nie będzie miejsc wolnych to przepatrujemy inne)
-
-        int fieldType = ThreadLocalRandom.current().nextInt(5);  // jak 0 to nieurodzajne
-        if(fieldType == 0){
-
-            int opt = ThreadLocalRandom.current().nextInt(2);
-            if(opt == 0) {
-                indexesY.addAll(indexesYupper);
-                indexesY.addAll(indexesYbottom);
-                indexesYbottom.addAll(indexesYequator);
+                for(int i = 0; i < map.getMapSettings().width; i++)
+                    for(int j = first_bound; j < second_bound;j++)
+                    {
+                        SingleFoodField possibleField = (SingleFoodField) fields[i][j];
+                        if(!possibleField.containsFood())
+                            return new Food(map, new Vector2d(i, j),day);
+                    }
             }
-            else{
-                indexesY.addAll(indexesYbottom);
-                indexesY.addAll(indexesYupper);
-                indexesYbottom.addAll(indexesYequator);
+            else {
+
+                int k = 0;
+
+                while (k < 10) {
+
+                    int i = ThreadLocalRandom.current().nextInt(map.getMapSettings().width);
+                    int j = ThreadLocalRandom.current().nextInt(second_bound, map.getMapSettings().height);
+
+                    SingleFoodField possibleField = (SingleFoodField) fields[i][j];
+                    if(!possibleField.containsFood())
+                        return new Food(map, new Vector2d(i, j),day);
+
+                    k += 1;
+                }
+
+
+                for(int i = 0; i < map.getMapSettings().width; i++)
+                    for(int j = second_bound; j < map.getMapSettings().height; j++)
+                    {
+                        SingleFoodField possibleField = (SingleFoodField) fields[i][j];
+                        if(!possibleField.containsFood())
+                            return new Food(map, new Vector2d(i, j),day);
+                    }
+
+                for(int i = 0; i < map.getMapSettings().width; i++)
+                    for(int j = 0; j < first_bound;j++)
+                    {
+                        SingleFoodField possibleField = (SingleFoodField) fields[i][j];
+                        if(!possibleField.containsFood())
+                            return new Food(map,new Vector2d(i, j),day);
+                    }
+
+                for(int i = 0; i < map.getMapSettings().width; i++)
+                    for(int j = first_bound; j < second_bound;j++)
+                    {
+                        SingleFoodField possibleField = (SingleFoodField) fields[i][j];
+                        if(!possibleField.containsFood())
+                            return new Food(map, new Vector2d(i, j),day);
+                    }
+
             }
         }
-        else{
-            indexesYdry.addAll(indexesYbottom);
-            indexesYdry.addAll(indexesYupper);
-            Collections.shuffle(indexesYdry);
-            indexesY.addAll(indexesYequator);
-            indexesY.addAll(indexesYdry);
-        }
+        else
+        {
+            int k = 0;
 
-        // przepatrywanie pól po kolei czy nie ma już Food wg wylosowanej wcześniej kolejności indexów Xowych i Yowych
+            while (k < 10) {
 
-        int xFind = 0;
-        int yFind = 0;
-        int flag = 0;           // 0-status quo, 1-znalezione pole zajęte już przez Food
-        while(true){
+                int i = ThreadLocalRandom.current().nextInt(map.getMapSettings().width);
+                int j = ThreadLocalRandom.current().nextInt(first_bound, second_bound);
 
-            if(yFind == endpoint.y)
-                return null;
+                SingleFoodField possibleField = (SingleFoodField) fields[i][j];
+                if(!possibleField.containsFood())
+                    return new Food(map, new Vector2d(i, j),day);
 
-            IMapElement[] elements = map.getMapFields()[indexesX.get(xFind)][indexesY.get(yFind)].getElements();
-            for(IMapElement element:elements){
-                if(element instanceof Food) {
-                    flag = 1;
-                    break;
-                }
+                k += 1;
             }
 
-            if(flag==1){
-                if(xFind < endpoint.x) {
-                    xFind++;
-                    flag = 0;
+
+            for(int i = 0; i < map.getMapSettings().width; i++)
+                for(int j = first_bound; j < second_bound;j++)
+                {
+                    SingleFoodField possibleField = (SingleFoodField) fields[i][j];
+                    if(!possibleField.containsFood())
+                        return new Food(map, new Vector2d(i, j),day);
                 }
-                else{
-                    xFind = 0;
-                    yFind++;
-                    flag = 0;
+
+            for(int i = 0; i < map.getMapSettings().width; i++)
+                for(int j = second_bound; j < map.getMapSettings().height; j++)
+                {
+                    SingleFoodField possibleField = (SingleFoodField) fields[i][j];
+                    if(!possibleField.containsFood())
+                        return new Food(map, new Vector2d(i, j),day);
                 }
-            }
-            else
-                break;
+
+            for(int i = 0; i < map.getMapSettings().width; i++)
+                for(int j = 0; j < first_bound;j++)
+                {
+                    SingleFoodField possibleField = (SingleFoodField) fields[i][j];
+                    if(!possibleField.containsFood())
+                        return new Food(map,new Vector2d(i, j),day);
+                }
         }
 
-        int x = indexesX.get(xFind);
-        int y = indexesY.get(yFind);
-
-        return new Food(map, new Vector2d(x, y), day);
+        return null;
     }
 
 }

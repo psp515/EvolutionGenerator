@@ -16,9 +16,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import netscape.javascript.JSObject;
 // import org.json.*;
-import java.io.*;
 
 
 import java.util.ArrayList;
@@ -90,51 +88,50 @@ public class App extends Application
 
     private void loadPresets() {
 
-        //TODO: JSON
         var ss = new SimulationSettings();
-        ss.width = 5;
-        ss.height = 5;
-        ss.moveCost = 1;
+        ss.width = 30;
+        ss.height = 30;
+        ss.moveCost = 2;
         ss.energyFromFood = 50;
-        ss.copulationMinimalEnergy = 80;
-        ss.copulationCostEnregy = 50;
-        ss.startingEnregy = 300;
+        ss.copulationMinimalEnergy = 10;
+        ss.copulationCostEnregy = 10;
+        ss.startingEnregy = 67;
         ss.maxEnregy = 300;
-        ss.startingFood = 1;
-        ss.dailyFoodGrow = 1;
-        ss.startingAnimals = 2;
+        ss.startingFood = 100;
+        ss.dailyFoodGrow = 15;
+        ss.startingAnimals = 100;
         ss.movementsOptions = AnimalMovementOptions.DEFAULT;
         ss.genesOptions = GenesOptions.DEFAULT;
         ss.mapOption = MapOptions.DEFAULT;
-        ss.growingOptions = FoodGrowOptions.RANDOMER;
-        ss.gensLength = 4;
+        ss.growingOptions = FoodGrowOptions.DEFAULT;
+        ss.gensLength = 8;
         ss.saveToCsv = false;
 
         var sw = new SettingsWrapper();
-        sw.name = "Default";
+        sw.name = "Default Combination";
         sw.settings = ss;
 
         var ss2 = new SimulationSettings();
-        ss2.width = 30;
-        ss2.height = 30;
+        ss2.width = 15;
+        ss2.height = 15;
         ss2.moveCost = 1;
         ss2.energyFromFood = 50;
-        ss2.copulationMinimalEnergy = 50;
-        ss2.copulationCostEnregy = 50;
-        ss2.startingEnregy = 300;
+        ss2.copulationMinimalEnergy = 10;
+        ss2.copulationCostEnregy = 10;
+        ss2.startingEnregy = 200;
         ss2.maxEnregy = 300;
         ss2.startingFood = 30;
-        ss2.dailyFoodGrow = 1;
+        ss2.dailyFoodGrow = 10;
         ss2.startingAnimals = 30;
-        ss2.movementsOptions = AnimalMovementOptions.DEFAULT;
-        ss2.genesOptions = GenesOptions.DEFAULT;
-        ss2.mapOption = MapOptions.DEFAULT;
-        ss2.growingOptions = FoodGrowOptions.RANDOMER;
-        ss2.gensLength = 4;
+        ss2.movementsOptions = AnimalMovementOptions.SLIGHT_MADNESS;
+        ss2.genesOptions = GenesOptions.DISCOURAGED_GENOTYPE;
+        ss2.mapOption = MapOptions.HELL;
+        ss2.growingOptions = FoodGrowOptions.DEATH_BODIES;
+        ss2.gensLength = 8;
         ss2.saveToCsv = false;
 
         var sw2 = new SettingsWrapper();
-        sw2.name = "Default2";
+        sw2.name = "Modification";
         sw2.settings = ss2;
 
         optionalSettings.add(sw);
@@ -155,17 +152,17 @@ public class App extends Application
         Button startButton = new Button("Start Custom Simulation");
 
 
-        IntEntry widthEntry = new IntEntry("Map Width", 40,20,200);
-        IntEntry heightEntry = new IntEntry("Map Height", 40,20,200);
-        IntEntry moveCostEntry = new IntEntry("Move Cost", 10,1,10);
+        IntEntry widthEntry = new IntEntry("Map Width", 40,5,80);
+        IntEntry heightEntry = new IntEntry("Map Height", 40,5,80);
+        IntEntry moveCostEntry = new IntEntry("Move Cost", 1,1,10);
         IntEntry energyFromFoodEntry = new IntEntry("Energy From Food", 50,1,100);
         IntEntry copulationMinimalEnergyEntry = new IntEntry("Copulation energy requirements", 80,1,100);
         IntEntry copulationCostEnregyEntry = new IntEntry("Copulation Cost", 39,1,100);
-        IntEntry startingEnregyEntry = new IntEntry("Starting Animal Energy", 100,1,100);
-        IntEntry maxEnregyEntry = new IntEntry("Maximal Animal Energy", 500,1,1000);
-        IntEntry startingFoodEntry = new IntEntry("Starting Food Objects on Map", 1,1,200*200);
-        IntEntry dailyFoodGrowEntry = new IntEntry("Daily Food Grow", 1,1,200*200);
-        IntEntry startingAnimalsEntry = new IntEntry("Starting Animals Count", 1,1,200*200);
+        IntEntry startingEnregyEntry = new IntEntry("Starting Animal Energy", 50,1,100);
+        IntEntry maxEnregyEntry = new IntEntry("Maximal Animal Energy", 500,100,1000);
+        IntEntry startingFoodEntry = new IntEntry("Starting Food Objects on Map", 1,1,80*80);
+        IntEntry dailyFoodGrowEntry = new IntEntry("Daily Food Grow", 1,1,80*80);
+        IntEntry startingAnimalsEntry = new IntEntry("Starting Animals Count", 1,1,80*80);
         IntEntry genesLengthEntry = new IntEntry("Gen Length", 1,1,32);
 
         VBox mo = new VBox();
