@@ -16,9 +16,18 @@ import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-// import org.json.*;
+import org.json.*;
+import org.json.simple.*;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.*;
 
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -86,26 +95,47 @@ public class App extends Application
 
     }
 
-    private void loadPresets() {
+    private void loadPresets() throws IOException, ParseException {
+
+        Object obj = new JSONParser().parse(new FileReader("src/main/resources/package.json"));
+
+        // typecasting obj to JSONObject
+        JSONObject jo = (JSONObject) obj;
 
         var ss = new SimulationSettings();
-        ss.width = 30;
-        ss.height = 30;
-        ss.moveCost = 2;
-        ss.energyFromFood = 50;
-        ss.copulationMinimalEnergy = 10;
-        ss.copulationCostEnregy = 10;
-        ss.startingEnregy = 67;
-        ss.maxEnregy = 300;
-        ss.startingFood = 100;
-        ss.dailyFoodGrow = 15;
-        ss.startingAnimals = 100;
+
+        ss.width = ((Number) jo.get("width")).intValue();
+        ss.height = ((Number) jo.get("height")).intValue();
+        ss.moveCost = ((Number) jo.get("moveCost")).intValue();
+        ss.energyFromFood = ((Number) jo.get("energyFromFood")).intValue();
+        ss.copulationMinimalEnergy = ((Number) jo.get("copulationMinimalEnergy")).intValue();
+        ss.copulationCostEnregy = ((Number) jo.get("copulationCostEnregy")).intValue();
+        ss.startingEnregy = ((Number) jo.get("startingEnregy")).intValue();
+        ss.maxEnregy = ((Number) jo.get("maxEnregy")).intValue();
+        ss.startingFood = ((Number) jo.get("startingFood")).intValue();
+        ss.dailyFoodGrow = ((Number) jo.get("dailyFoodGrow")).intValue();
+        ss.startingAnimals = ((Number) jo.get("startingAnimals")).intValue();
+        ss.gensLength = ((Number) jo.get("gensLength")).intValue();
+        ss.saveToCsv = (boolean) jo.get("saveToCsv");
+
+
+//        ss.width = 30;
+//        ss.height = 30;
+//        ss.moveCost = 2;
+//        ss.energyFromFood = 50;
+//        ss.copulationMinimalEnergy = 10;
+//        ss.copulationCostEnregy = 10;
+//        ss.startingEnregy = 67;
+//        ss.maxEnregy = 300;
+//        ss.startingFood = 100;
+//        ss.dailyFoodGrow = 15;
+//        ss.startingAnimals = 100;
         ss.movementsOptions = AnimalMovementOptions.DEFAULT;
         ss.genesOptions = GenesOptions.DEFAULT;
         ss.mapOption = MapOptions.DEFAULT;
         ss.growingOptions = FoodGrowOptions.DEFAULT;
-        ss.gensLength = 8;
-        ss.saveToCsv = false;
+//        ss.gensLength = 8;
+//        ss.saveToCsv = false;
 
         var sw = new SettingsWrapper();
         sw.name = "Default Combination";

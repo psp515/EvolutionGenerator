@@ -17,6 +17,9 @@ dependencies {
 //    compile 'com.opencsv:opencsv:5.7.1'
 //    implementation group: 'com.opencsv', name: 'opencsv', version: '3.7'
     implementation 'com.opencsv:opencsv:3.7'
+    implementation 'org.json:json:20171018'
+    implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+
 
 }
 

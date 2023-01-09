@@ -320,7 +320,6 @@ public class SimulationEngine implements IMapSimulations, Runnable {
 
         if(_simulationSettings.saveToCsv) {
 
-            //TODO : zmiana nazwy pliku na simulation + milisekundy utworzneia -> nazwa zapisana w konstruktorze.
             File newfile = new File(this.csvName);
 
             writeIntoCSV(mapStatistics, simulationDay, newfile);
