@@ -92,8 +92,8 @@ public class App extends Application
 
         //TODO: JSON
         var ss = new SimulationSettings();
-        ss.width = 5;
-        ss.height = 5;
+        ss.width = 2;
+        ss.height = 2;
         ss.moveCost = 1;
         ss.energyFromFood = 50;
         ss.copulationMinimalEnergy = 80;

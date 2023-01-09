@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.util.*;
 
 import static Tools.Randomizer.getRandomNumber;
+import static java.lang.System.out;
 
 public class SimulationEngine implements IMapSimulations, Runnable {
 
@@ -188,15 +189,17 @@ public class SimulationEngine implements IMapSimulations, Runnable {
     }
     @Override
     public void simulateBorns() {
-
         for(int i = 0; i < map.getMapSettings().width; i++) {
-            for(int j = 0; j < map.getMapSettings().width; j++)
+            for(int j = 0; j < map.getMapSettings().height; j++)
             {
+
                 var field = mapFields[i][j];
                 var elements = field.getElements();
 
+                out.println(elements.length);
+
                 if(elements.length < 2)
-                    return;
+                    break;
 
                 Animal[] fieldAniamls = new Animal[elements.length];
 
@@ -214,6 +217,8 @@ public class SimulationEngine implements IMapSimulations, Runnable {
                     animals.add(ch);
                     mapStatistics.dayBorns += 1;
                 }
+
+
             }
         }
     }
