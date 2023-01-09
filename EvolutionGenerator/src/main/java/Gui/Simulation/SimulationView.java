@@ -9,6 +9,7 @@ import javafx.concurrent.Task;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -17,8 +18,6 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 import java.util.Arrays;
-
-import static java.lang.System.out;
 
 public class SimulationView implements IPropertyChanged {
 
@@ -32,7 +31,6 @@ public class SimulationView implements IPropertyChanged {
     HBox actions;
     GridPane watchedAnimal;
 
-
     public SimulationView(SimulationSettings settings) {
 
         map = new GridPane();
@@ -42,9 +40,13 @@ public class SimulationView implements IPropertyChanged {
 
         status = new SimulationStatus();
         status.isRunning = false;
+        status.isFinished = true;
 
         simulationEngine = new SimulationEngine(settings, status,this);
-        Platform.runLater(this::refreshMap);
+
+        drawStatistics();
+        drawWatchedAnimal();
+        drawMap();
         drawActions();
 
         mainView = new Stage();
@@ -59,7 +61,7 @@ public class SimulationView implements IPropertyChanged {
         mainScene = new Scene(scrollPane);
         mainView.setScene(mainScene);
         mainView.setMinWidth(800);
-        mainView.setMinHeight(400);
+        mainView.setMinHeight(800);
         mainView.show();
 
         mainView.setOnCloseRequest(new EventHandler<WindowEvent>() {
@@ -74,8 +76,8 @@ public class SimulationView implements IPropertyChanged {
     //DRAW
 
     public void refreshMap(){
-        drawStatistics();
-        drawWatchedAnimal();
+        updateStatistics();
+        updateWatchedAnimal();
         drawMap();
     }
 
@@ -105,7 +107,10 @@ public class SimulationView implements IPropertyChanged {
 
         map.setGridLinesVisible(true);
     }
-
+    public void updateMap() {
+        map = new GridPane();
+        drawMap();
+    }
     public void drawStatistics() {
         statistics.getChildren().clear();
 
@@ -140,6 +145,11 @@ public class SimulationView implements IPropertyChanged {
 
 
         statistics.setGridLinesVisible(true);
+    }
+
+    public void updateStatistics() {
+        statistics = new GridPane();
+        drawStatistics();
     }
 
     public void drawWatchedAnimal() {
@@ -182,6 +192,11 @@ public class SimulationView implements IPropertyChanged {
            watchedAnimal.add(new Label(String.valueOf(simulationEngine.getSimulationDay() - animal.getCreationDay())),5,1);
        }
     }
+    public void updateWatchedAnimal()
+    {
+        watchedAnimal = new GridPane();
+        drawWatchedAnimal();
+    }
 
     private void drawActions() {
 
@@ -206,11 +221,12 @@ public class SimulationView implements IPropertyChanged {
         });
 
         animalButton.setOnAction((e)->{
-            selectAnimalToWatch();
+            //TODO
+            watchAnimal();
         });
 
-        animalButton.setOnAction((e)->{
-            markAnimals();
+        markingButton.setOnAction((e)->{
+            //TODO
         });
     }
 
@@ -218,23 +234,30 @@ public class SimulationView implements IPropertyChanged {
     //ACTIONS
 
     public void startSimulation() {
-        if(status.isRunning)
+        if(status.notReadyToStartAction())
+        {
+            Alert a = new Alert(Alert.AlertType.INFORMATION);
+            a.setContentText("There is ongoing simulation or previous simulation didn't finished.");
+            a.show();
             return;
+        }
 
         status.isRunning = true;
         Task task = new Task<Void>() {
             @Override
             public Void call() {
 
+                status.isFinished= false;
                 while (status.isRunning)
                 {
                     simulationEngine.run();
                     try {
-                        Thread.sleep(1000);
+                        Thread.sleep(200);
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
                 }
+                status.isFinished= true;
 
                 return null;
             }
@@ -243,21 +266,38 @@ public class SimulationView implements IPropertyChanged {
         new Thread(task).start();
     }
     public void stopSimulation() {
-
-        out.println("stop");
         status.isRunning = false;
         refreshMap();
     }
-    private void selectAnimalToWatch() {
+
+    private void watchAnimal() {
+        if(status.notReadyToStartAction())
+        {
+            Alert a = new Alert(Alert.AlertType.INFORMATION);
+            a.setContentText("There is ongoing simulation or previous simulation didn't finished. Please wait.");
+            a.show();
+            return;
+        }
+
         //TODO
     }
-    private void markAnimals() {
+
+    private void markAnimalWithGenotype()
+    {
+        if(status.notReadyToStartAction())
+        {
+            Alert a = new Alert(Alert.AlertType.INFORMATION);
+            a.setContentText("There is ongoing simulation or previous simulation didn't finished. Please wait.");
+            a.show();
+            return;
+        }
+
         //TODO
     }
+
     @Override
-    public void propertyChanged() {
-
+    public void propertyChanged()
+    {
         Platform.runLater(this::refreshMap);
-
     }
 }

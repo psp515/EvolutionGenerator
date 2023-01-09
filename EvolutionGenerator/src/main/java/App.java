@@ -69,7 +69,6 @@ public class App extends Application
         for(var value : FoodGrowOptions.values())
             foodGenerationOptions.add(value.toString());
 
-
         for(var value : AnimalMovementOptions.values())
             movementOptions.add(value.toString());
 

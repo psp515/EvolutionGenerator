@@ -5,8 +5,11 @@ import Elements.Food;
 import Interfaces.Animals.IGenes;
 import Tools.Vector2d;
 
+import java.util.Map;
+
 public class MapStatistics
 {
+
     public MapStatistics(int width, int height)
     {
         animalDeathsOnField = new int[width][height];
@@ -17,7 +20,7 @@ public class MapStatistics
     public int foodOnMap;
 
     public int placesFreeFromAnimalCount;
-    public IGenes mostPoupularGenotype;
+    public String mostPoupularGenes;
     public double averageEnergy;
     public double averageLiveLength;
 

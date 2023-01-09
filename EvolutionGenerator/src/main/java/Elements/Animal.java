@@ -11,9 +11,8 @@ import javafx.util.Pair;
 
 import java.util.Arrays;
 
-import static java.lang.System.out;
 
-public class Animal extends MapElement implements IMapMoveElement {
+public class Animal extends MapElement implements IMapMoveElement, Comparable<Animal> {
 
     private final IAnimalMovement _movement;
     public final IGenes _genotype;
@@ -21,7 +20,7 @@ public class Animal extends MapElement implements IMapMoveElement {
     private int deathDay;
     private boolean isDead;
     private int foodEaten;
-    private int childrens;
+    private int children;
 
     private MapDirection actDirection;
 
@@ -38,8 +37,9 @@ public class Animal extends MapElement implements IMapMoveElement {
         energy = startingEnergy;
         deathDay = -1;
         foodEaten = 0;
-        childrens = 0;
+        children = 0;
         isDead = false;
+
     }
 
     public void eat(Food food){
@@ -104,16 +104,13 @@ public class Animal extends MapElement implements IMapMoveElement {
         return this.foodEaten;
     }
     public int getChildrensCount(){
-        return this.childrens;
+        return this.children;
     }
     public void childrenBorn(){
-        this.childrens+=1;
+        this.children +=1;
     }
     @Override
     public void move(){
-
-        out.println(_creationDay);
-        out.println(Arrays.toString(_genotype.getGenes()));
         Vector2d newPosition = _movement.nextPosition(_genotype, position, actDirection);
         Pair<MapDirection, Vector2d> pair = _map.moveElement(this,position, newPosition);
 
@@ -135,7 +132,32 @@ public class Animal extends MapElement implements IMapMoveElement {
         return RESOURCES_STRING + "/animals/" + getAnimalImage();
     }
     private String getAnimalImage() {
-        int number = (int) Math.floor(energy * 6 / _map.getMapSettings().maxEnergy);
-        return "a"+number+".png";
+        int img = (int) Math.floor(energy * 6 / _map.getMapSettings().maxEnergy);
+        return "a"+img+".png";
+    }
+
+    @Override
+    public int compareTo(Animal cmp) {
+
+        //A energia
+        if(cmp.getEnergy() > this.getEnergy())
+            return -1;
+        else if (this.getEnergy() > cmp.getEnergy())
+            return 1;
+
+        //B urodzenie
+        if(cmp._creationDay < this._creationDay)
+            return -1;
+        else if (cmp._creationDay > this._creationDay)
+            return 1;
+
+        //C dzieci
+        if(cmp.getChildrensCount() > this.getChildrensCount())
+            return -1;
+        else if (cmp.getChildrensCount() < this.getChildrensCount())
+            return 1;
+
+        //D losowo
+        return Math.random() >= 0.5 ? 1 : -1;
     }
 }

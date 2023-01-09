@@ -14,12 +14,9 @@ import Tools.SingleFoodField;
 import Tools.Vector2d;
 import javafx.application.Platform;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
+import java.util.*;
 
 import static Tools.Randomizer.getRandomNumber;
-import static java.lang.System.out;
 
 public class SimulationEngine implements IMapSimulations, Runnable {
 
@@ -34,13 +31,15 @@ public class SimulationEngine implements IMapSimulations, Runnable {
 
     SingleFoodField[][] mapFields;
 
-    Animal markedAnimal;
+    Animal watchedAnimal;
     public final SimulationSettings _simulationSettings;
 
     IFoodGenerator foodGenerator;
-    SimulationStatus isRunning;
+    SimulationStatus status;
 
     IPropertyChanged observer;
+
+    HashMap<String, Integer> genesCollection = new HashMap<String, Integer>();
 
 
     public ArrayList<Animal> getAnimals(){
@@ -48,7 +47,7 @@ public class SimulationEngine implements IMapSimulations, Runnable {
     }
 
     public Animal getMarkledAnimal(){
-        return this.markedAnimal;
+        return this.watchedAnimal;
     }
     public int getSimulationDay(){
         return this.simulationDay;
@@ -60,19 +59,19 @@ public class SimulationEngine implements IMapSimulations, Runnable {
         return this.mapStatistics;
     }
 
-    public void setMarkedAnimal(Animal animal)
+    public void setWatchedAnimal(Animal animal)
     {
         //TODO : check if in animals
-        this.markedAnimal = animal;
+        this.watchedAnimal = animal;
     }
 
 
     public SimulationEngine(SimulationSettings settings, SimulationStatus isRunning, IPropertyChanged observer){
 
-        markedAnimal = null;
+        watchedAnimal = null;
 
         this.observer = observer;
-        this.isRunning = isRunning;
+        this.status = isRunning;
 
         animals = new ArrayList<>();
         deadAnimals = new ArrayList<>();
@@ -99,8 +98,7 @@ public class SimulationEngine implements IMapSimulations, Runnable {
 
     //region Initialization
 
-    private void generateStartingFood()
-    {
+    private void generateStartingFood() {
         for(int i = 0; i < _simulationSettings.startingFood; i++)
         {
             Food food = foodGenerator.growFood(map, this.simulationDay);
@@ -113,7 +111,6 @@ public class SimulationEngine implements IMapSimulations, Runnable {
             }
         }
     }
-
     private void generateStartingAnimals() {
         for(int i = 0; i < _simulationSettings.startingAnimals; i++)
         {
@@ -156,16 +153,12 @@ public class SimulationEngine implements IMapSimulations, Runnable {
                     Animal animal = field.getStrongestAnimal();
 
                     if(animal != null)
-                    {
                         animal.eat(field.getFood());
-                    }
+
                 }
     }
-
     @Override
-    public void simulateDeaths()
-    {
-        //Nowa lista bo nie da sie iterowac po zmieniajacej kolekcji
+    public void simulateDeaths(){
         for(Animal animal : new ArrayList<>(animals))
             if(animal.getEnergy() <= 0)
             {
@@ -178,7 +171,6 @@ public class SimulationEngine implements IMapSimulations, Runnable {
                 mapStatistics.safeDeadAnimal(animal);
             }
     }
-
     @Override
     public void simulateBorns() {
 
@@ -190,9 +182,6 @@ public class SimulationEngine implements IMapSimulations, Runnable {
 
                 if(elements.length < 2)
                     return;
-
-                out.println("Simulate borns");
-                out.println(elements.length);
 
                 Animal[] fieldAniamls = new Animal[elements.length];
 
@@ -229,8 +218,9 @@ public class SimulationEngine implements IMapSimulations, Runnable {
             }
         }
     }
-
     void updateStatistics() {
+        genesCollection = new HashMap<>();
+
         mapStatistics.animalsOnMap = animals.size();
         int totalEnergy = 0;
         int totalDaysLived = 0;
@@ -257,66 +247,36 @@ public class SimulationEngine implements IMapSimulations, Runnable {
                         totalEnergy += animal.getEnergy();
                         totalDaysLived += simulationDay - animal.getCreationDay();
 
-                        //TODO : find popular genotype;
+                        int[] genes = animal._genotype.getGenes();
+
+                        String key = Arrays.toString(genes);
+
+                        if(genesCollection.containsKey(key))
+                        {
+                            var val = genesCollection.get(key);
+                            genesCollection.put(key, val+1);
+                        }
+                        else
+                        {
+                            genesCollection.put(key, 1);
+                        }
                     }
                 }
             }
 
-        //TODO FIX
-        mapStatistics.animalsOnMap = animals.size();
-    }
+        List<Map.Entry<String, Integer>> list = new ArrayList<>(genesCollection.entrySet());
+        list.sort(Map.Entry.comparingByValue());
 
+        mapStatistics.mostPoupularGenes = list.get(list.size()-1).getKey();
+
+        mapStatistics.animalsOnMap = animals.size();
+        mapStatistics.averageEnergy = totalEnergy / animals.size();
+        mapStatistics.averageLiveLength = totalDaysLived / (animals.size() + deadAnimals.size());
+    }
 
     @Override
     public void run() {
-        /*
-        Task<Void> task = new Task<>() {
-            @Override
-            public Void call() {
-                while(isRunning.isRunning)
-                {
-                    out.println("startDay");
-                    simulationDay += 1;
-                    mapStatistics.dayBorns = 0;
-                    mapStatistics.dayDeaths = 0;
-                    mapStatistics.placesFreeFromAnimalCount = 0;
 
-                    moveAnimals();
-                    out.println("1");
-                    simulateEating();
-
-                    out.println("2");
-                    simulateDeaths();
-                    out.println("3");
-                    simulateBorns();
-                    out.println("4");
-                    growFood();
-                    out.println("5");
-
-                    updateStatistics();
-
-                    out.println("data");
-
-                    observer.propertyChanged();
-
-                    if(_simulationSettings.saveToCsv)
-                    {
-                        //TODO save to csv
-                    }
-
-                    try
-                    {
-                        Thread.sleep(1000);
-                    }
-                    catch (InterruptedException e) {}
-                    out.println("endsleep");
-                }
-
-                return null;
-            }
-        };
-
-        new Thread(task).run();*/
         simulationDay += 1;
         mapStatistics.dayBorns = 0;
         mapStatistics.dayDeaths = 0;
@@ -334,11 +294,9 @@ public class SimulationEngine implements IMapSimulations, Runnable {
 
         if(_simulationSettings.saveToCsv)
         {
-            //TODO save to csv
+            //TODO: osobny wątek
+            //TODO: save to csv
         }
-
-
-        out.println("endsleep");
     }
 
     public void MarkMostPopularGenotype()
@@ -350,8 +308,7 @@ public class SimulationEngine implements IMapSimulations, Runnable {
 
     private boolean isMostPopular(int[] genes)
     {
-        //TODO
-        return false;
+        return Arrays.toString(genes).equals(mapStatistics.mostPoupularGenes);
     }
 
     public void DeMarkMostPopularGenotype()

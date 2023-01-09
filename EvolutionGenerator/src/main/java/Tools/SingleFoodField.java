@@ -57,13 +57,12 @@ public class SingleFoodField extends MapField implements IFoodField {
     }
 
     public Animal getStrongestAnimal(){
-        //TODO zmiana sposobu !!!!!!!!!
-        return  elements.stream().max(Comparator.comparing(Animal::getEnergy)).orElse(null);
+        return  elements.stream().max(Animal::compareTo).orElse(null);
     }
 
     @Override
     public FieldView getView()  {
-        return new FieldView(getStrongestAnimal(), elements.size(), food);
+        return new FieldView(getStrongestAnimal(), elements.size(), food, getAnimals());
     }
 
     public ArrayList<Animal> getAnimals(){

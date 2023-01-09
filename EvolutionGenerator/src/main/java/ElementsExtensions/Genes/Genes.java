@@ -5,6 +5,7 @@ import Interfaces.Animals.IGenes;
 
 import java.util.concurrent.ThreadLocalRandom;
 
+
 public abstract class Genes implements IGenes {
     private int[] genes;
     private int activatedGene;
@@ -27,6 +28,12 @@ public abstract class Genes implements IGenes {
             this.genes = createGenes(genLength, parent2, parent1, part2, part1);
 
         mutate();
+
+        int i = ThreadLocalRandom.current().nextInt(genLength);
+
+        for(int j = 0; j < i; j++)
+            this.activateNextGene();
+
     }
 
     private int[] createGenes(int len, Animal a, Animal b, int a_len, int b_len)

@@ -38,10 +38,10 @@ public abstract class MapField implements IMapField
         FieldView view;
 
         if (elements.isEmpty())
-            return new FieldView(null,0,null);
+            return new FieldView(null,0,null, null);
 
         IMapElement food =  elements.stream().filter(p->{return p instanceof Food;}).findFirst().orElse(null);
 
-        return new FieldView(elements.get(0),0,food);
+        return new FieldView(elements.get(0),0,food, null);
     }
 }
