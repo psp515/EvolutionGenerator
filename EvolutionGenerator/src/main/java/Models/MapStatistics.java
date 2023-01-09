@@ -29,7 +29,7 @@ public class MapStatistics
 
     public final int[][]  animalDeathsOnField;
     public final int[][] foodGrowOnField;
-    public File csvfile = new File("src/main/resources/csvFile.csv");
+    // public File csvfile = new File("src/main/resources/csvFile.csv");
 
 
     public void safeDeadAnimal(Animal animal)

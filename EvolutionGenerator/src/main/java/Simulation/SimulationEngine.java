@@ -53,6 +53,7 @@ public class SimulationEngine implements IMapSimulations, Runnable {
     HashMap<String, Integer> genesCollection = new HashMap<String, Integer>();
 
 
+
     public ArrayList<Animal> getAnimals(){
         return this.animals;
     }
@@ -315,19 +316,20 @@ public class SimulationEngine implements IMapSimulations, Runnable {
 
         if(_simulationSettings.saveToCsv) {
 
+            //TODO : zmiana nazwy pliku na simulation + milisekundy utworzneia -> nazwa zapisana w konstruktorze.
+            File newfile = new File("src/main/resources/csvFile.csv");
 
-
-            writeIntoCSV(mapStatistics, simulationDay);
+            writeIntoCSV(mapStatistics, simulationDay, newfile);
 
             //TODO: osobny wątek
         }
     }
 
-    public void writeIntoCSV(MapStatistics stats, int day){
+    public void writeIntoCSV(MapStatistics stats, int day, File newfile){
 
         try {
             // create FileWriter object with file as parameter
-            FileWriter outputfile = new FileWriter(stats.csvfile, true);
+            FileWriter outputfile = new FileWriter(newfile, true);
 
             out.println(outputfile);
 
