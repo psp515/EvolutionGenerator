@@ -349,12 +349,7 @@ public class SimulationEngine implements IMapSimulations, Runnable {
         }
     }
 
-    public void MarkMostPopularGenotype()
-    {
-        for(var animal : animals)
-            if(isMostPopular(animal._genotype.getGenes()))
-                animal.isHighlighted = true;
-    }
+   
 
     private boolean isMostPopular(int[] genes)
     {
