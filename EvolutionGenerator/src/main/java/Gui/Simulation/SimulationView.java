@@ -76,8 +76,8 @@ public class SimulationView implements IPropertyChanged {
     //DRAW
 
     public void refreshMap(){
-        updateStatistics();
-        updateWatchedAnimal();
+        drawStatistics();
+        drawWatchedAnimal();
         drawMap();
     }
 
@@ -112,6 +112,7 @@ public class SimulationView implements IPropertyChanged {
         drawMap();
     }
     public void drawStatistics() {
+
         statistics.getChildren().clear();
 
         var stats = simulationEngine.getMapStatistics();
@@ -149,10 +150,42 @@ public class SimulationView implements IPropertyChanged {
 
     public void updateStatistics() {
         statistics = new GridPane();
-        drawStatistics();
+
+        var stats = simulationEngine.getMapStatistics();
+
+        for ( int i = 0; i < 7; i++ )
+            statistics.getColumnConstraints().add(new ColumnConstraints(  ));
+        for ( int i = 0; i < 2; i++ )
+            statistics.getRowConstraints().add(new RowConstraints(  ));
+
+        statistics.add(new Label("Animals Count"),0,0);
+        statistics.add(new Label(String.valueOf(stats.animalsOnMap)),0,1);
+
+        statistics.add(new Label("Food Count"),1,0);
+        statistics.add(new Label(String.valueOf(stats.foodOnMap)),1,1);
+
+        statistics.add(new Label("Free Count"),2,0);
+        statistics.add(new Label(String.valueOf(stats.placesFreeFromAnimalCount)),2,1);
+
+        statistics.add(new Label("Most Popular Gens"),3,0);
+        statistics.add(new Label("TODO"),3,1);
+
+        statistics.add(new Label("Avg. Energy"),4,0);
+        statistics.add(new Label(String.valueOf(stats.averageEnergy)),4,1);
+
+        statistics.add(new Label("Avg. Live Span"),5,0);
+        statistics.add(new Label(String.valueOf(stats.averageLiveLength)),5,1);
+
+
+        statistics.add(new Label("Simulation Day"),6,0);
+        statistics.add(new Label(String.valueOf(simulationEngine.getSimulationDay())),6,1);
+
+
+        statistics.setGridLinesVisible(true);
     }
 
     public void drawWatchedAnimal() {
+        watchedAnimal.getChildren().clear();
 
         var animal = simulationEngine.getMarkledAnimal();
         if(animal == null)
@@ -192,8 +225,7 @@ public class SimulationView implements IPropertyChanged {
            watchedAnimal.add(new Label(String.valueOf(simulationEngine.getSimulationDay() - animal.getCreationDay())),5,1);
        }
     }
-    public void updateWatchedAnimal()
-    {
+    public void updateWatchedAnimal() {
         watchedAnimal = new GridPane();
         drawWatchedAnimal();
     }
