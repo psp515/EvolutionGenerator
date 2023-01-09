@@ -94,6 +94,10 @@ public class SimulationEngine implements IMapSimulations, Runnable {
 
         generateStartingAnimals();
         generateStartingFood();
+
+        updateStatistics();
+
+        observer.propertyChanged();
     }
 
     //region Initialization
@@ -299,22 +303,23 @@ public class SimulationEngine implements IMapSimulations, Runnable {
         }
     }
 
-    public void MarkMostPopularGenotype()
-    {
-        for(var animal : animals)
-            if(isMostPopular(animal._genotype.getGenes()))
-                animal.isHighlighted = true;
-    }
-
     private boolean isMostPopular(int[] genes)
     {
         return Arrays.toString(genes).equals(mapStatistics.mostPoupularGenes);
     }
 
-    public void DeMarkMostPopularGenotype()
-    {
+    public void MarkMostPopularGenotype() {
+        for(var animal : animals)
+            if(isMostPopular(animal._genotype.getGenes()))
+                animal.isHighlighted = true;
+    }
+
+    public void UnMarkMostPopularGenotype() {
         for(var animal : animals)
             animal.isHighlighted = false;
     }
 
+    public boolean isPossible() {
+        return this.animals.size() > 0;
+    }
 }

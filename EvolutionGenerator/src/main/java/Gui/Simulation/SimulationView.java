@@ -20,8 +20,6 @@ import javafx.stage.WindowEvent;
 
 import java.util.Arrays;
 
-import static java.lang.System.out;
-
 // TODO Marking Animals
 // TODO Selecting One Animal - > to mozna zrobić combo boxem i wybór jednego
 // TODO Kopulacja nie działa poprawnie
@@ -38,7 +36,11 @@ public class SimulationView implements IPropertyChanged {
     HBox actions;
     GridPane watchedAnimal;
 
+    boolean genotypesMarked;
+
     public SimulationView(SimulationSettings settings) {
+
+        genotypesMarked = false;
 
         map = new GridPane();
         statistics = new GridPane();
@@ -80,7 +82,7 @@ public class SimulationView implements IPropertyChanged {
 
     }
 
-    //DRAW
+    //region DRAW
 
     public Label makeLabel(String text)
     {
@@ -214,7 +216,7 @@ public class SimulationView implements IPropertyChanged {
         Button startButton = new Button("Start Simulation");
         Button stopButton = new Button("Stop Simulation");
         Button animalButton = new Button("Select Animal");
-        Button markingButton = new Button("Mark Genotype");
+        Button markingButton = new Button("Mark / Unmark Most Popular Genotype");
 
         actions.getChildren().add(startButton);
         actions.getChildren().add(stopButton);
@@ -237,10 +239,11 @@ public class SimulationView implements IPropertyChanged {
         });
 
         markingButton.setOnAction((e)->{
-            //TODO
+            markAnimalsWithGenotype();
         });
     }
 
+    // endregion
 
     //ACTIONS
 
@@ -253,6 +256,11 @@ public class SimulationView implements IPropertyChanged {
             return;
         }
 
+        if(genotypesMarked)
+        {
+            genotypesMarked = false;
+            simulationEngine.UnMarkMostPopularGenotype();
+        }
         status.isRunning = true;
         Task task = new Task<Void>() {
             @Override
@@ -261,11 +269,20 @@ public class SimulationView implements IPropertyChanged {
                 status.isFinished= false;
                 while (status.isRunning)
                 {
-                    simulationEngine.run();
-                    try {
-                        Thread.sleep(300);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
+                    if(simulationEngine.getMapStatistics().animalsOnMap > 0)
+                    {
+                        simulationEngine.run();
+                        try {
+                            Thread.sleep(200);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                    else {
+                        Alert a = new Alert(Alert.AlertType.INFORMATION);
+                        a.setContentText("Simulation has ended all animals died.");
+                        a.show();
+                        break;
                     }
                 }
                 status.isFinished= true;
@@ -301,17 +318,27 @@ public class SimulationView implements IPropertyChanged {
         //TODO
     }
 
-    private void markAnimalWithGenotype()
+    private void markAnimalsWithGenotype()
     {
         if(status.notReadyToStartAction())
         {
             Alert a = new Alert(Alert.AlertType.INFORMATION);
-            a.setContentText("There is ongoing simulation or previous simulation didn't finished. Please wait.");
+            a.setContentText("There is ongoing simulation or previous simulation didn't finished. Please wait or end simulation.");
             a.show();
             return;
         }
 
-        //TODO
+        if(genotypesMarked)
+        {
+            genotypesMarked = false;
+            simulationEngine.UnMarkMostPopularGenotype();
+            refreshMap();
+        }
+        else {
+            genotypesMarked = true;
+            simulationEngine.MarkMostPopularGenotype();
+            refreshMap();
+        }
     }
 
     @Override
