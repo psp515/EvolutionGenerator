@@ -5,10 +5,18 @@ import Elements.Food;
 import Interfaces.Animals.IGenes;
 import Tools.Vector2d;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class MapStatistics
 {
+
 
     public MapStatistics(int width, int height)
     {
@@ -42,4 +50,5 @@ public class MapStatistics
         Vector2d position = food.getPosition();
         foodGrowOnField[position.x][position.y] += 1;
     }
+
 }

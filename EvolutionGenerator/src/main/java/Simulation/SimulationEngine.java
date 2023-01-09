@@ -12,8 +12,17 @@ import Models.SimulationSettings;
 import Models.SimulationStatus;
 import Tools.SingleFoodField;
 import Tools.Vector2d;
+import com.opencsv.CSVWriter;
 import javafx.application.Platform;
+import com.opencsv.CSVReader;
+import java.io.IOException;
+import java.io.Reader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 
 import static Tools.Randomizer.getRandomNumber;
@@ -94,6 +103,8 @@ public class SimulationEngine implements IMapSimulations, Runnable {
 
         generateStartingAnimals();
         generateStartingFood();
+
+
     }
 
     //region Initialization
@@ -292,10 +303,47 @@ public class SimulationEngine implements IMapSimulations, Runnable {
 
         Platform.runLater(() -> observer.propertyChanged());
 
-        if(_simulationSettings.saveToCsv)
-        {
+        if(_simulationSettings.saveToCsv) {
+            File newfile = new File("../resources/csvFile.csv");
+
+            writeIntoCSV(newfile, mapStatistics, simulationDay);
+
+            //TODO: jak zrobić żeby pwostawał tylko raz (narazie jest już utworzony i program do niego wpisuje)
             //TODO: osobny wątek
             //TODO: save to csv
+        }
+    }
+
+    public void writeIntoCSV(File filepath, MapStatistics stats, int day){
+        try {
+            // create FileWriter object with file as parameter
+            FileWriter outputfile = new FileWriter(filepath);
+
+            // create CSVWriter object filewriter object as parameter
+            CSVWriter writer = new CSVWriter(outputfile);
+
+            // adding header to csv
+            if(day==1) {
+                String[] header = {"animalsOnMap", "foodOnMap", "placesFreeFromAnimalCount", "mostPoupularGenes", "averageEnergy", "averageLiveLength"};
+                writer.writeNext(header);
+            }
+
+            String animalsCount = String.valueOf(stats.animalsOnMap);
+            String foodCount = String.valueOf(stats.foodOnMap);
+            String freePlaces = String.valueOf(stats.placesFreeFromAnimalCount);
+            String popularGenes = String.valueOf(stats.mostPoupularGenes);
+            String avEnergy = String.valueOf(stats.averageEnergy);
+            String avLivespan = String.valueOf(stats.averageLiveLength);
+
+            // add data to csv
+            String[] data1 = { animalsCount, foodCount, freePlaces, popularGenes, avEnergy, avLivespan };
+            writer.writeNext(data1);
+
+            // closing writer connection
+            writer.close();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

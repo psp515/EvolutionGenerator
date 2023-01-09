@@ -18,6 +18,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import netscape.javascript.JSObject;
 // import org.json.*;
+import java.io.*;
 
 
 import java.util.ArrayList;
@@ -193,7 +194,7 @@ public class App extends Application
         g.setPadding(new Insets(4,10,4,10));
         Label gDescription = new Label("Genes Options");
         genesOptionsSelector = new ComboBox();
-        genesOptionsSelector.setPromptText("Saving Options");
+        genesOptionsSelector.setPromptText("Genes Options");
         genesOptionsSelector.getItems().addAll(genesOptions);
 
         VBox sd = new VBox();
