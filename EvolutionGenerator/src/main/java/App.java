@@ -16,9 +16,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import netscape.javascript.JSObject;
 // import org.json.*;
-import java.io.*;
 
 
 import java.util.ArrayList;
@@ -129,7 +127,7 @@ public class App extends Application
         ss2.movementsOptions = AnimalMovementOptions.DEFAULT;
         ss2.genesOptions = GenesOptions.DEFAULT;
         ss2.mapOption = MapOptions.DEFAULT;
-        ss2.growingOptions = FoodGrowOptions.RANDOMER;
+        ss2.growingOptions = FoodGrowOptions.LINEAR_GROW;
         ss2.gensLength = 4;
         ss2.saveToCsv = false;
 

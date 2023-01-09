@@ -5,9 +5,9 @@ import Interfaces.Map.IMap;
 import Tools.SingleFoodField;
 import Tools.Vector2d;
 
-public class Randomer extends FoodGenerator {
+public class LinearGrow extends FoodGenerator {
 
-    public Randomer(SingleFoodField[][] mapFields) {
+    public LinearGrow(SingleFoodField[][] mapFields) {
         super(mapFields);
     }
 
