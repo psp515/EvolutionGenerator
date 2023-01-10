@@ -1,3 +1,4 @@
+import ElementsExtensions.AnimalMovement.AnimalMovement;
 import Enums.AnimalMovementOptions;
 import Enums.FoodGrowOptions;
 import Enums.GenesOptions;
@@ -30,6 +31,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Map;
+import java.util.Objects;
 
 import static java.lang.System.out;
 
@@ -97,74 +100,63 @@ public class App extends Application
 
     private void loadPresets() throws IOException, ParseException {
 
-        Object obj = new JSONParser().parse(new FileReader("src/main/resources/package.json"));
+        Object obj = new JSONParser().parse(new FileReader("src/main/resources/simSet.json"));
 
         // typecasting obj to JSONObject
         JSONObject jo = (JSONObject) obj;
+        JSONObject ss1 = (JSONObject) jo.get("ss1");
+        JSONObject ss2 = (JSONObject) jo.get("ss2");
 
-        var ss = new SimulationSettings();
-
-        ss.width = ((Number) jo.get("width")).intValue();
-        ss.height = ((Number) jo.get("height")).intValue();
-        ss.moveCost = ((Number) jo.get("moveCost")).intValue();
-        ss.energyFromFood = ((Number) jo.get("energyFromFood")).intValue();
-        ss.copulationMinimalEnergy = ((Number) jo.get("copulationMinimalEnergy")).intValue();
-        ss.copulationCostEnregy = ((Number) jo.get("copulationCostEnregy")).intValue();
-        ss.startingEnregy = ((Number) jo.get("startingEnregy")).intValue();
-        ss.maxEnregy = ((Number) jo.get("maxEnregy")).intValue();
-        ss.startingFood = ((Number) jo.get("startingFood")).intValue();
-        ss.dailyFoodGrow = ((Number) jo.get("dailyFoodGrow")).intValue();
-        ss.startingAnimals = ((Number) jo.get("startingAnimals")).intValue();
-        ss.gensLength = ((Number) jo.get("gensLength")).intValue();
-        ss.saveToCsv = (boolean) jo.get("saveToCsv");
+        var ss_1 = new SimulationSettings();
+        var ss_2 = new SimulationSettings();
 
 
-//        ss.width = 30;
-//        ss.height = 30;
-//        ss.moveCost = 2;
-//        ss.energyFromFood = 50;
-//        ss.copulationMinimalEnergy = 10;
-//        ss.copulationCostEnregy = 10;
-//        ss.startingEnregy = 67;
-//        ss.maxEnregy = 300;
-//        ss.startingFood = 100;
-//        ss.dailyFoodGrow = 15;
-//        ss.startingAnimals = 100;
-        ss.movementsOptions = AnimalMovementOptions.DEFAULT;
-        ss.genesOptions = GenesOptions.DEFAULT;
-        ss.mapOption = MapOptions.DEFAULT;
-        ss.growingOptions = FoodGrowOptions.DEFAULT;
-//        ss.gensLength = 8;
-//        ss.saveToCsv = false;
 
-        var sw = new SettingsWrapper();
-        sw.name = "Default Combination";
-        sw.settings = ss;
+        ss_1.width = ((Number) ss1.get("width")).intValue();
+        ss_1.height = ((Number) ss1.get("height")).intValue();
+        ss_1.moveCost = ((Number) ss1.get("moveCost")).intValue();
+        ss_1.energyFromFood = ((Number) ss1.get("energyFromFood")).intValue();
+        ss_1.copulationMinimalEnergy = ((Number) ss1.get("copulationMinimalEnergy")).intValue();
+        ss_1.copulationCostEnregy = ((Number) ss1.get("copulationCostEnregy")).intValue();
+        ss_1.startingEnregy = ((Number) ss1.get("startingEnregy")).intValue();
+        ss_1.maxEnregy = ((Number) ss1.get("maxEnregy")).intValue();
+        ss_1.startingFood = ((Number) ss1.get("startingFood")).intValue();
+        ss_1.dailyFoodGrow = ((Number) ss1.get("dailyFoodGrow")).intValue();
+        ss_1.startingAnimals = ((Number) ss1.get("startingAnimals")).intValue();
+        ss_1.movementsOptions = returnAniMovOpt((String) ss1.get("movementsOptions"));
+        ss_1.genesOptions = returnGenOpt((String) ss1.get("genesOptions"));
+        ss_1.mapOption = returnMapOpt((String) ss1.get("mapOption"));
+        ss_1.growingOptions = returnFoodGrOpt((String) ss1.get("growingOptions"));
+        ss_1.gensLength = ((Number) ss1.get("gensLength")).intValue();
+        ss_1.saveToCsv = (boolean) ss1.get("saveToCsv");
 
-        var ss2 = new SimulationSettings();
-        ss2.width = 15;
-        ss2.height = 15;
-        ss2.moveCost = 1;
-        ss2.energyFromFood = 50;
-        ss2.copulationMinimalEnergy = 10;
-        ss2.copulationCostEnregy = 10;
-        ss2.startingEnregy = 200;
-        ss2.maxEnregy = 300;
-        ss2.startingFood = 30;
-        ss2.dailyFoodGrow = 10;
-        ss2.startingAnimals = 30;
-        ss2.movementsOptions = AnimalMovementOptions.SLIGHT_MADNESS;
-        ss2.genesOptions = GenesOptions.DISCOURAGED_GENOTYPE;
-        ss2.mapOption = MapOptions.HELL;
-        ss2.growingOptions = FoodGrowOptions.DEATH_BODIES;
-        ss2.gensLength = 8;
-        ss2.saveToCsv = false;
+        ss_2.width = ((Number) ss2.get("width")).intValue();
+        ss_2.height = ((Number) ss2.get("height")).intValue();
+        ss_2.moveCost = ((Number) ss2.get("moveCost")).intValue();
+        ss_2.energyFromFood = ((Number) ss2.get("energyFromFood")).intValue();
+        ss_2.copulationMinimalEnergy = ((Number) ss2.get("copulationMinimalEnergy")).intValue();
+        ss_2.copulationCostEnregy = ((Number) ss2.get("copulationCostEnregy")).intValue();
+        ss_2.startingEnregy = ((Number) ss2.get("startingEnregy")).intValue();
+        ss_2.maxEnregy = ((Number) ss2.get("maxEnregy")).intValue();
+        ss_2.startingFood = ((Number) ss2.get("startingFood")).intValue();
+        ss_2.dailyFoodGrow = ((Number) ss2.get("dailyFoodGrow")).intValue();
+        ss_2.startingAnimals = ((Number) ss2.get("startingAnimals")).intValue();
+        ss_2.movementsOptions = returnAniMovOpt((String) ss2.get("movementsOptions"));
+        ss_2.genesOptions = returnGenOpt((String) ss2.get("genesOptions"));
+        ss_2.mapOption = returnMapOpt((String) ss2.get("mapOption"));
+        ss_2.growingOptions = returnFoodGrOpt((String) ss2.get("growingOptions"));
+        ss_2.gensLength = ((Number) ss2.get("gensLength")).intValue();
+        ss_2.saveToCsv = (boolean) ss2.get("saveToCsv");
+
+        var sw1 = new SettingsWrapper();
+        sw1.name = "Default Combination";
+        sw1.settings = ss_1;
 
         var sw2 = new SettingsWrapper();
         sw2.name = "Modification";
-        sw2.settings = ss2;
+        sw2.settings = ss_2;
 
-        optionalSettings.add(sw);
+        optionalSettings.add(sw1);
         optionalSettings.add(sw2);
 
         for(var item : optionalSettings)
@@ -529,4 +521,57 @@ public class App extends Application
         new SimulationView(selectedPresetSettings.settings);
     }
 
+    public AnimalMovementOptions returnAniMovOpt (String opt){
+        return switch(opt){
+            case ("SLIGHT_MADNESS") -> AnimalMovementOptions.SLIGHT_MADNESS;
+            case ("FULL_FATE") -> AnimalMovementOptions.FULL_FATE;
+            default -> AnimalMovementOptions.DEFAULT;
+        };
+    }
+
+    public GenesOptions returnGenOpt (String opt){
+        return switch(opt){
+            case ("DISCOURAGED_GENOTYPE") -> GenesOptions.DISCOURAGED_GENOTYPE;
+            case ("NORMAL_GENOTYPE") -> GenesOptions.NORMAL_GENOTYPE;
+            default -> GenesOptions.DEFAULT;
+        };
+    }
+
+    public MapOptions returnMapOpt (String opt){
+        return switch(opt){
+            case ("HELL") -> MapOptions.HELL;
+            case ("EARTH") -> MapOptions.EARTH;
+            default -> MapOptions.DEFAULT;
+        };
+    }
+
+    public FoodGrowOptions returnFoodGrOpt (String opt){
+        return switch(opt){
+            case ("DEATH_BODIES") -> FoodGrowOptions.DEATH_BODIES;
+            case ("LINEAR_GROW") -> FoodGrowOptions.LINEAR_GROW;
+            case ("EQUATORS") -> FoodGrowOptions.EQUATORS;
+            default -> FoodGrowOptions.DEFAULT;
+        };
+    }
+
 }
+
+// jakieś wcześniejsze wartości zanim wklepałem to do JSONa
+
+//        ss.width = 30;
+//        ss.height = 30;
+//        ss.moveCost = 2;
+//        ss.energyFromFood = 50;
+//        ss.copulationMinimalEnergy = 10;
+//        ss.copulationCostEnregy = 10;
+//        ss.startingEnregy = 67;
+//        ss.maxEnregy = 300;
+//        ss.startingFood = 100;
+//        ss.dailyFoodGrow = 15;
+//        ss.startingAnimals = 100;
+//        ss.movementsOptions = AnimalMovementOptions.DEFAULT;
+//        ss.genesOptions = GenesOptions.DEFAULT;
+//        ss.mapOption = MapOptions.DEFAULT;
+//        ss.growingOptions = FoodGrowOptions.DEFAULT;
+//        ss.gensLength = 8;
+//        ss.saveToCsv = false;
