@@ -28,6 +28,10 @@
 
 Repository contains simple evolution generator with GUI crated in JavaFx.
 
+Task requirements are descripted in Requirements.pdf.
+
+Project is considered as ended (future may bring UI improvements beacause we are really unhappy how it looks but our deadline was strict so unfortunetly there is tech debt when it comes to joining generator logic with UI).
+
 ### Built With
 
 <div>
@@ -41,7 +45,7 @@ Repository contains simple evolution generator with GUI crated in JavaFx.
 
 ### Getting Started
 
-In order to use it download the repository adn run it in InteliJ.
+In order to use it download the repository and run it in InteliJ.
 
 ### Usage 
 
@@ -53,6 +57,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 ### Contact
 
+### Łukasz Kolber 
 <div align="center">
   <a href="https://www.linkedin.com/in/lukasz-psp515-kolber/">
     <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn" />
@@ -61,3 +66,14 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
     <img src="https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white" alt="Twitter" />
   </a>
 </div>
+
+### Wiktor Gut
+<div align="center">
+  <a href="">
+    <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn" />
+  </a>
+  <a href="">
+    <img src="https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white" alt="Twitter" />
+  </a>
+</div>
+
