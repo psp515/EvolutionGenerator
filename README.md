@@ -27,8 +27,12 @@
 ### About The Project
 
 Repository contains simple evolution generator with GUI crated in JavaFx.
-
 Task requirements are descripted in Requirements.pdf.
+
+Generator is built that way it is simple to create random combinations and easy for extending generator by other maps / map elements. 
+This was posible thanks to design patterns. In this project we mostly used abstract factory, observer, dependency injector and template method.
+
+Project give us experience with working in pairs and we came to conclusion that an exchange of information is key aspect of each project, also with good work organization like proper design consideration and division of labor really helps to move forward with project.
 
 Project is considered as ended (future may bring UI improvements beacause we are really unhappy how it looks but our deadline was strict so unfortunetly there is tech debt when it comes to joining generator logic with UI).
 
